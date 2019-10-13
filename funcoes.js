@@ -19,10 +19,10 @@ function inserir(formulario) {
         .catch(error => {
             console.log(`Erro ao conectar:\n\n${error.message}`)
         });
-    }
+}
     
-    function valida_sessao(formulario)
-    {
+function valida_sessao(formulario){
+
     event.preventDefault();
     fetch('valida_sessao.php', {
         method: 'POST',
@@ -33,9 +33,9 @@ function inserir(formulario) {
             return response.json();
          }).then(dados => {
             console.log('Recebendo dados!');
-            // console.log(data);
+            console.log(dados);
             if (dados) {
-               if (dados.sucesso==true) {
+               if (dados.sucesso == true) {
                    window.location='home.html'
                 }
                 else{
@@ -48,10 +48,10 @@ function inserir(formulario) {
             console.log(`Erro ao conectar:\n\n${error.message}`)
         });
     
-    }
+}
     
     
-    function listar(formulario) {
+function listar(formulario) {
         
     event.preventDefault();
     fetch('listagem.php', {
@@ -83,60 +83,54 @@ function inserir(formulario) {
         });
     }
     
-    function autentica()
-        {
+function autentica(){
     
         fetch('autentica.php', {
         method: 'POST',
         mode: 'no-cors'
-    })
-    .then(response => {
-            return response.json();
-         }).then(dados => {
-            console.log('Recebendo dados!');
-            // console.log(data);
-            if (dados) {
-               if (dados.sucesso==false) {
-                   window.location='login.html'
-                }
-            }
         })
-        .catch(error => {
-            console.log(`Erro ao conectar:\n\n${error.message}`)
-        });
+        .then(response => {
+                return response.json();
+            }).then(dados => {
+                console.log('Recebendo dados!');
+                //console.log(data);
+                if (dados) {
+                    if (dados.sucesso==false) {
+                        window.location='login.html'
+                    }
+                }
+            })
+            .catch(error => {
+                console.log(`Erro ao conectar:\n\n${error.message}`)
+            });
     
+    }
     
-    
-        }
-    
-        function sair()
-        {
-        var formData = new FormData();
-        formData.append('acao', 'sair')    
-        fetch('valida_sessao.php', {
-        method: 'POST',
-        body:formData,
-        mode: 'no-cors'
+function sair() {
+    var formData = new FormData();
+    formData.append('acao', 'sair')    
+    fetch('valida_sessao.php', {
+    method: 'POST',
+    body:formData,
+    mode: 'no-cors'
     })
     .then(response => {
             return response.json();
-         }).then(dados => {
+        }).then(dados => {
             console.log('Recebendo dados!');
-            // console.log(data);
+            console.log(dados);
             if (dados.sair==true) {
-               window.location='login.html'
-                }
-           
-        })
-        .catch(error => {
-            console.log(`Erro ao conectar:\n\n${error.message}`)
-        });
+              window.location='login.html'
+            }
+        
+    })
+    .catch(error => {
+        console.log(`Erro ao conectar:\n\n${error.message}`)
+    });
     
+}
     
-    
-        }
-    
-    function listaUsuario(){
+function listaUsuario(){
     
     fetch('listagem.php', {
         method: 'POST',
