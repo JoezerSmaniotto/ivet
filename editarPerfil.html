@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <!-- <script src="funcoes.js" async defer></script> -->
+    <title>Editar Perfil</title>
+  </head>
+  <body onload="autentica(),recuperaDados(),recuperarDadosEdita()">
+    <h2 id="welcome"></h2>
+    <form action="" method="post">
+        <p><label for="nome">Nome: </label><input type="text" name="nome" id="nome"></p>
+        <p><label for="cpf">CPF: </label><input type="text" name="cpf" id="cpf" size="11"></p>
+        <p><label for="email">email: </label><input type="email" name="email" id="email"></p>
+        <p><label for="cep">CEP: </label><input type="text" name="cep" id="cep"></p>
+        <p><label for="rua">Rua: </label><input type="text" name="rua" id="rua"></p>
+        <p><label for="Numero">Numero: </label><input type="number" name="numero" id="numero"></p>
+        <p><label for="Cidade">Cidade: </label><input type="text" name="cidade" id="cidade"></p>
+        <p><label for="Estado">Estado: </label><input type="text" name="estado" id="estado"></p>
+        <p><label for="Complemento">Complemento: </label><input type="text" name="complemento" id="complemento"></p>
+        <p><label for="telefone">Telefone: </label> <input type="text" name="telefone" id="telefone"></p>
+        <p><label for="senha">Senha: </label><input type="password" name="senha" id="senha"></p>
+        <p><button type="submit" id='cadastrar' name='cadastrar' value="Cadastrar" onclick="cadastrarUsuario()"> Cadastrar </button>  </p>            
+    </form>
+    <a href="home.html">Voltar</a>
+  </body>
+
+  <script src="funcoes.js"></script>
+
+
+
+</html>

@@ -93,19 +93,42 @@ function autentica(){
                 return response.json();
             }).then(dados => {
                 console.log('Recebendo dados!');
-                //console.log(data);
+                //console.log(dados);
                 if (dados) {
                     if (dados.sucesso==false) {
                         window.location='login.html'
+                    }else{
+                       return dados.sucesso;
                     }
                 }
             })
-            .catch(error => {
-                console.log(`Erro ao conectar:\n\n${error.message}`)
-            });
+        .catch(error => {
+            console.log(`Erro ao conectar:\n\n${error.message}`)
+        });
     
-    }
-    
+}
+ 
+function recuperaDados(){
+    fetch('./dados.php', {
+        method: 'get',
+        mode: 'cors'
+        })
+        .then(response => response.json())
+        .then(function result (dados){
+            //console.log(dados);
+            boasvindas(dados);
+            
+        })
+    .catch(error => {
+        console.log(`Erro ao conectar:\n\n${error.message}`)
+    });
+}
+
+function boasvindas(dado){
+    document.querySelector('#welcome').innerHTML = `Olá ${dado.nome} `;    
+}
+
+
 function sair() {
     var formData = new FormData();
     formData.append('acao', 'sair')    
@@ -159,5 +182,34 @@ function listaUsuario(){
         });
 }   
     
+
+function recuperarDadosEdita(){
+
+    var formData = new FormData();
+    formData.append('editar','editarrr')              
+    fetch('includes/logica/logica_usuario.php', {
+        method: 'POST',
+        body:formData,
+        mode: 'no-cors'
+    })
+
+    .then(response => {
+            return response.json();
+        }).then(dados => {
+            console.log('Recebendo dados!')
+            //console.log(dados);
+            if (dados.status == 'true') {
+                console.log(dados.status);
+                console.log(dados);
+            }else {
+                console.log(dados.status);
+                alert('Usuario Não Encontrado ')
+            }
+        })
+       
+    .catch(error => {
+        console.log(`Erro ao conectar:\n\n${error.message}`)
+    });
+}
     
-    
+

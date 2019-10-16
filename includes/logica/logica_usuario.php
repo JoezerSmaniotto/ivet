@@ -1,6 +1,7 @@
 <?php
     require_once('conecta.php');
     require_once('funcoes_usuario.php');
+    session_start();
 #CADASTRO USUÁRIO
     $json = file_get_contents('php://input');
     $data = json_decode($json);
@@ -67,12 +68,13 @@
 
 #EDITAR USUÁRIO
     if(isset($_POST['editar'])){
-    
-            $id = $_POST['editar'];
+            $id =  $_SESSION['id'];
+            //$id = $_POST['editar'];
             $array = array($id);
-            $usuario= json_encode(buscarUsuario($conexao, $array)); 
+            $retorno=(buscarUsuario($conexao, $array));
+            echo json_encode($retorno);
+
             
-            //require_once('../../alterarUsuario.php');
     }    
 #ALTERAR USUÁRIO
     if(isset($_POST['alterar'])){
@@ -86,8 +88,9 @@
             $dt_nascimento = $_POST['dt_nascimento'];
             
             $array = array($nome, $email, $senha, $endereco, $telefone, $dt_nascimento, $id);
-            alterarUsuario($conexao, $array);
-    
+            $retorno=alterarUsuario($conexao, $array);
+            
+
             header('location:../../index.php');
     }
 #DELETAR USUÁRIO

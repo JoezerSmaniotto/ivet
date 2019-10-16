@@ -48,13 +48,27 @@
 
     function buscarUsuario($conexao,$array){
         try {
-        $query = $conexao->prepare("select * from usuarios where id= ?");
+
+        $query = $conexao->prepare("select * from usuario where id_usuario= ?");
         if($query->execute($array)){
-            $usuario = $query->fetch(); //coloca os dados num array $usuario
-            return $usuario;
+            $usuario = $query->fetch(PDO::FETCH_ASSOC); //coloca os dados num array $usuario
+            $vetor=array();
+             foreach($usuario as $indice=>$valor)
+             {
+                 $vetor["$indice"]=$valor;
+
+            }
+
+            $vetor['status']='true';    
+            return $vetor;
+            
         }
         else{
-            return false;
+            //return false;
+            //echo("Não Existe Usuarios");
+            $ret = array("status"=>"false");
+;            return $ret;
+            
         }
          }catch(PDOException $e) {
             echo 'Error: ' . $e->getMessage();
