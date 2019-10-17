@@ -1,4 +1,4 @@
-function inserir(formulario) {
+function inserir(formulario) { // ???
     event.preventDefault();
     fetch('insere.php', {
         method: 'POST',
@@ -21,7 +21,7 @@ function inserir(formulario) {
         });
 }
     
-function valida_sessao(formulario){
+function valida_sessao(formulario){ // OK
 
     event.preventDefault();
     fetch('valida_sessao.php', {
@@ -51,7 +51,7 @@ function valida_sessao(formulario){
 }
     
     
-function listar(formulario) {
+function listar(formulario) { // ??
         
     event.preventDefault();
     fetch('listagem.php', {
@@ -83,7 +83,7 @@ function listar(formulario) {
         });
     }
     
-function autentica(){
+function autentica(){ // OK
     
         fetch('autentica.php', {
         method: 'POST',
@@ -108,7 +108,7 @@ function autentica(){
     
 }
  
-function recuperaDados(){
+function recuperaDados(){ // OK
     fetch('./dados.php', {
         method: 'get',
         mode: 'cors'
@@ -129,7 +129,7 @@ function boasvindas(dado){
 }
 
 
-function sair() {
+function sair() { // OK 
     var formData = new FormData();
     formData.append('acao', 'sair')    
     fetch('valida_sessao.php', {
@@ -153,7 +153,7 @@ function sair() {
     
 }
     
-function listaUsuario(){
+function listaUsuario(){ // ???
     
     fetch('listagem.php', {
         method: 'POST',
@@ -183,7 +183,7 @@ function listaUsuario(){
 }   
     
 
-function recuperarDadosEdita(){
+function recuperarDadosEdita(){ // OK 
 
     var formData = new FormData();
     formData.append('editar','editarrr')              
@@ -197,12 +197,26 @@ function recuperarDadosEdita(){
             return response.json();
         }).then(dados => {
             console.log('Recebendo dados!')
-            //console.log(dados);
-            if (dados.status == 'true') {
-                console.log(dados.status);
-                console.log(dados);
+            console.log(dados);
+            if(dados.result == 'true') {
+                document.querySelector("#nome").value = dados.nome;
+                document.querySelector("#cpf").value = dados.cpf;
+                document.querySelector("#email").value = dados.e_mail;
+                document.querySelector("#cep").value = dados.cep
+                document.querySelector("#rua").value = dados.rua;
+                document.querySelector("#numero").value = dados.numero;
+                document.querySelector("#cidade").value = dados.cidade;
+                document.querySelector("#estado").value = dados.estado;
+                document.querySelector("#complemento").value = dados.complemento;
+                document.querySelector("#telefone").value = dados.telefone;
+                document.querySelector("#salvar").style.display = 'none';
+                let  inp = document.querySelectorAll("input")
+                inp.forEach( (inpt) => {
+                    inpt.setAttribute('disabled','true')
+                })
+                                              
             }else {
-                console.log(dados.status);
+                console.log(dados.result);
                 alert('Usuario Não Encontrado ')
             }
         })
@@ -213,3 +227,108 @@ function recuperarDadosEdita(){
 }
     
 
+function habilitaEdicao(){  // OK
+    document.querySelector("#salvar").style.display = 'inline';
+    document.querySelector("#editar").style.display = 'none';
+
+    let  inp = document.querySelectorAll("input")
+    inp.forEach( (inpt) => {
+        inpt.removeAttribute('disabled','true')
+    }) 
+
+}
+
+
+
+// ULTIMA PARTE
+
+function gerarObjetoUsuario(){ // OK
+
+    let nome = document.querySelector("#nome").value;
+    let cpf = document.querySelector("#cpf").value;
+    let email = document.querySelector("#email").value;
+    let cep = document.querySelector("#cep").value;
+    let rua = document.querySelector("#rua").value;
+    let numero = document.querySelector("#numero").value;
+    let cidade = document.querySelector("#cidade").value;
+    let estado = document.querySelector("#estado").value;
+    let complemento = document.querySelector("#complemento").value;
+    let telefone = document.querySelector("#telefone").value;
+    let alterar = true;
+
+    return { // Cria o objeto 
+      nome,cpf,email,cep,rua,numero,cidade,estado,complemento,telefone,alterar
+    }
+
+}
+
+function formularioValido(dadosUsuario){ // OK 
+    let campoVazio = false; 
+    const arrayDadosUser = Object.values(dadosUsuario);
+    arrayDadosUser.forEach(cont=>{
+      if(cont === ''){
+         campoVazio = true;
+      }
+    });
+
+    return !campoVazio;  
+}
+
+
+function salvaEdicao(){ // OK
+    document.querySelector("#salvar").style.display = 'none';
+    document.querySelector("#editar").style.display = 'inline';
+
+    let dadosUsuario = gerarObjetoUsuario();
+    if(formularioValido(dadosUsuario)){
+        fetch('includes/logica/logica_usuario.php',{
+            method:'post',
+            body: JSON.stringify(dadosUsuario) // Converte para JSON
+        }).then ((response) => { return response.text() // esse .text poderia ser json() se sim o que mudaria ??
+        }).then( data => {
+            let result = JSON.parse(data)
+            console.log(result)
+            alert("Dados Atualizados Com Sucesso")
+        });
+        
+    }else {
+        alert("Verifique os Campos, Existem Campos Não Preenchidos")
+    }
+
+    recuperarDadosEdita();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function cadastrar(){
+
+//     const dadosUsuario = gerarObjetoUsuario();    
+//     if( formularioValido(dadosUsuario)){
+//       fetch('insere.php',{
+//         method: 'post',
+//         body: JSON.stringify(dadosUsuario)// converte para JSON o JSON.stringify // body apenas quando quero fazer um post
+//       }).then((response)=> { return response.text()
+//       }).then( data => {
+//           const result = JSON.parse(data);
+//           console.log(`Data STATUS = ${result.ret}`);
+//           if(result.ret){
+//             alert("Dados Inseridos Com Sucesso");
+//           }else{
+//             alert("Dados Não Inserido !");
+//           }   
+//       });      
+        
+//     }else{
+//       alert("Verifique os Campos, Existe  Campos Não Preenchidos");
+//     }
+//   }

@@ -1,5 +1,5 @@
 <?php
- 
+    
     function inserirUsuario($conexao,$array){
        try {
             $query = $conexao->prepare("insert into usuario (nome,cpf,e_mail,cep,rua,numero,cidade,estado,complemento,status,senha,telefone) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -9,18 +9,6 @@
             echo 'Error: ' . $e->getMessage();
         }
     }
-
-
-    function alterarUsuario($conexao, $array){
-        try {
-            $query = $conexao->prepare("update usuarios set nome= ?, email = ?, senha= ?, endereco= ?, telefone= ?, dt_nascimento=? where id = ?");
-            $usuario = $query->execute($array);   
-            return $usuario;
-        }catch(PDOException $e) {
-            echo 'Error: ' . $e->getMessage();
-        }
-    }
-
 
     function deletarUsuario($conexao, $array){
         try {
@@ -46,33 +34,44 @@
 
     }
 
-    function buscarUsuario($conexao,$array){
+    
+    function alterarUsuario($conexao, $array){ // OK
         try {
-
-        $query = $conexao->prepare("select * from usuario where id_usuario= ?");
-        if($query->execute($array)){
-            $usuario = $query->fetch(PDO::FETCH_ASSOC); //coloca os dados num array $usuario
-            $vetor=array();
-             foreach($usuario as $indice=>$valor)
-             {
-                 $vetor["$indice"]=$valor;
-
-            }
-
-            $vetor['status']='true';    
-            return $vetor;
+            $query = $conexao->prepare("update usuario set nome= ?, cpf= ?, e_mail = ?, cep= ?, rua= ?, numero = ?,  cidade = ?, estado = ?, complemento = ?, telefone= ? where id_usuario = ?");
+            $usuario = $query->execute($array);  
+            return $usuario;
             
-        }
-        else{
-            //return false;
-            //echo("Não Existe Usuarios");
-            $ret = array("status"=>"false");
-;            return $ret;
-            
-        }
-         }catch(PDOException $e) {
+        }catch(PDOException $e) {// Erro ao executar a query cai no catch
             echo 'Error: ' . $e->getMessage();
-      }  
+        }
+    }
+
+    function buscarUsuario($conexao,$array){ // OK
+        try {
+      
+            $query = $conexao->prepare("select * from usuario where id_usuario= ?");
+            if($query->execute($array)){
+                $usuario = $query->fetch(PDO::FETCH_ASSOC); //coloca os dados num array $usuario
+                $vetor=array();
+                if($usuario){
+                    foreach($usuario as $indice=>$valor){
+                        $vetor["$indice"]=$valor;
+                    }
+                    $vetor['result']='true';    
+                    return $vetor;
+                    
+                }else {
+                    $vetor['result']='false';
+                    return $vetor;
+                  
+                }
+                  
+            }
+          
+        }
+        catch(PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }  
     }
 
     function acessarUsuario($conexao,$array){
