@@ -108,24 +108,39 @@ function autentica(){ // OK
     
 }
  
-function recuperaDados(){ // OK
-    fetch('./dados.php', {
-        method: 'get',
-        mode: 'cors'
-        })
+// function recuperaDados(){ // OK
+//     fetch('./dados.php', {
+//         method: 'get',
+//         mode: 'cors'
+//         })
+//         .then(response => response.json())
+//         .then(function result (dados){
+//             //console.log(dados);
+//             boasvindas(dados);
+            
+//         })
+//     .catch(error => {
+//         console.log(`Erro ao conectar:\n\n${error.message}`)
+//     });
+// }
+
+
+function boasvindas(){ // OK
+    let apresentarUser = true
+    let obj =  { apresentarUser }
+    fetch('includes/logica/logica_usuario.php', {
+        method: 'post',
+        mode: 'cors',
+        body: JSON.stringify(obj)
+    })
         .then(response => response.json())
         .then(function result (dados){
-            //console.log(dados);
-            boasvindas(dados);
+            document.querySelector('#welcome').innerHTML = `Olá ${dados.nome} `;
             
         })
     .catch(error => {
         console.log(`Erro ao conectar:\n\n${error.message}`)
     });
-}
-
-function boasvindas(dado){
-    document.querySelector('#welcome').innerHTML = `Olá ${dado.nome} `;    
 }
 
 
@@ -239,8 +254,7 @@ function habilitaEdicao(){  // OK
 }
 
 
-
-// ULTIMA PARTE
+// Começo Edita
 
 function gerarObjetoUsuario(){ // OK
 
@@ -282,13 +296,14 @@ function salvaEdicao(){ // OK
     let dadosUsuario = gerarObjetoUsuario();
     if(formularioValido(dadosUsuario)){
         fetch('includes/logica/logica_usuario.php',{
-            method:'post',
+            method:'put',
             body: JSON.stringify(dadosUsuario) // Converte para JSON
-        }).then ((response) => { return response.text() // esse .text poderia ser json() se sim o que mudaria ??
+        }).then ((response) => { return response.text() // esse .text poderia ser json() se sim o que mudaria ??  ???
         }).then( data => {
             let result = JSON.parse(data)
             console.log(result)
             alert("Dados Atualizados Com Sucesso")
+            boasvindas()
         });
         
     }else {
@@ -298,37 +313,25 @@ function salvaEdicao(){ // OK
     recuperarDadosEdita();
 }
 
+// Fim Edita
 
 
+function excluirConta(){
+    if(window.confirm("Deseja Realmente Excluir Sua Conta ?")){
+        let excluirConta = true;
+        let obj =  { excluirConta };
+        console.log(obj);
+        fetch('includes/logica/logica_usuario.php',{
+            method:'delete',
+            body: JSON.stringify(obj) // Converte para JSON
+        }).then ((response) => { return response.text() // esse .text poderia ser json() se sim o que mudaria ??  ???
+        }).then( data => {
+            //let result = JSON.parse(data)
+            //console.log(result)
+            alert("USUARIO EXCLUIDO !!! ")
+            window.location='login.html'
+        });
+    }
+}
 
 
-
-
-
-
-
-
-
-
-// function cadastrar(){
-
-//     const dadosUsuario = gerarObjetoUsuario();    
-//     if( formularioValido(dadosUsuario)){
-//       fetch('insere.php',{
-//         method: 'post',
-//         body: JSON.stringify(dadosUsuario)// converte para JSON o JSON.stringify // body apenas quando quero fazer um post
-//       }).then((response)=> { return response.text()
-//       }).then( data => {
-//           const result = JSON.parse(data);
-//           console.log(`Data STATUS = ${result.ret}`);
-//           if(result.ret){
-//             alert("Dados Inseridos Com Sucesso");
-//           }else{
-//             alert("Dados Não Inserido !");
-//           }   
-//       });      
-        
-//     }else{
-//       alert("Verifique os Campos, Existe  Campos Não Preenchidos");
-//     }
-//   }

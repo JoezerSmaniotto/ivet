@@ -10,9 +10,9 @@
         }
     }
 
-    function deletarUsuario($conexao, $array){
+    function deletarUsuario($conexao, $array){ // ok
         try {
-            $query = $conexao->prepare("delete from usuarios where id = ?");
+            $query = $conexao->prepare("delete from usuario where id_usuario = ?");
             $usuario = $query->execute($array);   
             return $usuario;
         }catch(PDOException $e) {
@@ -40,7 +40,7 @@
             $query = $conexao->prepare("update usuario set nome= ?, cpf= ?, e_mail = ?, cep= ?, rua= ?, numero = ?,  cidade = ?, estado = ?, complemento = ?, telefone= ? where id_usuario = ?");
             $usuario = $query->execute($array);  
             return $usuario;
-            
+
         }catch(PDOException $e) {// Erro ao executar a query cai no catch
             echo 'Error: ' . $e->getMessage();
         }
@@ -73,6 +73,42 @@
             echo 'Error: ' . $e->getMessage();
         }  
     }
+
+
+    function buscarNomeUsuario($conexao,$array){ // OK
+        try {
+      
+            $query = $conexao->prepare("select nome from usuario where id_usuario= ?");
+            if($query->execute($array)){
+                $usuario = $query->fetch(PDO::FETCH_ASSOC); //coloca os dados num array $usuario
+                $vetor=array();
+                if($usuario){
+                    foreach($usuario as $indice=>$valor){
+                        $vetor["$indice"]=$valor;
+                    }
+                    $vetor['result']='true';    
+                    return $vetor;
+                    
+                }else {
+                    $vetor['result']='false';
+                    return $vetor;
+                  
+                }
+                  
+            }
+          
+        }
+        catch(PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }  
+    }
+
+
+
+
+
+
+
 
     function acessarUsuario($conexao,$array){
        

@@ -6,6 +6,7 @@
     $data = json_decode($json);
 
     
+    
 #CADASTRO USUÁRIO // OK    
 if(isset($data->cadastrar)){
     $nome        = $data->nome;    
@@ -49,6 +50,14 @@ if(isset($_POST['entrar'])){
         header('location:../../login.php');
     }
 }
+
+#Apresenta Dados Usuario  => OK
+if(isset( $data->apresentarUser)){ 
+    $id =  $_SESSION['id'];
+    $array = array($id);
+    $retorno=(buscarNomeUsuario($conexao, $array));
+    echo json_encode($retorno);       
+}  
 
 
 
@@ -98,16 +107,19 @@ if(isset($_POST['deletar'])){
 }
 
 
-#DELETAR USUÁRIO Logado
-if(isset($_GET['excluirConta'])){
+#DELETAR USUÁRIO Logado    OK
+if(isset($data->excluirConta)){
     session_start();
     $array = array($_SESSION['id']);
     $result = deletarUsuario($conexao, $array);
-    if( $result  == true){
+    if($result){
+        echo json_encode($result);
         session_destroy();
+       
+        
     }
-    var_dump($result);
-    header('Location:../../index.php');
+
+    
 } 
 
 #ALTERAR USUÁRIO_Logado
