@@ -56,7 +56,7 @@ if(isset( $data->apresentarUser)){
     $id =  $_SESSION['id'];
     $array = array($id);
     $retorno=(buscarNomeUsuario($conexao, $array));
-    echo json_encode($retorno);       
+    echo json_encode($retorno);     
 }  
 
 
@@ -87,12 +87,13 @@ if(isset($data->alterar)){
     $cep         = $data->cep;    
     $rua         = $data->rua;         
     $numero      = $data->numero; 
+    $bairro      = $data->bairro; 
     $cidade      = $data->cidade;  
     $estado      = $data->estado;
     $complemento = $data->complemento;
     $telefone    = $data->telefone;
 
-    $array = array($nome,$cpf,$email,$cep,$rua,$numero,$cidade,$estado,$complemento,$telefone,$id);
+    $array = array($nome,$cpf,$email,$cep,$rua,$numero,$cidade,$estado,$complemento,$telefone,$bairro,$id);
     $retorno=alterarUsuario($conexao, $array);
     echo json_encode($retorno);
 

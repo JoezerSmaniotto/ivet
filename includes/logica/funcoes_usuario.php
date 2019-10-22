@@ -37,7 +37,7 @@
     
     function alterarUsuario($conexao, $array){ // OK
         try {
-            $query = $conexao->prepare("update usuario set nome= ?, cpf= ?, e_mail = ?, cep= ?, rua= ?, numero = ?,  cidade = ?, estado = ?, complemento = ?, telefone= ? where id_usuario = ?");
+            $query = $conexao->prepare("update usuario set nome= ?, cpf= ?, e_mail = ?, cep= ?, rua= ?, numero = ?,  cidade = ?, estado = ?, complemento = ?, telefone= ?, bairro = ? where id_usuario = ?");
             $usuario = $query->execute($array);  
             return $usuario;
 
