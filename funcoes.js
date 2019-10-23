@@ -1,3 +1,6 @@
+let flagCadastro = 0
+
+
 function inserir(formulario) { // ???
     event.preventDefault();
     fetch('insere.php', {
@@ -389,3 +392,78 @@ function meu_callback(conteudo) {
         alert("CEP não encontrado.");
     }
 }
+
+
+
+function cadastrarUsuario(){
+    // const formulario = document.querySelector("#cadastro") 
+    // formulario.preventDefault()
+
+    const dadosUsuario = gerarObjetoUsuarioCadastro()
+    
+    if( formularioValido(dadosUsuario)){
+      fetch('includes/logica/logica_usuario.php',{
+        method: 'post',
+        body: JSON.stringify(dadosUsuario)// converte para JSON o JSON.stringify // body apenas quando quero fazer um post
+        }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+        }).then( data => {
+            console.log(data);
+            if(data.result == "true"){
+                const resetar = document.querySelector("#cadastro");
+                alert("Usuario Cadastrado !!");
+                // formulario.reset(); 
+                // Aqui redireciona o window
+                window.location='login.html'
+            }
+        });
+    }else{
+      alert("Verifique os Campos, Existe  Campos Não Preenchidos");
+    }
+}
+
+
+function gerarObjetoUsuarioCadastro(){
+    const nome = document.querySelector('#nome').value;
+    const cpf = document.querySelector('#cpf').value;
+    const email = document.querySelector('#email').value;
+    const cep = document.querySelector('#cep').value;
+    const rua = document.querySelector('#rua').value;
+    const numero = document.querySelector('#numero').value;
+    const bairro = document.querySelector('#bairro').value;
+    const cidade = document.querySelector('#cidade').value;
+    const estado = document.querySelector('#estado').value;
+    const complemento = document.querySelector('#complemento').value;
+    const telefone = document.querySelector('#telefone').value;
+    const senha = document.querySelector('#senha').value;
+    const status = 1;
+    //const dt_nascimento = ObterValor('dt_nascimento');
+    const cadastrar = true;
+    return { // Cria o objeto 
+      nome,cpf,email,cep,rua,numero,bairro,cidade,estado,complemento,status,senha,telefone,cadastrar
+    }
+
+}
+
+         
+function pesquisaemail(email){
+    let validaEmail = true
+    let obj =  { validaEmail,email }
+    console.log(obj)
+    fetch('includes/logica/logica_usuario.php', {
+        method: 'POST',
+        body: JSON.stringify(obj)
+    }).then ((response) => { return response.json()
+    }).then( data => {
+            //console.log('Recebendo dados!')
+            console.log(data);
+            if(data.result == 'true') {
+               alert(`Email: ${email} já email`)
+               document.querySelector("#email").value = ' '
+            }
+
+    }) .catch(error => {
+        console.log(`Erro ao conectar:\n\n${error.message}`)
+    });
+
+}
+

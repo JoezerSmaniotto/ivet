@@ -2,11 +2,24 @@
     
     function inserirUsuario($conexao,$array){
        try {
-            $query = $conexao->prepare("insert into usuario (nome,cpf,e_mail,cep,rua,numero,cidade,estado,complemento,status,senha,telefone) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $query = $conexao->prepare("insert into usuario (nome,cpf,e_mail,cep,rua,numero,cidade,estado,complemento,status,senha,telefone,bairro) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $usuario = $query->execute($array);
-            return $usuario;
+            
+            if($usuario){
+                $vetor['result']='true';
+                return  $vetor;
+            }
+            echo var_dump($usuario);
+            echo var_dump($vetor);
+            die();
+
         }catch(PDOException $e) {
+            echo var_dump($usuario);
+             
+
             echo 'Error: ' . $e->getMessage();
+            echo var_dump( $e->getMessage());
+            die();
         }
     }
 
@@ -104,12 +117,6 @@
     }
 
 
-
-
-
-
-
-
     function acessarUsuario($conexao,$array){
        
         try {
@@ -152,6 +159,30 @@
             echo 'Error: ' . $e->getMessage();
       }  
     }
+
+    function validaEmail($conexao,$array){
+        try {
+            $query = $conexao->prepare("select e_mail from usuario where e_mail=?");
+            if($query->execute($array)){
+                $usuario = $query->fetch(PDO::FETCH_ASSOC); //coloca os dados num array $usuario
+                $vetor=array();
+                if($usuario){
+                    $vetor['result']='true';    
+                    return $vetor;
+                    
+                }else {
+                    $vetor['result']='false';
+                    return $vetor;
+                  
+                }            
+
+        }
+        }catch(PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+      }  
+    }
+
+
 
     
 ?>

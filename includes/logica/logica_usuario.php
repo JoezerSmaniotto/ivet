@@ -15,6 +15,7 @@ if(isset($data->cadastrar)){
     $cep         = $data->cep;    
     $rua         = $data->rua;         
     $numero      = $data->numero; 
+    $bairro      = $data->bairro;
     $cidade      = $data->cidade;  
     $estado      = $data->estado;
     $complemento = $data->complemento;
@@ -23,8 +24,11 @@ if(isset($data->cadastrar)){
     $status      = $data->status;
     $senhaEncriptada =  base64_encode($senha);
 
-    $array = array($nome,$cpf,$email,$cep,$rua,$numero,$cidade,$estado,$complemento,$status,$senhaEncriptada,$telefone);
+    $array = array($nome,$cpf,$email,$cep,$rua,$numero,$cidade,$estado,$complemento,$status,$senhaEncriptada,$telefone,$bairro);
     $result=inserirUsuario($conexao, $array);
+    // echo var_dump($result);
+    // die();
+    echo json_encode($result); 
  
 }
 #ENTRAR
@@ -123,6 +127,23 @@ if(isset($data->excluirConta)){
     
 } 
 
+
+# VERIFICA SE O EMAIL JÁ FOI CADASTRADO
+if(isset( $data->validaEmail)){
+    $email = $data->email;
+    $array = array($email);
+    $result = validaEmail($conexao, $array);
+    // echo var_dump($result);
+    // die();
+    echo json_encode($result); 
+    
+}
+
+
+
+
+
+
 #ALTERAR USUÁRIO_Logado
 if(isset($_POST['alterar'])){
     
@@ -139,6 +160,11 @@ if(isset($_POST['alterar'])){
 
     header('location:../../index.php');
 }
+
+
+
+
+
 
 
 ?>
