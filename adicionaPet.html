@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <!--<link rel="stylesheet" href="assets/css/index.css">-->
+      <title>Cadastrar Usuário</title>
+      <script src="funcoes.js"></script>
+      <script src="funcoes_animal.js"></script>
+  </head>
+  <body onload="autentica(),boasvindas() ">
+    
+    <main>
+        <h1>Cadastre Um Pet</h1>
+        <section>
+          <!-- <form name="cadastro" id="cadastro" > -->
+            <p><label for="nome">Nome: </label><input type="text" name="nome" id="nome"></p>
+            <p><label for="data">Data Nascimento: </label><input type="date" name="dt_nasc" id="dt_nasc" size="11"></p>
+            <p> <label for="sexo">Sexo:</label>
+              <select   name="SeletorSexo" id="SeletorSexo" >
+                <option value="">--Escolha--</option>
+                <option value="M">Macho</option>
+                <option value="F">Femea</option>
+              </select>
+            </p>
+            <p> <label for="tipo">Tipo:</label>
+              <select   name="SeletorTipo" id="SeletorTipo" >
+                <option value="" >--Escolha--</option>
+                <option value="C" >Cão</option>
+                <option value="G">Gato</option>
+              </select>
+            </p>
+            <p><label for="localizacao">Localização CEP: </label><input type="text" name="cep" id="cep"  placeholder="ex:96040540" size="10" onblur="pesquisacep(this.value);" ></p>
+            <p><label for="Observacoes">Observações: </label> <br><textarea name="obs" id="obs"  placeholder="Descreve Informações relevantes, Se o animal é vacidando, Portedo animal, Comportamento"  rows="4" cols="50" ></textarea> </p>
+
+
+
+            <p><button type="submit" id='cadastrar' name='cadastrar' value="Cadastrar" > Cadastrar </button>  </p>      
+            <button type="button"> <a href="home.html"> Voltar </a> </button>
+            
+          <!-- </form> -->
+        </section>
+    </main>
+ 
+
+  </body>
+
+ 
+  
+
+</html>

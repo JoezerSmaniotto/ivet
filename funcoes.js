@@ -457,7 +457,7 @@ function pesquisaemail(email){
             //console.log('Recebendo dados!')
             console.log(data);
             if(data.result == 'true') {
-               alert(`Email: ${email} já email`)
+               alert(`Email: ${email} já cadastrado`)
                document.querySelector("#email").value = ' '
             }
 
@@ -467,3 +467,5 @@ function pesquisaemail(email){
 
 }
 
+
+ 
