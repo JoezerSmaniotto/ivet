@@ -72,9 +72,6 @@ function retornaRaca (){
       });
 }
 
-//  Cadastrar animal
-
-
 function cadastrarPet(){
   // const formulario = document.querySelector("#cadastro") 
   // formulario.preventDefault()
@@ -155,6 +152,84 @@ function excluirAnimal(idAnimal){
   }  
 }
 
+function editarAnimal(id){
+  if(window.confirm(`Deseja Realmente Editar o Pet?`)){
+    retornaRaca ()
+    let recuperaDadosPet = true,idAnimal=id; 
+    let obj =  { recuperaDadosPet,idAnimal };
+    console.log(obj);
+    fetch('includes/logica/logica_animal.php',{
+        method:'post',
+        body: JSON.stringify(obj) // Converte para JSON
+    }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+    }).then( dados => {
+        console.log(dados)
+        document.querySelector("#nome").value = dados.nome;
+        document.querySelector("#dt_nasc").value = dados.nascimento;
+        document.querySelector("#SeletorTipo").value = dados.tipo;
+        document.querySelector("#SeletorSexo").value = dados.sexo;
+        document.querySelector("#raca").value = dados.fk_raca_id;
+        document.querySelector("#cep").value = dados.localizacao;
+        document.querySelector("#obs").value = dados.observacoes;
+        document.querySelector("#idpet").value = dados.id_animal;
+        document.querySelector("#editaPet").style.display = 'inline';
+
+    });
+  }  
+ 
+
+}
+
+// Começo Edita
+
+function gerarObjetoPetEdita(){ // OK
+  const nome = document.querySelector('#nome').value;
+  const dt_nasc = document.querySelector('#dt_nasc').value;
+  const tipo = document.querySelector('#SeletorTipo').value;
+  const sexo = document.querySelector('#SeletorSexo').value;
+  const raca = document.querySelector('#raca').value;
+  const localizacao = document.querySelector('#cep').value;
+  const obs = document.querySelector('#obs').value;
+  const id_Animal = document.querySelector("#idpet").value;
+  const editaPet = true;
+  return { // Cria o objeto 
+    nome,dt_nasc,tipo,sexo,raca,localizacao,obs,id_Animal,editaPet
+  }
+
+}
+
+
+function salvaEditaPet(){
+  let dadosAnimal = gerarObjetoPetEdita();
+  if(formularioValido(dadosAnimal)){
+      //console.log(`Dados Envia Alteração: ${dadosAnimal}`)
+      fetch('includes/logica/logica_animal.php',{
+          method:'put',
+          body: JSON.stringify(dadosAnimal) // Converte para JSON
+      }).then ((response) => { return response.json() 
+      }).then( dados => {
+          // if(dados.result == 'true'){
+            console.log(dados)
+            // escondeForm()
+            alert("Dados Atualizados Com Sucesso")
+            // showPets()
+          
+          
+          //   alert("Dados Não Atualizados")
+          // } }else{
+          
+          
+      });
+      
+  }else {
+      alert("Verifique os Campos, Existem Campos Não Preenchidos")
+  }
+
+  // recuperarDadosEdita();
+
+
+}
+
 
 function showPets(){
     let apresentarPets = true;
@@ -204,10 +279,6 @@ function showPets(){
       })    
 }
 
-function editarAnimal(){
-alert("EDITA")
-
-}
 
 
 

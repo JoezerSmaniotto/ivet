@@ -102,10 +102,53 @@
   }
 
 
+  function recuperadaDadosPet($conexao, $array){ // ok
+    try {
+        
+      $query = $conexao->prepare("select * from pet_tipo where id_animal= ? and id_usuario= ? ");
+      if($query->execute($array)){
+          $pet = $query->fetch(PDO::FETCH_ASSOC); //coloca os dados num array $usuario
+          $vetor=array();
+          if($pet){
+              // foreach($usuario as $indice=>$valor){
+              //     $vetor["$indice"]=$valor;
+              // }
+              // $vetor['result']='true'; 
 
+              return $pet;
+              
+          }else {
+              $vetor['result']='Pet Não Encontrado';
+              return $vetor;
+            
+          }      
+      }
+    }
+    catch(PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+    }  
 
+  }
 
+      
+  function alteraPet($conexao, $array){ // OK
+    try {
+        $query = $conexao->prepare("update pet_tipo set tipo= ?, nascimento= ?, sexo = ?, localizacao= ?, nome = ?,  observacoes = ?, fk_raca_id = ? where id_animal = ? and id_usuario = ?");
+        $pets = $query->execute($array);
+        $vetor=array();
+        if($pets){
+          $vetor['result']= "true";
+          return $vetor;
 
+        }else{
+          $vetor['result']= "Dados Pet Não Alterado";
+          return $vetor;
+        } 
+        
+    }catch(PDOException $e) {// Erro ao executar a query cai no catch
+        echo 'Error: ' . $e->getMessage();
+    }
+}
 
 
 

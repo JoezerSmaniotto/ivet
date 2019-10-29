@@ -45,13 +45,13 @@
               </select>
             </p >
 
-
+            <input type="hidden" name="idpet" id="idpet">
             <p><label for="localizacao">Localização CEP: </label><input type="text" name="cep" id="cep"  placeholder="ex:96040540" size="10" onblur="pesquisacep(this.value);" ></p>
             <p><label for="Observacoes">Observações: </label> <br><textarea name="obs" id="obs"  placeholder="Descreve Informações relevantes, Se o animal é vacidando, Portedo animal, Comportamento"  rows="4" cols="50" ></textarea> </p>
 
 
 
-            <p><button type="submit" id='cadastrar' name='cadastrar' value="Cadastrar" onclick="cadastrarPet()" > Cadastrar </button>  </p>      
+            <p><button type="button" id='salvaEdita' name='salvaEdita' value="salvaEdita" onclick="salvaEditaPet()" >Salvar</button>  </p>      
             <hr>
       </main>
       
@@ -62,5 +62,6 @@
 
 
   </body>
+
   
 </html>

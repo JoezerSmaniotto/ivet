@@ -69,7 +69,31 @@
                     foreach($usuario as $indice=>$valor){
                         $vetor["$indice"]=$valor;
                     }
-                    $vetor['result']='true';    
+                    $vetor['result']='true';    try {
+      
+                        $query = $conexao->prepare("select * from usuario where id_usuario= ?");
+                        if($query->execute($array)){
+                            $usuario = $query->fetch(PDO::FETCH_ASSOC); //coloca os dados num array $usuario
+                            $vetor=array();
+                            if($usuario){
+                                foreach($usuario as $indice=>$valor){
+                                    $vetor["$indice"]=$valor;
+                                }
+                                $vetor['result']='true';    
+                                return $vetor;
+                                
+                            }else {
+                                $vetor['result']='false';
+                                return $vetor;
+                              
+                            }
+                              
+                        }
+                      
+                    }
+                    catch(PDOException $e) {
+                        echo 'Error: ' . $e->getMessage();
+                    }  
                     return $vetor;
                     
                 }else {

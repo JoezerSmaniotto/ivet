@@ -46,6 +46,12 @@
             <p><label for="localizacao">Localização CEP: </label><input type="text" name="cep" id="cep"  placeholder="ex:96040540" size="10" onblur="pesquisacep(this.value);" ></p>
             <p><label for="Observacoes">Observações: </label> <br><textarea name="obs" id="obs"  placeholder="Descreve Informações relevantes, Se o animal é vacidando, Portedo animal, Comportamento"  rows="4" cols="50" ></textarea> </p>
 
+            <!-- <input name="file" type="file"
+            class="file-upload" data-cloudinary-field="image_id"
+            data-form-data="{ 'transformation': {'crop':'limit','tags':'samples','width':3000,'height':2000}}"/> -->
+
+            <input  name = " file "  type = " file "  class = " cloudinary-fileupload "  data-cloudinary-field = " image_id " 
+             data-form-data = " [upload-preset-and-other-upload-options-as- html-escaped-JSON-data] " > </input>
 
 
             <p><button type="submit" id='cadastrar' name='cadastrar' value="Cadastrar" onclick="cadastrarPet()" > Cadastrar </button>  </p>      
