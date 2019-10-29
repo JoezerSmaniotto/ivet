@@ -18,8 +18,8 @@
              
 
             echo 'Error: ' . $e->getMessage();
-            echo var_dump( $e->getMessage());
-            die();
+            // echo var_dump( $e->getMessage());
+            // die();
         }
     }
 
@@ -44,7 +44,6 @@
             echo 'Error: ' . $e->getMessage();
       }  
       
-
     }
 
     

@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <!--<link rel="stylesheet" href="assets/css/index.css">-->
-      <title>Cadastrar Usuário</title>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="">
       <script src="funcoes.js"></script>
       <script src="funcoes_animal.js"></script>
-  </head>
-  <body onload="autentica(),boasvindas(),retornaRaca()">
-    
-    <main>
-        <h2 id="welcome"></h2>
-        <h3>Cadastre Um Pet</h3>
+    <title>Página Inicial </title> 
+  </head> 
+
+  <body onload="autentica(),boasvindas(),showPets(),escondeForm()">
+      <h2 id="welcome"></h2>
+      <h3>Pets Cadastrados</h3>
+      
+      <main id="editaPet">
+          <h3>Edite Um Pet</h3>
         <section>
           <!-- <form name="cadastro" id="cadastro" > -->
             <p><label for="nome">Nome: </label><input type="text" name="nome" id="nome"></p>
@@ -49,16 +52,15 @@
 
 
             <p><button type="submit" id='cadastrar' name='cadastrar' value="Cadastrar" onclick="cadastrarPet()" > Cadastrar </button>  </p>      
-            <button type="button"> <a href="home.html"> Voltar </a> </button>
-            
-          <!-- </form> -->
-        </section>
-    </main>
- 
+            <hr>
+      </main>
+      
+
+      <section id="listarPets">        
+
+      </section>
+
 
   </body>
-
- 
   
-
 </html>
