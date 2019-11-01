@@ -20,10 +20,10 @@
          $query = $conexao->prepare("insert into pet_tipo (tipo,nascimento,sexo,localizacao,nome,observacoes,fk_raca_id,id_usuario) values (?, ?, ?, ?, ?, ?, ?, ?)");
          $pet = $query->execute($array);
          if($pet){
-            $vetor['result']="true";
+            $vetora['result']="true";
             // var_dump($vetor);
             // die();
-            return  $vetor;
+            return  $vetora;
           }  
         //  echo "PETs";
         //  var_dump($pet);
@@ -59,7 +59,7 @@
         $query = $conexao->prepare("select pet_tipo.id_animal,pet_tipo.nome,pet_tipo.observacoes,pet_tipo.sexo,pet_tipo.tipo,pet_tipo.nascimento,pet_tipo.localizacao,pet_tipo.fk_raca_id,raca.id,raca.nomer from pet_tipo full join raca on(pet_tipo.fk_raca_id = raca.id)  where id_usuario='$idUsuario' ");
         $query->execute();
         $pets = $query->fetchAll(PDO::FETCH_ASSOC); //coloca os dados num array $usuario
-        $vetor=array();
+        $vetore=array();
         if($pets){
             // foreach($pets as $indice=>$valor){
             //     $vetor["$indice"]=$valor;
@@ -69,8 +69,8 @@
                 return $pets;
 
         }else {
-            $vetor['result']='Não Há Animais Cadastrados';
-            return $vetor;
+            $vetore['result']='Não Há Animais Cadastrados';
+            return $vetore;
           
         }       
     
@@ -108,7 +108,7 @@
       $query = $conexao->prepare("select * from pet_tipo where id_animal= ? and id_usuario= ? ");
       if($query->execute($array)){
           $pet = $query->fetch(PDO::FETCH_ASSOC); //coloca os dados num array $usuario
-          $vetor=array();
+          $veto=array();
           if($pet){
               // foreach($usuario as $indice=>$valor){
               //     $vetor["$indice"]=$valor;
@@ -118,8 +118,8 @@
               return $pet;
               
           }else {
-              $vetor['result']='Pet Não Encontrado';
-              return $vetor;
+              $veto['result']='Pet Não Encontrado';
+              return $veto;
             
           }      
       }
@@ -135,14 +135,14 @@
     try {
         $query = $conexao->prepare("update pet_tipo set tipo= ?, nascimento= ?, sexo = ?, localizacao= ?, nome = ?,  observacoes = ?, fk_raca_id = ? where id_animal = ? and id_usuario = ?");
         $pets = $query->execute($array);
-        $vetor=array();
+        $vet=array();
         if($pets){
-          $vetor['result']= "true";
-          return $vetor;
+          $vet['result']= "true";
+          return $vet;
 
         }else{
-          $vetor['result']= "Dados Pet Não Alterado";
-          return $vetor;
+          $vet['result']= "Dados Pet Não Alterado";
+          return $vet;
         } 
         
     }catch(PDOException $e) {// Erro ao executar a query cai no catch

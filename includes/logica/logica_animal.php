@@ -7,9 +7,9 @@
 
         
   # Buscar Raca
-  if(isset($data->raca)){
-    $result=buscarRaca($conexao);
-    echo json_encode($result); 
+  if(isset($data->racass) ){ // && $_SERVER['REQUEST_METHOD'] == 'post'
+    $resultado=buscarRaca($conexao);
+    echo json_encode($resultado); 
 
   }
 
@@ -26,8 +26,8 @@
     $idUsuario   = $_SESSION['id'];
     
     $array = array($tipo,$dt_nasc,$sexo,$localizacao,$nome,$obs,$raca,$idUsuario);
-    $result=inserirPet($conexao, $array);
-    echo json_encode($result); 
+    $resultad=inserirPet($conexao, $array);
+    echo json_encode($resultad); 
 
   }
 
@@ -35,8 +35,8 @@
   if(isset($data->apresentarPets)){
     $idUsuario = $_SESSION['id'];
     // $array = array($idUsuario);
-    $result=listarPetsUsuario($conexao, $idUsuario);
-    echo json_encode($result); 
+    $resulta=listarPetsUsuario($conexao, $idUsuario);
+    echo json_encode($resulta); 
 
   }
 
@@ -55,12 +55,12 @@
     $idUsuario = $_SESSION['id'];
     $idAnimal = $data->idAnimal;    
     $array = array($idAnimal,$idUsuario);
-    $result=recuperadaDadosPet($conexao, $array);
-    echo json_encode($result); 
+    $resul=recuperadaDadosPet($conexao, $array);
+    echo json_encode($resul); 
   }
 
                   
-  if(isset($data->editaPet)){
+  if(isset($data->editaPet) ){
     $idUsuario = $_SESSION['id'];
     $nome        = $data->nome;    
     $dt_nasc     = $data->dt_nasc;     
@@ -72,8 +72,8 @@
     $id_Animal   = $data->id_Animal;
     
     $array = array($tipo,$dt_nasc,$sexo,$localizacao,$nome,$obs,$raca,$id_Animal,$idUsuario);
-    $result=alteraPet($conexao, $array);
-    echo json_encode($result); 
+    $res=alteraPet($conexao, $array);
+    echo json_encode($res); 
   }
 
 

@@ -56,8 +56,8 @@ function pesquisacep(valor) {
 
 function retornaRaca (){
       let esc = document.querySelector("#raca");
-      let raca = true;
-      let obj =  { raca };
+      let racass = true;
+      let obj =  { racass };
       console.log(obj);
       fetch('includes/logica/logica_animal.php',{
           method:'post',
@@ -132,9 +132,9 @@ function formularioValido(dadosAnimal){ // OK
 }
 
 
-function excluirAnimal(idAnimal){
- 
-  if(window.confirm(`Deseja Realmente Excluir o Pet?`)){
+function excluirAnimal(idAnimal,nome){
+  
+  if(window.confirm(`Deseja Realmente Excluir o ${nome} Pet?`)){
     let excluirPet = true; 
     let obj =  { excluirPet,idAnimal };
     console.log(obj);
@@ -154,14 +154,13 @@ function excluirAnimal(idAnimal){
 
 function editarAnimal(id){
   if(window.confirm(`Deseja Realmente Editar o Pet?`)){
-    retornaRaca ()
     let recuperaDadosPet = true,idAnimal=id; 
     let obj =  { recuperaDadosPet,idAnimal };
     console.log(obj);
     fetch('includes/logica/logica_animal.php',{
         method:'post',
         body: JSON.stringify(obj) // Converte para JSON
-    }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+    }).then ((response) => { return response.json() // 
     }).then( dados => {
         console.log(dados)
         document.querySelector("#nome").value = dados.nome;
@@ -208,15 +207,15 @@ function salvaEditaPet(){
           body: JSON.stringify(dadosAnimal) // Converte para JSON
       }).then ((response) => { return response.json() 
       }).then( dados => {
-          // if(dados.result == 'true'){
+          if(dados.result == 'true'){
             console.log(dados)
-            // escondeForm()
+            escondeForm()
             alert("Dados Atualizados Com Sucesso")
-            // showPets()
+            showPets()
           
-          
-          //   alert("Dados Não Atualizados")
-          // } }else{
+          }else {
+            alert("Dados Não Atualizados")
+          }
           
           
       });
@@ -269,7 +268,7 @@ function showPets(){
                 document.querySelector('#listarPets').innerHTML += `Sexo: ${Sx} | Data Nasc: ${item.nascimento} | Localização: ${item.localizacao} <br>`;
                 document.querySelector('#listarPets').innerHTML += `Observações: ${item.observacoes} <br>`;
                 // document.querySelector('#listarPets').innerHTML += `<button onclick="editarProd(${item.id_animal})">Edita</button> <button onclick="excluirAnimal(${item.id_animal},${item.nome})">Exclui</button> <br> <hr>`;
-                document.querySelector('#listarPets').innerHTML += `<button onclick="excluirAnimal(${item.id_animal})">Exclui</button>`;
+                document.querySelector('#listarPets').innerHTML += `<button onclick="excluirAnimal(${item.id_animal},'${item.nome}')">Exclui</button>`;
                 document.querySelector('#listarPets').innerHTML += `<button onclick="editarAnimal(${item.id_animal})">Edita</button>`;
                 document.querySelector('#listarPets').innerHTML += `<br><hr>`;
               })
