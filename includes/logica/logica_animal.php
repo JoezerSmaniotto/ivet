@@ -14,19 +14,24 @@
   }
 
    # Cadastro Animal
-   if(isset($data->cadastrar)){
+   if(isset($_POST['cadastrar'])){   
+    // $senha = $_POST['senha'];
+    // if(isset($data->cadastrar)){
 
-    $nome        = $data->nome;    
-    $dt_nasc     = $data->dt_nasc;     
-    $tipo        = $data->tipo;
-    $sexo        = $data->sexo;    
-    $raca        = $data->raca;         
-    $localizacao = $data->localizacao; 
-    $obs         = $data->obs;
-    $idUsuario   = $_SESSION['id'];
+    // $nome        = $_POST['nome']   
+    // $dt_nasc     = $data->dt_nasc; $_POST['dt_nasc']      
+    // $tipo        = $data->tipo; $_POST['tipo'] 
+    // $sexo        = $data->sexo; $_POST['sexo']    
+    // $raca        = $data->raca;  $_POST['nome']          
+    // $localizacao = $data->localizacao; $_POST['nome'] 
+    // $obs         = $data->obs; $_POST['nome'] 
+    // $idUsuario   = $_SESSION['id']; $_POST['nome'] 
     
     $array = array($tipo,$dt_nasc,$sexo,$localizacao,$nome,$obs,$raca,$idUsuario);
     $resultad=inserirPet($conexao, $array);
+    // if($resultad){
+
+    // }
     echo json_encode($resultad); 
 
   }
@@ -58,7 +63,6 @@
     $resul=recuperadaDadosPet($conexao, $array);
     echo json_encode($resul); 
   }
-
                   
   if(isset($data->editaPet) ){
     $idUsuario = $_SESSION['id'];
@@ -76,6 +80,14 @@
     echo json_encode($res); 
   }
 
+  # Apresenta animais para serem adotados
+  if(isset($data->apresentarPetsTotal)){
+    $idUsuario = $_SESSION['id'];
+    // $array = array($idUsuario);
+    $resulta=listarPetsAdota($conexao,$idUsuario);
+    echo json_encode($resulta); 
+
+  }
 
 
 

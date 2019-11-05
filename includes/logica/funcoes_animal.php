@@ -30,27 +30,28 @@
     
     }catch(PDOException $e) {
       echo 'Error: ' . $e->getMessage();
-  }  
+    }
+  }
 
-}
+  function inserirImagem($conexao,$array){
+    try {
+        
+         $query = $conexao->prepare("insert into imagens (link_imagens,fk_pet_tipo_id_animal) values (?, ?)");
+         $pet = $query->execute($array);
+         if($pet){
+            $vetora['result']="true";
+            // var_dump($vetor);
+            // die();
+            return  $vetora;
+          }  
+        //  echo "PETs";
+        //  var_dump($pet);
+    
+    }catch(PDOException $e) {
+      echo 'Error: ' . $e->getMessage();
+    }  
+  }
 
-// function inserirPet($conexao,$array){
-// try {
-//          if($pet){
-//             $vetor['result']="true";
-//             // var_dump($vetor);
-//             // die();
-//             return  $vetor;
-//          }
-//          die();
-//      }catch(PDOException $e) {
-//         //  echo "Entrou no Catch";
-//         //  die(); 
-//          echo 'Error: ' . $e->getMessage();
-//          // echo var_dump( $e->getMessage());
-//          // die();
-//      }
-//   }
 
   
   function listarPetsUsuario($conexao,$idUsuario){
@@ -61,13 +62,7 @@
         $pets = $query->fetchAll(PDO::FETCH_ASSOC); //coloca os dados num array $usuario
         $vetore=array();
         if($pets){
-            // foreach($pets as $indice=>$valor){
-            //     $vetor["$indice"]=$valor;
-            // }
-            // $vetor['result']='true';    
-            // return $vetor;
-                return $pets;
-
+              return $pets;
         }else {
             $vetore['result']='Não Há Animais Cadastrados';
             return $vetore;
@@ -150,33 +145,30 @@
     }
 }
 
+  function listarPetsAdota ($conexao,$idUsuario){
+    try {
+      
+      $query = $conexao->prepare("select pet_tipo.id_animal,pet_tipo.nome,pet_tipo.observacoes,pet_tipo.sexo,pet_tipo.tipo,pet_tipo.nascimento,pet_tipo.localizacao,pet_tipo.fk_raca_id,raca.id,raca.nomer from pet_tipo full join raca on(pet_tipo.fk_raca_id = raca.id) where dataadoc IS NULL ");
+      $query->execute();
+      $pets = $query->fetchAll(PDO::FETCH_ASSOC); //coloca os dados num array $usuario
+      $vetore=array();
+      if($pets){
+            
+        return $pets;
+          
+      }else {
+          $vetore['result']='false';
+          return $vetore;
+        
+      }
+         
+    }
+  
+    catch(PDOException $e) {
+          echo 'Error: ' . $e->getMessage();
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  }
 
 
 

@@ -15,7 +15,7 @@
         <h2 id="welcome"></h2>
         <h3>Cadastre Um Pet</h3>
         <section>
-          <!-- <form name="cadastro" id="cadastro" > -->
+          <form name="cadastro" id="cadastro"  onsubmit="cadastrarPet(event)" >
             <p><label for="nome">Nome: </label><input type="text" name="nome" id="nome"></p>
             <p><label for="data">Data Nascimento: </label><input type="date" name="dt_nasc" id="dt_nasc" size="11"></p>
           
@@ -46,33 +46,20 @@
             <p><label for="localizacao">Localização CEP: </label><input type="text" name="cep" id="cep"  placeholder="ex:96040540" size="10" onblur="pesquisacep(this.value);" ></p>
             <p><label for="Observacoes">Observações: </label> <br><textarea name="obs" id="obs"  placeholder="Descreve Informações relevantes, Se o animal é vacidando, Portedo animal, Comportamento"  rows="4" cols="50" ></textarea> </p>
             
-            <input  name = "file"  type = "file"  class = "cloudinary-fileupload"  data-cloudinary-field = "image_id" 
+            <input type="file" name="imgPet" id="imgPet">
+            <!-- <input  name = "file"  type = "file"  class = "cloudinary-fileupload"  data-cloudinary-field = "image_id" 
             data-form-data = "[upload-preset-and-other-upload-options-as- html-escaped-JSON-data]" > </input>
-            
+             -->
 
-            <p><button type="submit" id='cadastrar' name='cadastrar' value="Cadastrar" onclick="cadastrarPet()" > Cadastrar </button>  </p>      
+            <p><button type="submit" id='cadastrar' name='cadastrar' value="Cadastrar"> Cadastrar </button>  </p>      
             <button type="button"> <a href="home.html"> Voltar </a> </button>
             
-          <!-- </form> -->
+          </form>
         </section>
     </main>
  
 
   </body>
-  <script src="jquery.js"></script> 
-  <script  src = " [caminho da pasta] /jquery/dist/jquery.js "  type = " text / javascript " > </script>
-   <!-- os seguintes arquivos precisam ser incluídos apenas para oferecer suporte ao upload no lado do cliente -->
-  <script  src = " [caminho da pasta] /blueimp-file-upload/js/vendor/jquery.ui.widget.js "  type = " text / javascript " > </script> 
-  <script  src = " [caminho da pasta ] /blueimp-file-upload/js/jquery.iframe-transport.js "  type = " text / javascript " > </script> 
-  <script  src = " [caminho da pasta] / blueimp-file-upload / js / jquery .fileupload.js "  type = " text / javascript " > </script> 
-<script src = " [caminho da pasta] /cloudinary-jquery-file-upload/cloudinary-jquery-file-upload.js "  type = " text / javascript " > </script> 
- <!-- [caminho da pasta] é o mapeamento para os recursos em seu aplicativo da web -->
- 
- <script>
-    $ .cloudinary.config ({ cloud_name : ' dcshtor4t ' , secure : true });
-    $ (document) .ready ( function () {
-      $ ( " input.cloudinary-fileupload [tipo = arquivo] " ) .cloudinary_fileupload ();
-    });  
-</script>
+
 
 </html>

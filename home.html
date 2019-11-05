@@ -6,11 +6,15 @@
       <meta name="description" content="">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="">
-      <script src="funcoes.js" async defer></script>
+      <!-- <script src="funcoes.js" async defer></script> -->
+      <script src="funcoes.js"></script>
+      <script src="funcoes_animal.js"></script>
     <title>Página Inicial </title> 
   </head> 
 
-  <body onload="autentica(),boasvindas() ">
+  <body onload="autentica(),boasvindas(),showPetsTotal()">
+
+    <nav>  
       <h2 id="welcome"></h2>
       <h1> Escolha a opção para o Usuario </h1>
       <button><a href="insere.html">Cadastrar Usuário</a></button>
@@ -20,7 +24,16 @@
       <button><a href="listaPet.html" >ListaPets</a></button>
       <button><a href="editarPerfil.html">Editar Perfil</a></button>
       <button><a href="#" onclick="sair()">Sair</a></button>
-      </form>
+    </nav>
+
+    <section id="listarPets"  >
+    
+
+
+      
+    </section>
+
+
   </body>
   
 

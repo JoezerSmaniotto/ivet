@@ -72,29 +72,36 @@ function retornaRaca (){
       });
 }
 
-function cadastrarPet(){
-  // const formulario = document.querySelector("#cadastro") 
-  // formulario.preventDefault()
-
+function cadastrarPet(event){
+  const formulario = document.querySelector("#cadastro")
   const dadosAnimal = gerarObjetoAnimalCadastro()
   
   console.log(dadosAnimal);
 
-  if( formularioValido(dadosAnimal)){
-    fetch('includes/logica/logica_animal.php',{
-      method: 'post',
-      body: JSON.stringify(dadosAnimal)
-      }).then ((response) => { return response.json() 
-      }).then( data => {
-          if(data.result == 'true'){
-              alert("Animal Cadastrado Com Sucesso");
-          }  
+  // if( formularioValido(dadosAnimal)){
+    
+  //   Object.entries(dadosAnimal).map(([key, value]) => {
+  //     dataform.append(key, value)
+  //   });
 
-      });
+  //   fetch('includes/logica/logica_animal.php',{
+  //     method: 'post',
+  //     body: dataform,
+  //     headers: { 'Content-Type': 'multipart/form-data' },
+  //     }).then ((response) => { return response.json() 
+  //     }).then( data => {
+  //         if(data.result == 'true'){
+  //             alert("Animal Cadastrado Com Sucesso");
+  //             formulario.reset()
+  //         }  
+
+  //     });
   
-  }else{
-    alert("Verifique os Campos, Existe  Campos Não Preenchidos");
-  }
+  // }else{
+  //   alert("Verifique os Campos, Existe  Campos Não Preenchidos");
+  // }
+
+  event.preventDefault()
 }
 
 function escondeForm(){
@@ -111,9 +118,10 @@ function gerarObjetoAnimalCadastro(){
   const raca = document.querySelector('#raca').value;
   const localizacao = document.querySelector('#cep').value;
   const obs = document.querySelector('#obs').value;
+  const img = document.querySelector('#imgPet').files[0];
   const cadastrar = true;
-  return { // Cria o objeto 
-    nome,dt_nasc,tipo,sexo,raca,localizacao,obs,cadastrar
+  return { // Cria o objeto
+    nome,dt_nasc,tipo,sexo,raca,localizacao,obs,img,cadastrar
   }
 
 }
@@ -277,6 +285,60 @@ function showPets(){
     
       })    
 }
+
+
+
+function showPetsTotal(){
+  let apresentarPetsTotal = true;
+  let obj =  { apresentarPetsTotal };
+  fetch('includes/logica/logica_animal.php',{
+      method:'post',
+      body: JSON.stringify(obj) // Converte para JSON
+  }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+  }).then( data => {
+     console.log(data)
+      // if(data.result =="Não Há Animais Cadastrados"){
+      //     let reposta = document.querySelector("#listarPets")
+      //     document.querySelector('#listarPets').innerText = "";
+      //     let p4 = document.createElement('p')
+      //     let conteudo = document.createTextNode(" Não Há Animais Cadastrados ")
+      //     reposta.appendChild(conteudo)     
+      //     alert("Não Há Animais Cadastrados");
+      // }else{
+          let tipoA,Sx;
+          document.querySelector('#listarPets').innerText = "";
+          data.forEach((item,index)=>{
+              console.log(index);
+              console.log(item);
+              if (item.tipo == 'C') {
+                tipoA = "Cão";            
+              }else{
+                tipoA = "Gato"
+              }
+
+              if (item.sexo == 'F') {
+                Sx = "Fêmea";              
+              }else{
+                Sx = "Macho";
+              }  
+
+              document.querySelector('#listarPets').innerHTML += `Nome: ${item.nome} | Tipo: ${tipoA} | Raça: ${item.nomer} <br>`;
+              document.querySelector('#listarPets').innerHTML += `Sexo: ${Sx} | Data Nasc: ${item.nascimento} | Localização: ${item.localizacao} <br>`;
+              document.querySelector('#listarPets').innerHTML += `Observações: ${item.observacoes} <br>`;
+              document.querySelector('#listarPets').innerHTML += `<button onclick="solicitaAdota(${item.id_animal})">Adote !</button>`;
+              document.querySelector('#listarPets').innerHTML += `<br><hr>`;
+            })
+
+      // }
+  
+    })    
+}
+
+
+
+
+
+
 
 
 
