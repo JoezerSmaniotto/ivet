@@ -148,7 +148,7 @@
   function listarPetsAdota ($conexao,$idUsuario){
     try {
       
-      $query = $conexao->prepare("select pet_tipo.id_animal,pet_tipo.nome,pet_tipo.observacoes,pet_tipo.sexo,pet_tipo.tipo,pet_tipo.nascimento,pet_tipo.localizacao,pet_tipo.fk_raca_id,raca.id,raca.nomer from pet_tipo full join raca on(pet_tipo.fk_raca_id = raca.id) where dataadoc IS NULL ");
+      $query = $conexao->prepare("select pet_tipo.id_animal,pet_tipo.nome,pet_tipo.observacoes,pet_tipo.sexo,pet_tipo.tipo,pet_tipo.nascimento,pet_tipo.localizacao,pet_tipo.fk_raca_id,raca.id,raca.nomer from pet_tipo join raca on(pet_tipo.fk_raca_id = raca.id) where dataadoc IS NULL ");
       $query->execute();
       $pets = $query->fetchAll(PDO::FETCH_ASSOC); //coloca os dados num array $usuario
       $vetore=array();
@@ -170,7 +170,22 @@
 
   }
 
+  function solicitaAdocao($conexao,$array){
+    try {
+      //  $array = array($data_Sol,$idUsuario,$id_Animal);  
+      $query = $conexao->prepare("insert into adota (data_solicitacao,status_adocao,id_usuario,id_animal) values (?, ?, ?, ?)");
+      $solicita = $query->execute($array);
+      $vetora=array();
+      if($solicita){
+         $vetora['result']="true";
+         return  $vetora;
+      }  
+ 
+    }catch(PDOException $e) {
+      echo 'Error: ' . $e->getMessage();
+    }  
 
+  }
 
 
 

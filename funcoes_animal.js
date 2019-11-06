@@ -275,7 +275,6 @@ function showPets(){
                 document.querySelector('#listarPets').innerHTML += `Nome: ${item.nome} | Tipo: ${tipoA} | Raça: ${item.nomer} <br>`;
                 document.querySelector('#listarPets').innerHTML += `Sexo: ${Sx} | Data Nasc: ${item.nascimento} | Localização: ${item.localizacao} <br>`;
                 document.querySelector('#listarPets').innerHTML += `Observações: ${item.observacoes} <br>`;
-                // document.querySelector('#listarPets').innerHTML += `<button onclick="editarProd(${item.id_animal})">Edita</button> <button onclick="excluirAnimal(${item.id_animal},${item.nome})">Exclui</button> <br> <hr>`;
                 document.querySelector('#listarPets').innerHTML += `<button onclick="excluirAnimal(${item.id_animal},'${item.nome}')">Exclui</button>`;
                 document.querySelector('#listarPets').innerHTML += `<button onclick="editarAnimal(${item.id_animal})">Edita</button>`;
                 document.querySelector('#listarPets').innerHTML += `<br><hr>`;
@@ -286,6 +285,20 @@ function showPets(){
       })    
 }
 
+
+function solicitaAdota(id_animal){
+  let solicitaAdocao = true;
+  let obj =  { solicitaAdocao,id_animal};
+  fetch('includes/logica/logica_animal.php',{
+      method:'post',
+      body: JSON.stringify(obj) // Converte para JSON
+  }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+  }).then( data => {
+     console.log(data)
+     
+  });
+
+}
 
 
 function showPetsTotal(){

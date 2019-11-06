@@ -89,7 +89,17 @@
 
   }
 
+   # Faz as notificações nas para os animais a serem adotados.
+   if(isset($data->solicitaAdocao)){
+    $idUsuario = $_SESSION['id'];
+    $id_Animal = $data->id_animal; 
+    $data_Solicita = date('d/m/y'); 
+    $status_Solicita = 0;
+    $array = array($data_Solicita,$status_Solicita,$idUsuario,$id_Animal);
+    $resulta=solicitaAdocao($conexao,$array);
+    echo json_encode($resulta); 
 
+  }
 
 
 
