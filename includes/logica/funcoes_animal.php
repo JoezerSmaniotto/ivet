@@ -172,7 +172,6 @@
 
   function solicitaAdocao($conexao,$array){
     try {
-      //  $array = array($data_Sol,$idUsuario,$id_Animal);  
       $query = $conexao->prepare("insert into adota (data_solicitacao,status_adocao,id_usuario,id_animal) values (?, ?, ?, ?)");
       $solicita = $query->execute($array);
       $vetora=array();
@@ -184,9 +183,71 @@
     }catch(PDOException $e) {
       echo 'Error: ' . $e->getMessage();
     }  
-
   }
 
+  function apresentarSolicitacoesAdocao($conexao,$idUsuario){
+    try {
+      $query = $conexao->prepare("select pet_tipo.nome,raca.nomer,pet_tipo.id_animal,usuario.nome,usuario.e_mail
+      from adota join pet_tipo on( adota.id_animal = pet_tipo.id_animal) join usuario 
+      on (adota.id_usuario= usuario.id_usuario) join raca 
+      on (pet_tipo.fk_raca_id = raca.id)
+      where pet_tipo.dataadoc is NULL and pet_tipo.id_usuario ='$idUsuario' ");
+      $query->execute();
+      $solitacoes = $query->fetchAll(PDO::FETCH_ASSOC); //coloca os dados num array $usuario
+      $vetore=array();
+      if($solitacoes){
+            return $solitacoes;
+      }else {
+          $vetore['result']='Não Há Solicitações';
+          return $vetore; 
+      }       
+    }
 
+    catch(PDOException $e) {
+          echo 'Error: ' . $e->getMessage();
+    }
+  }
+  
+  function efetivaAdocao($conexao,$array){
+    try {
+      // $array = array($data_adocao,$status_Solicita,$idUsuario,$id_Animal);
+      $query = $conexao->prepare("update adota set data_adocao= ?, status_adocao= ? where id_usuario = ? and id_animal = ? ");
+      $resultado = $query->execute($array);
+      $ret= 1;
+      if($resultado){
+        return $ret;
+
+      }else{
+        $ret = 0;
+        return $vet;
+      } 
+      
+    }catch(PDOException $e) {// Erro ao executar a query cai no catch
+        echo 'Error: ' . $e->getMessage();
+    }
+  }
+
+  function atualizaDataAdocao($conexao,$array){
+    try {
+      //   $array = array($data_adocao,$id_Animal);
+      $query = $conexao->prepare("update pet_tipo set datadoc= ? where id_animal = ? ");
+      $resultado = $query->execute($array);
+      $vetore = array();
+      if($resultado){
+        $vetore['result']='Adoção Efetivada';
+        return $vetore;
+
+      }else{
+        $vetore['result']='Adoção Não Efetivada';
+        return $vetore;
+      } 
+      
+    }catch(PDOException $e) {// Erro ao executar a query cai no catch
+        echo 'Error: ' . $e->getMessage();
+    }    
+
+
+
+  }
 
 ?>

@@ -101,6 +101,35 @@
 
   }
 
+   # Lista as Solictaçoes De Adoção Para o Dono do Pet
+  if(isset($data->apresentarSolicitacoesAdocao)){
+    $idUsuario = $_SESSION['id'];
+    // $array = array($idUsuario);
+    $resulta=apresentarSolicitacoesAdocao($conexao,$idUsuario);
+    echo json_encode($resulta); 
+
+  }
+
+  # Efetica a Adoção do Pet
+  if(isset($data->efetivaAdocao)){
+    $idUsuario = $_SESSION['id'];
+    $id_Animal = $data->id_animal;
+    $data_adocao = date('d/m/y'); 
+    $status_Solicita = 1;
+    $array = array($data_adocao,$status_Solicita,$idUsuario,$id_Animal);
+    $resulta=efetivaAdocao($conexao,$array);
+    
+    if($resulta){
+      $id_Animal = $data->id_animal;
+      $data_adocao = date('d/m/y');
+      $array = array($data_adocao,$id_Animal);
+      $resul = atualizaDataAdocao($conexao,$array);
+      if($resul){
+        echo json_encode($resul); 
+      }
+    }
+  }
+
 
 
 

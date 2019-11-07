@@ -347,6 +347,92 @@ function showPetsTotal(){
     })    
 }
 
+function aceitaAdocao(id_animal){
+  if(window.confirm("Deseja Aceitar o Pedido de Adoção ?")){
+    let efetivaAdocao = true;
+    let obj =  { efetivaAdocao,id_animal};
+    fetch('includes/logica/logica_animal.php',{
+        method:'post',
+        body: JSON.stringify(obj) // Converte para JSON
+    }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+    }).then( data => {
+      console.log(data)
+        if(data.result =="Adoção Efetivada"){
+          alert("Adoção Efetivada Com Sucesso");
+          showSolicitacoes()   
+        }else{
+          alert("Adoção Não Efetivada");
+          showSolicitacoes()
+        }
+    
+      })  
+
+  }
+
+}
+
+
+function showSolicitacoes(){
+  let apresentarSolicitacoesAdocao = true;
+  let obj =  { apresentarSolicitacoesAdocao };
+  fetch('includes/logica/logica_animal.php',{
+      method:'post',
+      body: JSON.stringify(obj) // Converte para JSON
+  }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+  }).then( data => {
+     console.log(data)
+      if(data.result =="Não Há Solicitações"){
+          let reposta = document.querySelector("#listarPets")
+          document.querySelector('#listarPets').innerText = "";
+          let p4 = document.createElement('p')
+          let conteudo = document.createTextNode(" Não Há Solicitações !!")
+          reposta.appendChild(conteudo)     
+          alert("Não Há Solicitações");
+      }else{
+          let tipoA,Sx;
+          document.querySelector('#listarPets').innerText = "";
+          data.forEach((item)=>{
+              document.querySelector('#listarPets').innerHTML += `O usuario: ${item.nome} com e-mail: ${item.e_mail} <br>`;
+              document.querySelector('#listarPets').innerHTML += `Deseja Adotar o Pet ${item.id_animal}  da raça ${item.nomer} <br>`;
+              document.querySelector('#listarPets').innerHTML += `<button onclick="aceitaAdocao(${item.id_animal})">Aceito !</button>`;
+              document.querySelector('#listarPets').innerHTML += `<br><hr>`;
+            })
+
+      }
+  
+    })    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -420,29 +506,6 @@ function showPetsTotal(){
     
 //       })    
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
