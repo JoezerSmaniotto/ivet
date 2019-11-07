@@ -112,7 +112,7 @@
 
   # Efetica a Adoção do Pet
   if(isset($data->efetivaAdocao)){
-    $idUsuario = $_SESSION['id'];
+    $idUsuario = $data->id_usu;
     $id_Animal = $data->id_animal;
     $data_adocao = date('d/m/y'); 
     $status_Solicita = 1;

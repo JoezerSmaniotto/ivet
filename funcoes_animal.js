@@ -347,10 +347,10 @@ function showPetsTotal(){
     })    
 }
 
-function aceitaAdocao(id_animal){
+function aceitaAdocao(id_animal,id_usu){
   if(window.confirm("Deseja Aceitar o Pedido de Adoção ?")){
     let efetivaAdocao = true;
-    let obj =  { efetivaAdocao,id_animal};
+    let obj =  { efetivaAdocao,id_animal,id_usu};
     fetch('includes/logica/logica_animal.php',{
         method:'post',
         body: JSON.stringify(obj) // Converte para JSON
@@ -393,8 +393,8 @@ function showSolicitacoes(){
           document.querySelector('#listarPets').innerText = "";
           data.forEach((item)=>{
               document.querySelector('#listarPets').innerHTML += `O usuario: ${item.nome} com e-mail: ${item.e_mail} <br>`;
-              document.querySelector('#listarPets').innerHTML += `Deseja Adotar o Pet ${item.id_animal}  da raça ${item.nomer} <br>`;
-              document.querySelector('#listarPets').innerHTML += `<button onclick="aceitaAdocao(${item.id_animal})">Aceito !</button>`;
+              document.querySelector('#listarPets').innerHTML += `Deseja Adotar o Pet ${item.nomeani}  da raça ${item.nomer} <br>`;
+              document.querySelector('#listarPets').innerHTML += `<button onclick="aceitaAdocao(${item.id_animal},${item.id_usu})">Aceito !</button>`;
               document.querySelector('#listarPets').innerHTML += `<br><hr>`;
             })
 

@@ -187,7 +187,7 @@
 
   function apresentarSolicitacoesAdocao($conexao,$idUsuario){
     try {
-      $query = $conexao->prepare("select pet_tipo.nome,raca.nomer,pet_tipo.id_animal,usuario.nome,usuario.e_mail
+      $query = $conexao->prepare("select adota.id_usuario as id_usu,pet_tipo.nome as nomeAni,raca.nomer,pet_tipo.id_animal,usuario.nome,usuario.e_mail
       from adota join pet_tipo on( adota.id_animal = pet_tipo.id_animal) join usuario 
       on (adota.id_usuario= usuario.id_usuario) join raca 
       on (pet_tipo.fk_raca_id = raca.id)
@@ -210,7 +210,7 @@
   
   function efetivaAdocao($conexao,$array){
     try {
-      // $array = array($data_adocao,$status_Solicita,$idUsuario,$id_Animal);
+      //  $array = array($data_adocao,$status_Solicita,$idUsuario,$id_Animal);
       $query = $conexao->prepare("update adota set data_adocao= ?, status_adocao= ? where id_usuario = ? and id_animal = ? ");
       $resultado = $query->execute($array);
       $ret= 1;
@@ -230,7 +230,7 @@
   function atualizaDataAdocao($conexao,$array){
     try {
       //   $array = array($data_adocao,$id_Animal);
-      $query = $conexao->prepare("update pet_tipo set datadoc= ? where id_animal = ? ");
+      $query = $conexao->prepare("update pet_tipo set dataadoc= ? where id_animal = ? ");
       $resultado = $query->execute($array);
       $vetore = array();
       if($resultado){
