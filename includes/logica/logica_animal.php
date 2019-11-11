@@ -131,6 +131,18 @@
   }
 
 
+  # Rejeitar a Adoção do Pet
+  if(isset($data->rejeitarAdocao)){
+    $id_Animal = $data->id_animal;
+    $idUsuario = $data->id_usu;
+    $status_Solicita = 2;
+    $array = array($status_Solicita,$idUsuario,$id_Animal);
+    $resul=rejeitaAdocao($conexao,$array);
+    echo json_encode($resul); 
+    
+  }
+
+
 
 
 

@@ -371,6 +371,28 @@ function aceitaAdocao(id_animal,id_usu){
 
 }
 
+function rejeitarAdocao(id_animal,id_usu){
+  if(window.confirm("Deseja Rejeitar o Pedido de Adoção ?")){
+    let rejeitarAdocao = true;
+    let obj =  { rejeitarAdocao,id_animal,id_usu};
+    fetch('includes/logica/logica_animal.php',{
+        method:'post',
+        body: JSON.stringify(obj) // Converte para JSON
+    }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+    }).then( data => {
+      console.log(data)
+        if(data.result =="Rejeição Efetivada"){
+          alert("Rejeição Efetivada Com Sucesso");
+          showSolicitacoes()   
+        }else{
+          alert("Rejeição Não Efetivada Com Sucesso");
+          showSolicitacoes()
+        }
+    
+      })  
+  }
+}
+
 
 function showSolicitacoes(){
   let apresentarSolicitacoesAdocao = true;
@@ -395,6 +417,7 @@ function showSolicitacoes(){
               document.querySelector('#listarPets').innerHTML += `O usuario: ${item.nome} com e-mail: ${item.e_mail} <br>`;
               document.querySelector('#listarPets').innerHTML += `Deseja Adotar o Pet ${item.nomeani}  da raça ${item.nomer} <br>`;
               document.querySelector('#listarPets').innerHTML += `<button onclick="aceitaAdocao(${item.id_animal},${item.id_usu})">Aceito !</button>`;
+              document.querySelector('#listarPets').innerHTML += `<button onclick="rejeitarAdocao(${item.id_animal},${item.id_usu})">Rejeitar !</button>`;
               document.querySelector('#listarPets').innerHTML += `<br><hr>`;
             })
 
