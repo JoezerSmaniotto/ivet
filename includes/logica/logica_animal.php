@@ -15,25 +15,42 @@
 
    # Cadastro Animal
    if(isset($_POST['cadastrar'])){   
-    // $senha = $_POST['senha'];
-    // if(isset($data->cadastrar)){
 
-    // $nome        = $_POST['nome']   
-    // $dt_nasc     = $data->dt_nasc; $_POST['dt_nasc']      
-    // $tipo        = $data->tipo; $_POST['tipo'] 
-    // $sexo        = $data->sexo; $_POST['sexo']    
-    // $raca        = $data->raca;  $_POST['nome']          
-    // $localizacao = $data->localizacao; $_POST['nome'] 
-    // $obs         = $data->obs; $_POST['nome'] 
-    // $idUsuario   = $_SESSION['id']; $_POST['nome'] 
+    $tipo        = $_POST['tipo']; 
+    $dt_nasc     = $_POST['dt_nasc'];     
+    $sexo        = $_POST['sexo'];
+    $localizacao = $_POST['localizacao']; 
+    $nome        = $_POST['nome'];
+    $obs         = $_POST['obs'];  
+    $raca        = $_POST['raca'];         
+    $idUsuario = $_SESSION['id'];
     
-    $array = array($tipo,$dt_nasc,$sexo,$localizacao,$nome,$obs,$raca,$idUsuario);
-    $resultad=inserirPet($conexao, $array);
-    // if($resultad){
+    // caminho absoluto onde os arquivos serão armazenados
+    $caminho="../../imagens";
 
-    // }
-    echo json_encode($resultad); 
-
+    // /*executa_upload*/
+    $nome_arquivo=$_FILES['img']['name']; 
+    $tamanho_arquivo=$_FILES['img']['size']; 
+    $arquivo_temporario=$_FILES['img']['tmp_name']; 
+    if (move_uploaded_file($arquivo_temporario, "$caminho/$nome_arquivo")){
+      // $vetResult['result']=' Upload do arquivo foi concluído com sucesso';
+      // echo json_ennome_arquivocode($vetResult); 
+      // die("Upload do arquivo foi concluído com sucesso");
+      $res = 1;
+    }
+    if($res){
+      $img = $nome_arquivo;
+      $array = array($tipo,$dt_nasc,$sexo,$localizacao,$nome,$obs,$raca,$idUsuario,$img);
+      $resultad=inserirPet($conexao, $array);
+      if($resultad){
+        $res=0;
+        echo json_encode($resultad);
+      }
+    }else {
+      $vet['result']="Imagem Nao Movida";
+      echo json_encode($vet);
+    }
+  
   }
 
   #Listar Pets
@@ -82,9 +99,9 @@
 
   # Apresenta animais para serem adotados
   if(isset($data->apresentarPetsTotal)){
-    $idUsuario = $_SESSION['id'];
+    // $idUsuario = $_SESSION['id'];
     // $array = array($idUsuario);
-    $resulta=listarPetsAdota($conexao,$idUsuario);
+    $resulta=listarPetsAdota($conexao); // ,$idUsuario
     echo json_encode($resulta); 
 
   }

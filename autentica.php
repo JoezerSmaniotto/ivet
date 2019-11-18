@@ -2,11 +2,11 @@
 session_start(); 
 
 		if(isset($_SESSION["email"])) {
-			$retorno = array('sucesso'=>true,'mensagem'=>'usuário logado');
+			$retorno = array('sucesso'=>true,'mensagem'=>'usuario logado');
           
 		} 
 		else { 
-			$retorno = array('sucesso'=>false,'mensagem'=>'usuário inválido');
+			$retorno = array('sucesso'=>false,'mensagem'=>'usuario inválido');
 
 		}
 

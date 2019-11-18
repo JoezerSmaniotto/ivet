@@ -15,42 +15,38 @@
   }
 
   function inserirPet($conexao,$array){
-    try {
-        
-         $query = $conexao->prepare("insert into pet_tipo (tipo,nascimento,sexo,localizacao,nome,observacoes,fk_raca_id,id_usuario) values (?, ?, ?, ?, ?, ?, ?, ?)");
-         $pet = $query->execute($array);
-         if($pet){
-            $vetora['result']="true";
-            // var_dump($vetor);
-            // die();
-            return  $vetora;
-          }  
-        //  echo "PETs";
-        //  var_dump($pet);
+  try {
+        $query = $conexao->prepare("insert into pet_tipo (tipo,nascimento,sexo,localizacao,nome,observacoes,fk_raca_id,id_usuario,imagem) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $pet = $query->execute($array);
+        $vetora=array();
+        if($pet){
+          return $vetora['result']="true";
+      
+        }   
     
     }catch(PDOException $e) {
       echo 'Error: ' . $e->getMessage();
     }
   }
 
-  function inserirImagem($conexao,$array){
-    try {
+  // function inserirImagem($conexao,$array){
+  //   try {
         
-         $query = $conexao->prepare("insert into imagens (link_imagens,fk_pet_tipo_id_animal) values (?, ?)");
-         $pet = $query->execute($array);
-         if($pet){
-            $vetora['result']="true";
-            // var_dump($vetor);
-            // die();
-            return  $vetora;
-          }  
-        //  echo "PETs";
-        //  var_dump($pet);
+  //        $query = $conexao->prepare("insert into imagens (link_imagens,fk_pet_tipo_id_animal) values (?, ?)");
+  //        $pet = $query->execute($array);
+  //        if($pet){
+  //           $vetora['result']="true";
+  //           // var_dump($vetor);
+  //           // die();
+  //           return  $vetora;
+  //         }  
+  //       //  echo "PETs";
+  //       //  var_dump($pet);
     
-    }catch(PDOException $e) {
-      echo 'Error: ' . $e->getMessage();
-    }  
-  }
+  //   }catch(PDOException $e) {
+  //     echo 'Error: ' . $e->getMessage();
+  //   }  
+  // }
 
 
   
@@ -145,7 +141,7 @@
     }
 }
 
-  function listarPetsAdota ($conexao,$idUsuario){
+  function listarPetsAdota ($conexao){ // ,$idUsuario
     try {
       
       $query = $conexao->prepare("select pet_tipo.id_animal,pet_tipo.nome,pet_tipo.observacoes,pet_tipo.sexo,pet_tipo.tipo,pet_tipo.nascimento,pet_tipo.localizacao,pet_tipo.fk_raca_id,raca.id,raca.nomer from pet_tipo join raca on(pet_tipo.fk_raca_id = raca.id) where dataadoc IS NULL ");

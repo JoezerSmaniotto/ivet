@@ -73,35 +73,41 @@ function retornaRaca (){
 }
 
 function cadastrarPet(event){
+ 
+  event.preventDefault()
   const formulario = document.querySelector("#cadastro")
   const dadosAnimal = gerarObjetoAnimalCadastro()
   
   console.log(dadosAnimal);
-
-  // if( formularioValido(dadosAnimal)){
+  let formData = new FormData();
+  if( formularioValido(dadosAnimal)){
     
-  //   Object.entries(dadosAnimal).map(([key, value]) => {
-  //     dataform.append(key, value)
-  //   });
+    Object.entries(dadosAnimal).forEach(([key, value]) => {
+      // console.log(key + " = " + value)
+      formData.append(key, value)
+    });
+    // console.log(formData)
+    fetch('includes/logica/logica_animal.php',{ // 
+      method: 'POST',
+      body: formData,
+      }).then ((response) => { return response.json() 
+      }).then( data => {
+          if(data == 'true'){
+              alert("Animal Cadastrado Com Sucesso");
+              console.log(data)
+              formulario.reset()
+          }else if(data.result == 'Imagem Nao Movida'){
+            alert("Imagem Não Movida !!");
+            console.log(data)
+          }
 
-  //   fetch('includes/logica/logica_animal.php',{
-  //     method: 'post',
-  //     body: dataform,
-  //     headers: { 'Content-Type': 'multipart/form-data' },
-  //     }).then ((response) => { return response.json() 
-  //     }).then( data => {
-  //         if(data.result == 'true'){
-  //             alert("Animal Cadastrado Com Sucesso");
-  //             formulario.reset()
-  //         }  
-
-  //     });
+      });
   
-  // }else{
-  //   alert("Verifique os Campos, Existe  Campos Não Preenchidos");
-  // }
+  }else{
+    alert("Verifique os Campos, Existe  Campos Não Preenchidos");
+  }
 
-  event.preventDefault()
+
 }
 
 function escondeForm(){
@@ -319,30 +325,60 @@ function showPetsTotal(){
       //     alert("Não Há Animais Cadastrados");
       // }else{
           let tipoA,Sx;
-          document.querySelector('#listarPets').innerText = "";
-          data.forEach((item,index)=>{
+          // document.querySelector('#listarPets').innerHTML = "";
+          // document.querySelector('#listarPets').innerHTML = `
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          // `;
+
+
+           data.forEach((item,index)=>{
               console.log(index);
-              console.log(item);
-              if (item.tipo == 'C') {
-                tipoA = "Cão";            
-              }else{
-                tipoA = "Gato"
-              }
+               console.log(item);
+               if (item.tipo == 'C') {
+                 tipoA = "Cão";            
+               }else{
+                 tipoA = "Gato"
+               }
+               if (item.sexo == 'F') {
+                 Sx = "Fêmea";              
+               }else{
+                 Sx = "Macho";
+               } 
+              //  document.querySelector('#listarPets').innerHTML += `Nome: ${item.nome} | Tipo: ${tipoA} | Raça: ${item.nomer} <br>`;
+              //  document.querySelector('#listarPets').innerHTML += `Sexo: ${Sx} | Data Nasc: ${item.nascimento} | Localização: ${item.localizacao} <br>`;
+              //  document.querySelector('#listarPets').innerHTML += `Observações: ${item.observacoes} <br>`;
+              //  document.querySelector('#listarPets').innerHTML += `<button onclick="solicitaAdota(${item.id_animal})">Adote !</button>`;
+              //  document.querySelector('#listarPets').innerHTML += `<br><hr>`;
+              document.querySelector('#listarPets').innerHTML += `
+              <div class="col-md-4">
+               <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="https://media-manager.noticiasaominuto.com/1920/naom_5c43865b1e42c.jpg" alt="Card image cap">
+                 <div class="card-body">
+                   <p class="card-text"> Nome: ${item.nome} | Tipo: ${tipoA} | Raça: ${item.nomer} <br></p>
+                   <p class="card-text"> Sexo: ${Sx} | Data Nasc: ${item.nascimento} | Localização: ${item.localizacao} <br></p>
+                   <p class="card-text"> Observações: ${item.observacoes} <br></p> 
+                   <div class="d-flex justify-content-between align-items-center">
+                     <div class="btn-group">
+                       <button type="button" class="btn btn-sm btn-outline-secondary" onclick="solicitaAdota(${item.id_animal})" >Adote</button>
+                       <button type="button" class="btn btn-sm btn-outline-secondary">Maiss</button>
+                     </div>
+                     <small class="text-muted">9 mins</small>
+                   </div>
+                 </div>
+               </div>
+             </div> `;
 
-              if (item.sexo == 'F') {
-                Sx = "Fêmea";              
-              }else{
-                Sx = "Macho";
-              }  
 
-              document.querySelector('#listarPets').innerHTML += `Nome: ${item.nome} | Tipo: ${tipoA} | Raça: ${item.nomer} <br>`;
-              document.querySelector('#listarPets').innerHTML += `Sexo: ${Sx} | Data Nasc: ${item.nascimento} | Localização: ${item.localizacao} <br>`;
-              document.querySelector('#listarPets').innerHTML += `Observações: ${item.observacoes} <br>`;
-              document.querySelector('#listarPets').innerHTML += `<button onclick="solicitaAdota(${item.id_animal})">Adote !</button>`;
-              document.querySelector('#listarPets').innerHTML += `<br><hr>`;
+            
             })
-
-      // }
   
     })    
 }

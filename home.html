@@ -6,6 +6,7 @@
       <meta name="description" content="">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
       <!-- <script src="funcoes.js" async defer></script> -->
       <script src="funcoes.js"></script>
       <script src="funcoes_animal.js"></script>
@@ -14,7 +15,7 @@
 
   <body onload="autentica(),boasvindas(),showPetsTotal()">
 
-    <h2 id="welcome"></h2>
+    <!-- <h2 id="welcome"></h2>
     <h1> Escolha a opção para o Usuario </h1>
 
     <nav>  
@@ -23,18 +24,41 @@
       <button><a href="listaPet.html" >ListaPets</a></button>
       <button><a href="editarPerfil.html">Editar Perfil</a></button>
       <button><a href="#" onclick="sair()">Sair</a></button>
-    </nav>
+    </nav> -->
 
-    <br>
+    <div id="colocamenu">
+
+    </div>
     <h3>Animais Proximos à você </h3>
+    <!-- <section id="listarPets">    </section>  -->
 
-    <section id="listarPets">
-        
-    </section> 
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+          <div class="row" id="listarPets">
+            <!-- <div class="col-md-4">
+              <div class="card mb-4 shadow-sm overflow-auto" >
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">Este é um card maior e que suporta texto abaixo, como uma introdução mais natural ao conteúdo adicional.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Ver</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>  
 
 
   </body>
   
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
 </html>

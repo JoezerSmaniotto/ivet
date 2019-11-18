@@ -86,29 +86,104 @@ function listar(formulario) { // ??
         });
     }
 
+
+function menuDeslogado(){
+
+    document.querySelector('#colocamenu').innerHTML = `
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Ivet</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Contato</a>
+                </li>
+                <li class="nav-item active">
+                <a class="nav-link" href="cadastroUsuario.html">Cadastra-se<span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item">
+                <a class="nav-link" href="login.html">Login</a>
+                </li>
+                
+            </ul>
+            </div>
+        </nav> `;
+}
+
+
+function menuLogado(){
+
+
+    document.querySelector('#colocamenu').innerHTML = `
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Ivet</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                
+                <li class="nav-item  active">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="solicitacoesAdot.html">SolicitaçõesAdo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="adicionaPet.html">AdiconaPet</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="listaPet.html">ListaPets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="editarPerfil.html">Edita Perfil</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="sair()">Sair</a>
+                </li>
+                
+            </ul>
+            </div>
+        </nav> `;
+}
+
+
+
+
+
     
 function autentica(){ // OK
     
-        fetch('autentica.php', {
-        method: 'POST',
-        mode: 'no-cors'
-        })
-        .then(response => {
-                return response.json();
-            }).then(dados => {
-                console.log('Recebendo dados!');
-                //console.log(dados);
-                if (dados) {
-                    if (dados.sucesso==false) {
-                        window.location='login.html'
-                    }else{
-                       return dados.sucesso;
-                    }
+    fetch('autentica.php', {
+    method: 'POST',
+    mode: 'no-cors'
+    })
+    .then(response => {
+            return response.json();
+        }).then(dados => {
+            console.log('Recebendo dados!');
+            //console.log(dados);
+            if (dados) {
+                if (dados.sucesso==false) {
+                    window.location='home.html';
+                    menuDeslogado();
+                }else{
+                    menuLogado()
+                    return dados.sucesso;
                 }
-            })
-        .catch(error => {
-            console.log(`Erro ao conectar:\n\n${error.message}`)
-        });
+            }
+        })
+    .catch(error => {
+        console.log(`Erro ao conectar:\n\n${error.message}`)
+    });
     
 }
  
@@ -400,6 +475,7 @@ function cadastrarUsuario(){
     // formulario.preventDefault()
 
     const dadosUsuario = gerarObjetoUsuarioCadastro()
+    console.log(dadosUsuario);
     
     if( formularioValido(dadosUsuario)){
       fetch('includes/logica/logica_usuario.php',{
