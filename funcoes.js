@@ -8,23 +8,23 @@ function inserir(formulario) { // ???
         body: new FormData(formulario),
         mode: 'no-cors'
     })
-    .then(response => {
+        .then(response => {
             return response.text();
-         }).then(data => {
+        }).then(data => {
             console.log('Recebendo dados!');
             // console.log(data);
             if (data) {
-                let texto=document.getElementById('texto');
+                let texto = document.getElementById('texto');
                 alert(data);
-                texto.innerHTML=data;
+                texto.innerHTML = data;
             }
         })
         .catch(error => {
             console.log(`Erro ao conectar:\n\n${error.message}`)
         });
 }
-    
-function valida_sessao(formulario){ // OK
+
+function valida_sessao(formulario) { // OK
 
     event.preventDefault();
     fetch('valida_sessao.php', {
@@ -32,17 +32,17 @@ function valida_sessao(formulario){ // OK
         body: new FormData(formulario),
         mode: 'no-cors'
     })
-    .then(response => {
+        .then(response => {
             return response.json();
-         }).then(dados => {
+        }).then(dados => {
             console.log('Recebendo dados!');
             console.log(dados);
             if (dados) {
-               if (dados.sucesso == true) {
-                   window.location='home.html'
+                if (dados.sucesso == true) {
+                    window.location = 'home.html'
                 }
-                else{
-                    let texto=document.getElementById('texto');
+                else {
+                    let texto = document.getElementById('texto');
                     texto.innerHTML = dados.mensagem;
                 };
             }
@@ -50,44 +50,45 @@ function valida_sessao(formulario){ // OK
         .catch(error => {
             console.log(`Erro ao conectar:\n\n${error.message}`)
         });
-    
+
 }
-    
-    
+
+
 function listar(formulario) { // ??
-        
+
     event.preventDefault();
     fetch('listagem.php', {
         method: 'POST',
         body: new FormData(formulario),
         mode: 'no-cors'
     })
-    .then(response => {
+        .then(response => {
             return response.json();
-         }).then(dados => {
+        }).then(dados => {
             console.log('Recebendo dados!');
             // console.log(data);
             if (dados) {
-                let texto=document.getElementById('texto');
+                let texto = document.getElementById('texto');
                 let table = '<table border=1>'
                 dados.forEach(obj => {
-                console.log(obj)
-                table += '<tr>'
-                Object.entries(obj).map(([key, value]) => {
-                    table += `<td>${value}</td>`
+                    console.log(obj)
+                    table += '<tr>'
+                    Object.entries(obj).map(([key, value]) => {
+                        table += `<td>${value}</td>`
+                    });
+                    table += '</tr>'
                 });
-                table += '</tr>'
-            });
                 texto.innerHTML += table + '</table>';
             }
         })
         .catch(error => {
             console.log(`Erro ao conectar:\n\n${error.message}`)
         });
-    }
+}
 
 
-function menuDeslogado(){
+function menuDeslogado() {
+    
 
     document.querySelector('#colocamenu').innerHTML = `
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -118,10 +119,80 @@ function menuDeslogado(){
 }
 
 
-function menuLogado(){
+function boasvindas() { // OK
+    let apresentarUser = true
+    let obj = { apresentarUser }
+    fetch('includes/logica/logica_usuario.php', {
+        method: 'post',
+        mode: 'cors',
+        body: JSON.stringify(obj)
+    })
+        .then(response => response.json())
+        .then(function result(dados) {
+            // document.querySelector('#welcome').innerHTML = `Olá ${dados.nome} `;
+            let data = new Date();
+            let hora = data.getHours();
+            let saldacao = "Bom dia"
+            if (hora >= 6 && hora < 12) {
+                saldacao = "Bom dia"
+            } else if (hora >= 12 && hora < 19) {
+                saldacao = "Boa tarde"
+            } else {
+                saldacao = "Boa Noite"
+            }
+            console.log(`${saldacao} ${hora} `);
+            return `${saldacao} ${dados.nome} `;
 
+        });
 
-    document.querySelector('#colocamenu').innerHTML = `
+    // .catch(error => {
+    //     console.log(`Erro ao conectar:\n\n${error.message}`)
+    // });
+}
+
+let saldacao2 = function () {
+    return new Promise(function (resolve, reject) {
+        let saldacao = "Bom dia"
+        let apresentarUser = true
+        let obj = { apresentarUser }
+        fetch('includes/logica/logica_usuario.php', {
+            method: 'post',
+            mode: 'cors',
+            body: JSON.stringify(obj)
+        })
+
+            .then(response => response.json())
+            .then(function result(dados) {
+                // document.querySelector('#welcome').innerHTML = `Olá ${dados.nome} `;
+                let data = new Date();
+                let hora = data.getHours();
+
+                if (hora >= 6 && hora < 12) {
+                    saldacao = "Bom dia"
+                    let result = saldacao + " " +dados.nome
+                    resolve(result)
+                } else if (hora >= 12 && hora < 19) {
+                    saldacao = "Boa tarde"
+                    let result = saldacao + " " +dados.nome
+                    resolve(result)
+                } else {
+                    saldacao = "Boa Noite"
+                    let result = saldacao + " " +dados.nome
+                    resolve(result)
+                }
+
+            });
+       
+
+    })
+}
+
+function menuLogado() {
+
+    saldacao2()
+    .then(function (response) {
+        let boasvi = response;
+        document.querySelector('#colocamenu').innerHTML = `
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">Ivet</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -149,134 +220,160 @@ function menuLogado(){
                 <li class="nav-item">
                     <a class="nav-link" href="#" onclick="sair()">Sair</a>
                 </li>
-                
+                <li class="nav-item">
+                   <p class="nav-link text-danger"> ${boasvi}</p>
+                </li>
+              
             </ul>
             </div>
         </nav> `;
+
+        
+    })
+
+    // document.querySelector('#colocamenu').innerHTML = `
+    //     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    //         <a class="navbar-brand" href="#">Ivet</a>
+    //         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    //         <span class="navbar-toggler-icon"></span>
+    //         </button>
+    //         <div class="collapse navbar-collapse" id="navbarNav">
+    //         <ul class="navbar-nav ml-auto">
+                
+    //             <li class="nav-item  active">
+    //                 <a class="nav-link" href="home.html">Home</a>
+    //             </li>
+    //             <li class="nav-item">
+    //                 <a class="nav-link" href="solicitacoesAdot.html">SolicitaçõesAdo</a>
+    //             </li>
+    //             <li class="nav-item">
+    //                 <a class="nav-link" href="adicionaPet.html">AdiconaPet</a>
+    //             </li>
+    //             <li class="nav-item">
+    //                 <a class="nav-link" href="listaPet.html">ListaPets</a>
+    //             </li>
+    //             <li class="nav-item">
+    //                 <a class="nav-link" href="editarPerfil.html">Edita Perfil</a>
+    //             </li>
+                
+    //             <li class="nav-item">
+    //                 <a class="nav-link" href="#" onclick="sair()">Sair</a>
+    //             </li>
+    //             <li class="nav-item">
+    //                 boasvi
+    //             </li>
+              
+    //         </ul>
+    //         </div>
+    //     </nav> `;
+
+    // <li class="nav-item">
+    //  <p>${boasvi}</p>
+    // </li>
 }
 
 
 
 
 
-    
-function autentica(){ // OK
-    
+
+function autentica() { // OK
+
     fetch('autentica.php', {
-    method: 'POST',
-    mode: 'no-cors'
+        method: 'POST',
+        mode: 'no-cors'
     })
-    .then(response => {
+        .then(response => {
             return response.json();
         }).then(dados => {
             console.log('Recebendo dados!');
             //console.log(dados);
             if (dados) {
-                if (dados.sucesso==false) {
-                    window.location='home.html';
+                if (dados.sucesso == false) {
+                    // window.location='home.html';
                     menuDeslogado();
-                }else{
+                } else {
                     menuLogado()
                     return dados.sucesso;
                 }
             }
         })
-    .catch(error => {
-        console.log(`Erro ao conectar:\n\n${error.message}`)
-    });
-    
-}
- 
+        .catch(error => {
+            console.log(`Erro ao conectar:\n\n${error.message}`)
+        });
 
-function boasvindas(){ // OK
-    let apresentarUser = true
-    let obj =  { apresentarUser }
-    fetch('includes/logica/logica_usuario.php', {
-        method: 'post',
-        mode: 'cors',
-        body: JSON.stringify(obj)
-    })
-        .then(response => response.json())
-        .then(function result (dados){
-            document.querySelector('#welcome').innerHTML = `Olá ${dados.nome} `;
-            
-        })
-    .catch(error => {
-        console.log(`Erro ao conectar:\n\n${error.message}`)
-    });
 }
 
 
 function sair() { // OK 
     var formData = new FormData();
-    formData.append('acao', 'sair')    
+    formData.append('acao', 'sair')
     fetch('valida_sessao.php', {
-    method: 'POST',
-    body:formData,
-    mode: 'no-cors'
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
     })
-    .then(response => {
+        .then(response => {
             return response.json();
         }).then(dados => {
             console.log('Recebendo dados!');
             console.log(dados);
-            if (dados.sair==true) {
-              window.location='login.html'
+            if (dados.sair == true) {
+                window.location = 'login.html'
             }
-        
-    })
-    .catch(error => {
-        console.log(`Erro ao conectar:\n\n${error.message}`)
-    });
-    
+
+        })
+        .catch(error => {
+            console.log(`Erro ao conectar:\n\n${error.message}`)
+        });
+
 }
-    
-function listaUsuario(){ // ???
-    
+
+function listaUsuario() { // ???
+
     fetch('listagem.php', {
         method: 'POST',
         mode: 'no-cors'
     })
-    .then(response => {
+        .then(response => {
             return response.json();
-         }).then(dados => {
+        }).then(dados => {
             console.log('Recebendo dados!')
             if (dados) {
-                let usuario=document.getElementById('usuario')
-                let tamanho = dados.length 
-                for(let i=0; i < tamanho; i++)
-                {
+                let usuario = document.getElementById('usuario')
+                let tamanho = dados.length
+                for (let i = 0; i < tamanho; i++) {
                     let opt = document.createElement("option")
                     opt.value = dados[i].id
                     opt.text = dados[i].nome
-    
-                    usuario.add(opt, usuario.options[i+1])
+
+                    usuario.add(opt, usuario.options[i + 1])
                 }
-                
+
             }
         })
         .catch(error => {
             console.log(`Erro ao conectar:\n\n${error.message}`)
         });
-}   
-    
+}
 
-function recuperarDadosEdita(){ // OK 
+
+function recuperarDadosEdita() { // OK 
 
     var formData = new FormData();
-    formData.append('editar','editarrr')              
+    formData.append('editar', 'editarrr')
     fetch('includes/logica/logica_usuario.php', {
         method: 'POST',
-        body:formData,
+        body: formData,
         mode: 'no-cors'
     })
 
-    .then(response => {
+        .then(response => {
             return response.json();
         }).then(dados => {
             console.log('Recebendo dados!')
             console.log(dados);
-            if(dados.result == 'true') {
+            if (dados.result == 'true') {
                 document.querySelector("#nome").value = dados.nome;
                 document.querySelector("#cpf").value = dados.cpf;
                 document.querySelector("#email").value = dados.e_mail;
@@ -289,38 +386,38 @@ function recuperarDadosEdita(){ // OK
                 document.querySelector("#complemento").value = dados.complemento;
                 document.querySelector("#telefone").value = dados.telefone;
                 document.querySelector("#salvar").style.display = 'none';
-                let  inp = document.querySelectorAll(".editar")
-                inp.forEach( (inpt) => {
-                    inpt.setAttribute('disabled','true')
+                let inp = document.querySelectorAll(".editar")
+                inp.forEach((inpt) => {
+                    inpt.setAttribute('disabled', 'true')
                 })
-                                              
-            }else {
+
+            } else {
                 console.log(dados.result);
                 alert('Usuario Não Encontrado ')
             }
         })
-       
-    .catch(error => {
-        console.log(`Erro ao conectar:\n\n${error.message}`)
-    });
-}
-    
 
-function habilitaEdicao(){  // OK
+        .catch(error => {
+            console.log(`Erro ao conectar:\n\n${error.message}`)
+        });
+}
+
+
+function habilitaEdicao() {  // OK
     document.querySelector("#salvar").style.display = 'inline';
     document.querySelector("#editar").style.display = 'none';
 
-    let  inp = document.querySelectorAll(".editar")
-    inp.forEach( (inpt) => {
-        inpt.removeAttribute('disabled','true')
-    }) 
+    let inp = document.querySelectorAll(".editar")
+    inp.forEach((inpt) => {
+        inpt.removeAttribute('disabled', 'true')
+    })
 
 }
 
 
 // Começo Edita
 
-function gerarObjetoUsuario(){ // OK
+function gerarObjetoUsuario() { // OK
 
     let nome = document.querySelector("#nome").value;
     let cpf = document.querySelector("#cpf").value;
@@ -336,42 +433,43 @@ function gerarObjetoUsuario(){ // OK
     let alterar = true;
 
     return { // Cria o objeto 
-      nome,cpf,email,cep,rua,numero,bairro,cidade,estado,complemento,telefone,alterar
+        nome, cpf, email, cep, rua, numero, bairro, cidade, estado, complemento, telefone, alterar
     }
 
 }
 
-function formularioValido(dadosUsuario){ // OK 
-    let campoVazio = false; 
+function formularioValido(dadosUsuario) { // OK 
+    let campoVazio = false;
     const arrayDadosUser = Object.values(dadosUsuario);
-    arrayDadosUser.forEach(cont=>{
-      if(cont === ''){
-         campoVazio = true;
-      }
+    arrayDadosUser.forEach(cont => {
+        if (cont === '') {
+            campoVazio = true;
+        }
     });
 
-    return !campoVazio;  
+    return !campoVazio;
 }
 
 
-function salvaEdicao(){ // OK
+function salvaEdicao() { // OK
     document.querySelector("#salvar").style.display = 'none';
     document.querySelector("#editar").style.display = 'inline';
 
     let dadosUsuario = gerarObjetoUsuario();
-    if(formularioValido(dadosUsuario)){
-        fetch('includes/logica/logica_usuario.php',{
-            method:'put',
+    if (formularioValido(dadosUsuario)) {
+        fetch('includes/logica/logica_usuario.php', {
+            method: 'put',
             body: JSON.stringify(dadosUsuario) // Converte para JSON
-        }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
-        }).then( data => {
+        }).then((response) => {
+            return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+        }).then(data => {
             let result = JSON.parse(data)
             //console.log(result)
             alert("Dados Atualizados Com Sucesso")
             boasvindas()
         });
-        
-    }else {
+
+    } else {
         alert("Verifique os Campos, Existem Campos Não Preenchidos")
     }
 
@@ -381,20 +479,21 @@ function salvaEdicao(){ // OK
 // Fim Edita
 
 
-function excluirConta(){
-    if(window.confirm("Deseja Realmente Excluir Sua Conta ?")){
+function excluirConta() {
+    if (window.confirm("Deseja Realmente Excluir Sua Conta ?")) {
         let excluirConta = true;
-        let obj =  { excluirConta };
+        let obj = { excluirConta };
         console.log(obj);
-        fetch('includes/logica/logica_usuario.php',{
-            method:'delete',
+        fetch('includes/logica/logica_usuario.php', {
+            method: 'delete',
             body: JSON.stringify(obj) // Converte para JSON
-        }).then ((response) => { return response.text() // esse .text poderia ser json() se sim o que mudaria ??  ???
-        }).then( data => {
+        }).then((response) => {
+            return response.text() // esse .text poderia ser json() se sim o que mudaria ??  ???
+        }).then(data => {
             //let result = JSON.parse(data)
             //console.log(result)
             alert("USUARIO EXCLUIDO !!! ")
-            window.location='login.html'
+            window.location = 'login.html'
         });
     }
 }
@@ -411,20 +510,20 @@ function pesquisacep(valor) {
         let validacep = /^[0-9]{8}$/;
 
         //Valida o formato do CEP.
-        if(validacep.test(cep)) {
+        if (validacep.test(cep)) {
 
             //Preenche os campos com "..." enquanto consulta webservice.
-            document.getElementById('rua').value="...";
-            document.getElementById('bairro').value="...";
-            document.getElementById('cidade').value="...";
-            document.getElementById('estado').value="...";
+            document.getElementById('rua').value = "...";
+            document.getElementById('bairro').value = "...";
+            document.getElementById('cidade').value = "...";
+            document.getElementById('estado').value = "...";
             // document.getElementById('ibge').value="...";
 
             //Cria um elemento javascript.
             var script = document.createElement('script');
 
             //Sincroniza com o callback.
-            script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+            script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
 
             //Insere script no documento e carrega o conteúdo.
             document.body.appendChild(script);
@@ -445,20 +544,20 @@ function pesquisacep(valor) {
 
 function limpa_formulário_cep() {
     //Limpa valores do formulário de cep.
-    document.getElementById('rua').value=("");
-    document.getElementById('bairro').value=("");
-    document.getElementById('cidade').value=("");
-    document.getElementById('estado').value=("");
+    document.getElementById('rua').value = ("");
+    document.getElementById('bairro').value = ("");
+    document.getElementById('cidade').value = ("");
+    document.getElementById('estado').value = ("");
     // document.getElementById('ibge').value=("");
 }
 
 function meu_callback(conteudo) {
     if (!("erro" in conteudo)) {
         //Atualiza os campos com os valores.
-        document.getElementById('rua').value=(conteudo.logradouro);
-        document.getElementById('bairro').value=(conteudo.bairro);
-        document.getElementById('cidade').value=(conteudo.localidade);
-        document.getElementById('estado').value=(conteudo.uf);
+        document.getElementById('rua').value = (conteudo.logradouro);
+        document.getElementById('bairro').value = (conteudo.bairro);
+        document.getElementById('cidade').value = (conteudo.localidade);
+        document.getElementById('estado').value = (conteudo.uf);
         // document.getElementById('ibge').value=(conteudo.ibge);
     } //end if.
     else {
@@ -470,35 +569,36 @@ function meu_callback(conteudo) {
 
 
 
-function cadastrarUsuario(){
+function cadastrarUsuario() {
     // const formulario = document.querySelector("#cadastro") 
     // formulario.preventDefault()
 
     const dadosUsuario = gerarObjetoUsuarioCadastro()
     console.log(dadosUsuario);
-    
-    if( formularioValido(dadosUsuario)){
-      fetch('includes/logica/logica_usuario.php',{
-        method: 'post',
-        body: JSON.stringify(dadosUsuario)// converte para JSON o JSON.stringify // body apenas quando quero fazer um post
-        }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
-        }).then( data => {
+
+    if (formularioValido(dadosUsuario)) {
+        fetch('includes/logica/logica_usuario.php', {
+            method: 'post',
+            body: JSON.stringify(dadosUsuario)// converte para JSON o JSON.stringify // body apenas quando quero fazer um post
+        }).then((response) => {
+            return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+        }).then(data => {
             console.log(data);
-            if(data.result == "true"){
+            if (data.result == "true") {
                 const resetar = document.querySelector("#cadastro");
                 alert("Usuario Cadastrado !!");
                 // formulario.reset(); 
                 // Aqui redireciona o window
-                window.location='login.html'
+                window.location = 'login.html'
             }
         });
-    }else{
-      alert("Verifique os Campos, Existe  Campos Não Preenchidos");
+    } else {
+        alert("Verifique os Campos, Existe  Campos Não Preenchidos");
     }
 }
 
 
-function gerarObjetoUsuarioCadastro(){
+function gerarObjetoUsuarioCadastro() {
     const nome = document.querySelector('#nome').value;
     const cpf = document.querySelector('#cpf').value;
     const email = document.querySelector('#email').value;
@@ -515,33 +615,33 @@ function gerarObjetoUsuarioCadastro(){
     //const dt_nascimento = ObterValor('dt_nascimento');
     const cadastrar = true;
     return { // Cria o objeto 
-      nome,cpf,email,cep,rua,numero,bairro,cidade,estado,complemento,status,senha,telefone,cadastrar
+        nome, cpf, email, cep, rua, numero, bairro, cidade, estado, complemento, status, senha, telefone, cadastrar
     }
 
 }
 
-         
-function pesquisaemail(email){
+
+function pesquisaemail(email) {
     let validaEmail = true
-    let obj =  { validaEmail,email }
+    let obj = { validaEmail, email }
     console.log(obj)
     fetch('includes/logica/logica_usuario.php', {
         method: 'POST',
         body: JSON.stringify(obj)
-    }).then ((response) => { return response.json()
-    }).then( data => {
-            //console.log('Recebendo dados!')
-            console.log(data);
-            if(data.result == 'true') {
-               alert(`Email: ${email} já cadastrado`)
-               document.querySelector("#email").value = ' '
-            }
+    }).then((response) => {
+        return response.json()
+    }).then(data => {
+        //console.log('Recebendo dados!')
+        console.log(data);
+        if (data.result == 'true') {
+            alert(`Email: ${email} já cadastrado`)
+            document.querySelector("#email").value = ' '
+        }
 
-    }) .catch(error => {
+    }).catch(error => {
         console.log(`Erro ao conectar:\n\n${error.message}`)
     });
 
 }
 
 
- 

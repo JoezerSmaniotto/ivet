@@ -8,3 +8,14 @@ footer{
   width: 100%;
 
 } */
+
+.card-body {
+  height: 200px;
+}
+
+
+.card-body::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: black; /* or add it to the track */
+}

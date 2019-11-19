@@ -24,6 +24,23 @@
     $obs         = $_POST['obs'];  
     $raca        = $_POST['raca'];         
     $idUsuario = $_SESSION['id'];
+
+    /* Config_upload */
+    //parâmetros de configuração para o upload
+    // limitar as extensões? (sim ou não)
+    $limitar_ext="sim";
+
+    //extensões autorizadas
+    $extensoes_validas=array(".gif",".jpg",".jpeg",".bmp",".GIF",".JPG",".JPEG",".BMP",".PNG",".png");
+
+    // limitar o tamanho do arquivo? (sim ou não)
+    $limitar_tamanho="sim";
+
+    //tamanho limite do arquivo em bytes
+    $tamanho_bytes="20000000";
+
+    // se já existir o arquivo indica se ele deve ser sobrescrito (sim ou não)
+    $sobrescrever="não";
     
     // caminho absoluto onde os arquivos serão armazenados
     $caminho="../../imagens";
@@ -32,12 +49,50 @@
     $nome_arquivo=$_FILES['img']['name']; 
     $tamanho_arquivo=$_FILES['img']['size']; 
     $arquivo_temporario=$_FILES['img']['tmp_name']; 
-    if (move_uploaded_file($arquivo_temporario, "$caminho/$nome_arquivo")){
-      // $vetResult['result']=' Upload do arquivo foi concluído com sucesso';
-      // echo json_ennome_arquivocode($vetResult); 
-      // die("Upload do arquivo foi concluído com sucesso");
-      $res = 1;
+
+    if (!empty($nome_arquivo)){
+        if($sobrescrever=="não" && file_exists("$caminho/$nome_arquivo")){
+            // die("Arquivo já existe");
+            $vet['result']="Arquivo ja existe";
+            echo json_encode($vet);
+            die();
+        }
+        if($limitar_tamanho=="sim" && ($tamanho_arquivo > $tamanho_bytes)){
+            // die("Arquivo deve ter o no máximo $tamanho_bytes bytes");
+            // $vet['result']="Arquivo deve ter o no máximo  bytes";
+            $vet['result']="Arquivo deve ter o no maximo 20000000 bytes";
+            echo json_encode($vet);
+            die();
+
+    
+        }
+        $ext = strrchr($nome_arquivo,'.');
+        if (($limitar_ext == "sim") && !in_array($ext,$extensoes_validas)){
+            // die("Extensão de arquivo inválida para upload");
+            $vet['result']="Extensao de arquivo invalida para upload";
+            echo json_encode($vet);
+            die();
+
+        }
+        if (move_uploaded_file($arquivo_temporario, "$caminho/$nome_arquivo")){
+            // $vet['result']="Imagem Movida";
+            // echo json_encode($vet);
+            // die();
+            $res = 1;
+        }
+        else{
+            // echo "Arquivo não pode ser copiado para o servidor.";
+            $vet['result']="Arquivo nao pode ser copiado para o servidor";
+            echo json_encode($vet);
+            die();
+        }
+    }else{ 
+        // die("Selecione o arquivo a ser enviado");
+        $vet['result']="Selecione o arquivo a ser enviado";
+        echo json_encode($vet);
+        die();
     }
+
     if($res){
       $img = $nome_arquivo;
       $array = array($tipo,$dt_nasc,$sexo,$localizacao,$nome,$obs,$raca,$idUsuario,$img);
@@ -46,13 +101,16 @@
         $res=0;
         echo json_encode($resultad);
       }
-    }else {
-      $vet['result']="Imagem Nao Movida";
-      echo json_encode($vet);
     }
+    // else {
+    //   $vet['result']="Imagem Nao Movida";
+    //   echo json_encode($vet);
+    // }
+  
   
   }
 
+  
   #Listar Pets
   if(isset($data->apresentarPets)){
     $idUsuario = $_SESSION['id'];

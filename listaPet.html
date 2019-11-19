@@ -5,20 +5,24 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="description" content="">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="">
       <script src="funcoes.js"></script>
       <script src="funcoes_animal.js"></script>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" href="index.css">
     <title>Página Inicial </title> 
   </head> 
-
+    
   <body onload="autentica(),boasvindas(),showPets(),escondeForm(),retornaRaca()">
-      <h2 id="welcome"></h2>
-      <h3>Pets Cadastrados</h3>
+    <div id="colocamenu">
+
+    </div>
+
+    <h3 class="pl-5">Pets Cadastrados</h3>
       
-      <main id="editaPet">
+      <!-- <main id="editaPet">
           <h3>Edite Um Pet</h3>
         <section>
-          <!-- <form name="cadastro" id="cadastro" > -->
+          <form name="cadastro" id="cadastro" >
             <p><label for="nome">Nome: </label><input type="text" name="nome" id="nome"></p>
             <p><label for="data">Data Nascimento: </label><input type="date" name="dt_nasc" id="dt_nasc" size="11"></p>
           
@@ -51,17 +55,112 @@
 
 
 
-            <p><button type="button" id='salvaEdita' name='salvaEdita' value="salvaEdita" onclick="salvaEditaPet()" >Salvar</button>  </p>      
+            <p><button type="button" id='salvaEdita' name='salvaEdita' value="salvaEdita" onclick="salvaEditaPet()" >Salvar</button>  </p>     
             <hr>
       </main>
       
+      
+       <form class="" id="editaPet"  onsubmit="cadastrarPet(event)" enctype="multipart/form-data">
+        <input type="file" name="imgPet" id="imgPet">
+        <p><button type="submit" id='cadastrar' name='cadastrar' value="Cadastrar"> Cadastrar </button>  </p>      
+        <button type="button"> <a href="home.html"> Voltar </a> </button>
+        
+      </form> -->
 
-      <section id="listarPets">        
+      <form class="col-10" id="editaPet"  onsubmit="salvaEditaPet(event)" enctype="multipart/form-data">
+        
+      <div class="form-row">  
+        <div class="form-group col-md-6 pl-5">
+          <label for="nome">Nome</label>
+          <input type="text" class="form-control"  name="nome" id="nome" placeholder="João Da Silva">
+        </div>
 
-      </section>
+        <div class="form-group col-md-6 pr-5">
+          <label for="nome">Data Nascimento</label>
+          <input type="date" class="form-control"  name="dt_nasc" id="dt_nasc" >
+        </div>
+      </div>  
+
+      <div class="form-row"> 
+        <div class="form-group col-md-6 pl-5">
+          <label for="SeletorTipo">Pet Tipo</label>
+          <select class="form-control" name="SeletorTipo" id="SeletorTipo">
+              <option value="" >--Escolha--</option>
+              <option value="C" >Cão</option>
+              <option value="G">Gato</option>
+          </select>
+        </div>
+
+        <div class="form-group col-md-6 pr-5">
+          <label for="SeletorSexo">Pet Sexo</label>
+          <select class="form-control" name="SeletorSexo" id="SeletorSexo">
+            <option value="">--Escolha--</option>
+            <option value="M">Macho</option>
+            <option value="F">Femea</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row"> 
+        <div class="form-group col-md-6 pl-5">
+          <label for="raca">Raça</label>
+          <select class="form-control" name="raca" id="raca">
+            <option value="">--Escolha--</option>
+          </select>
+        </div>
+        <input type="hidden" name="idpet" id="idpet">
+
+        <div class="form-group col-md-6 pr-5">
+          <label for="cep">Localização CEP</label>
+          <input type="text" class="form-control" name="cep" id="cep"  placeholder="ex:96040540" size="10" onblur="pesquisacep(this.value);">
+        </div>
+      </div>
+
+      <div class="form-group px-5">
+        <label for="obs">Descrição Pet</label>
+        <textarea class="form-control" name="obs" id="obs"  placeholder="Descreve Informações relevantes, Se o animal é vacidando, Portedo animal, Comportamento" rows="3"></textarea>
+      </div>
+      <div class="form-row pb-2 pl-5">
+        <input type="file" name="imgPet" id="imgPet">
+      </div>
+      
+      <button type="submit" class="btn btn-primary mb-2 ml-5">Salvar</button>
+
+        
+      </form>
+
+
+
+
+
+
+      <!-- <section id="listarPets">        
+
+      </section> -->
+
+      <div class="album py-5 bg-light">
+        <div class="container">
+
+          <div class="row" id="listarPets">
+  
+          </div>  
+        </div>
+       </div>
+
+
+      <footer class="footer mt-auto py-3 bg-primary align-items-stretch">
+        <div class="container-fluid  text-center mt-2">
+            <span class="text-muted" style="color: white !important">Copyright 2001-2019 ivet.com.br</span>
+        </div>
+    </footer>
 
 
   </body>
+    
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
   
 </html>
