@@ -92,7 +92,7 @@ function cadastrarPet(event){
       body: formData,
       }).then (response => { return response.json() 
       }).then( data => {
-        console.log(data)
+        // console.log(data)
           if(data == 'true'){
               console.log(data)
               alert("Animal Cadastrado Com Sucesso");
@@ -198,6 +198,7 @@ function editarAnimal(id){
         document.querySelector("#cep").value = dados.localizacao;
         document.querySelector("#obs").value = dados.observacoes;
         document.querySelector("#idpet").value = dados.id_animal;
+        document.querySelector("#imgAnt").value = dados.imagem;
         document.querySelector("#editaPet").style.display = 'inline';
 
     });
@@ -217,33 +218,73 @@ function gerarObjetoPetEdita(){ // OK
   const localizacao = document.querySelector('#cep').value;
   const obs = document.querySelector('#obs').value;
   const id_Animal = document.querySelector("#idpet").value;
+  const imgAnt = document.querySelector("#imgAnt").value;
+  const img = document.querySelector('#imgPet').files[0];
   const editaPet = true;
   return { // Cria o objeto 
-    nome,dt_nasc,tipo,sexo,raca,localizacao,obs,id_Animal,editaPet
+    nome,dt_nasc,tipo,sexo,raca,localizacao,obs,id_Animal,img,imgAnt,editaPet
   }
 
 }
 
+function formularioValidoEdita(dadosAnimal){ // OK 
+  let campoVazio = false; 
+  // const arrayDadosUser = Object.values(dadosAnimal);
+  const arrayDadosUser = Object.entries(dadosAnimal);
+  // console.log(Object.entries(dadosAnimal));
 
-function salvaEditaPet(){
+  arrayDadosUser.forEach(cont=>{
+    if(cont[0]!='img' && cont[1] === ''){ // ??
+       campoVazio = true;
+    }
+  });
+
+  return !campoVazio;  
+}
+
+
+function salvaEditaPet(event){
+  event.preventDefault()
   let dadosAnimal = gerarObjetoPetEdita();
-  if(formularioValido(dadosAnimal)){
-      //console.log(`Dados Envia Alteração: ${dadosAnimal}`)
+  let formData = new FormData();
+  if(formularioValidoEdita(dadosAnimal)){
+      Object.entries(dadosAnimal).forEach(([key, value]) => {
+        // console.log(key + " = " + value)
+        formData.append(key, value)
+      });
+      console.log(dadosAnimal)
+      // console.log(`Dados Envia Alteração: ${dadosAnimal}`)
       fetch('includes/logica/logica_animal.php',{
-          method:'put',
-          body: JSON.stringify(dadosAnimal) // Converte para JSON
+          method: 'POST',
+          body: formData,
       }).then ((response) => { return response.json() 
       }).then( dados => {
-          if(dados.result == 'true'){
-            console.log(dados)
-            escondeForm()
-            alert("Dados Atualizados Com Sucesso")
-            showPets()
-          
-          }else {
-            alert("Dados Não Atualizados")
-          }
-          
+        console.log(dados)
+        if(dados.result == 'true'){
+          console.log(dados)
+          escondeForm()
+          alert("Dados Atualizados Com Sucesso")
+          showPets()
+        // }else {
+        //   alert("Dados Não Atualizados")
+        // }
+        } if(dados.result == 'Arquivo ja existe'){
+          alert("Arquivo já existe !!");
+          // console.log(`${dados}`)
+        }else if(dados.result == 'Arquivo deve ter o no maximo 20000000 bytes'){
+          alert("Arquivo deve ter o no máximo 20000000 bytes !!");
+          // console.log(dados)
+        }else if(dados.result == 'Extensao de arquivo invalida para upload'){
+          alert("Extensão de arquivo invalida para upload");
+          // console.log(dados)
+        }else if(dados.result == 'Arquivo nao pode ser copiado para o servidor'){
+            alert("Arquivo nao pode ser copiado para o servidor");
+            // console.log(dados)
+        }else if(dados.result == 'Selecione o arquivo a ser enviado'){
+          alert("Selecione o arquivo a ser enviado");
+          // console.log(dados)
+        }
+
           
       });
       
@@ -361,14 +402,6 @@ function showPetsTotal(){
           // document.querySelector('#listarPets').innerHTML = "";
           // document.querySelector('#listarPets').innerHTML = `
           
-          
-          
-          
-          
-          
-          
-          
-          
           // `;
 
 
@@ -403,7 +436,6 @@ function showPetsTotal(){
                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="solicitaAdota(${item.id_animal})" >Adote</button>
                        <button type="button" class="btn btn-sm btn-outline-secondary">Maiss</button>
                      </div>
-                     <small class="text-muted">9 mins</small>
                    </div>
                  </div>
                </div>

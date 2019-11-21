@@ -12,7 +12,8 @@
     <title>Página Inicial </title> 
   </head> 
     
-  <body onload="autentica(),boasvindas(),showPets(),escondeForm(),retornaRaca()">
+  <body onload="autentica(),boasvindas(),showPets(),escondeForm(),retornaRaca()" >
+  <div class="container-fluid col-12 bg-info">  
     <div id="colocamenu">
 
     </div>
@@ -67,22 +68,22 @@
         
       </form> -->
 
-      <form class="col-10" id="editaPet"  onsubmit="salvaEditaPet(event)" enctype="multipart/form-data">
+      <form class="col-10 container-fluid" id="editaPet"  onsubmit="salvaEditaPet(event)" enctype="multipart/form-data">
         
-      <div class="form-row">  
-        <div class="form-group col-md-6 pl-5">
+      <div class="form-row mf-2 mr-2">  
+        <div class="form-group col-md-6 col-12">
           <label for="nome">Nome</label>
           <input type="text" class="form-control"  name="nome" id="nome" placeholder="João Da Silva">
         </div>
 
-        <div class="form-group col-md-6 pr-5">
+        <div class="form-group col-md-6 col-12">
           <label for="nome">Data Nascimento</label>
           <input type="date" class="form-control"  name="dt_nasc" id="dt_nasc" >
         </div>
       </div>  
 
-      <div class="form-row"> 
-        <div class="form-group col-md-6 pl-5">
+      <div class="form-row mf-2 mr-2"> 
+        <div class="form-group col-md-6 col-12">
           <label for="SeletorTipo">Pet Tipo</label>
           <select class="form-control" name="SeletorTipo" id="SeletorTipo">
               <option value="" >--Escolha--</option>
@@ -91,7 +92,7 @@
           </select>
         </div>
 
-        <div class="form-group col-md-6 pr-5">
+        <div class="form-group col-md-6 col-12">
           <label for="SeletorSexo">Pet Sexo</label>
           <select class="form-control" name="SeletorSexo" id="SeletorSexo">
             <option value="">--Escolha--</option>
@@ -101,8 +102,8 @@
         </div>
       </div>
 
-      <div class="form-row"> 
-        <div class="form-group col-md-6 pl-5">
+      <div class="form-row mf-2 mr-2"> 
+        <div class="form-group col-md-6 col-12">
           <label for="raca">Raça</label>
           <select class="form-control" name="raca" id="raca">
             <option value="">--Escolha--</option>
@@ -110,26 +111,25 @@
         </div>
         <input type="hidden" name="idpet" id="idpet">
 
-        <div class="form-group col-md-6 pr-5">
+        <div class="form-group col-md-6 col-12">
           <label for="cep">Localização CEP</label>
           <input type="text" class="form-control" name="cep" id="cep"  placeholder="ex:96040540" size="10" onblur="pesquisacep(this.value);">
         </div>
       </div>
 
-      <div class="form-group px-5">
+      <div class="form-group mf-2 mr-2">
         <label for="obs">Descrição Pet</label>
         <textarea class="form-control" name="obs" id="obs"  placeholder="Descreve Informações relevantes, Se o animal é vacidando, Portedo animal, Comportamento" rows="3"></textarea>
       </div>
-      <div class="form-row pb-2 pl-5">
+      <div class="form-row pb-2 mf-4">
         <input type="file" name="imgPet" id="imgPet">
       </div>
+      <input type="hidden" name="imgAnt" id="imgAnt">
       
-      <button type="submit" class="btn btn-primary mb-2 ml-5">Salvar</button>
+      <button type="submit" class="btn btn-primary mb-2 ">Salvar</button>
 
         
       </form>
-
-
 
 
 
@@ -154,7 +154,7 @@
         </div>
     </footer>
 
-
+  </div>
   </body>
     
   

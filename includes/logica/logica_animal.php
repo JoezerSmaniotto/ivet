@@ -138,21 +138,120 @@
     $resul=recuperadaDadosPet($conexao, $array);
     echo json_encode($resul); 
   }
-                  
-  if(isset($data->editaPet) ){
-    $idUsuario = $_SESSION['id'];
-    $nome        = $data->nome;    
-    $dt_nasc     = $data->dt_nasc;     
-    $tipo        = $data->tipo;
-    $sexo        = $data->sexo;    
-    $raca        = $data->raca;         
-    $localizacao = $data->localizacao; 
-    $obs         = $data->obs;
-    $id_Animal   = $data->id_Animal;
-    
-    $array = array($tipo,$dt_nasc,$sexo,$localizacao,$nome,$obs,$raca,$id_Animal,$idUsuario);
-    $res=alteraPet($conexao, $array);
-    echo json_encode($res); 
+  
+  
+  # Efetiva a Edição Salvando no Banco de Dados
+  if(isset($_POST['editaPet'])){
+
+    $tipo        = $_POST['tipo']; 
+    $dt_nasc     = $_POST['dt_nasc']; 
+    $sexo        = $_POST['sexo'];
+    $localizacao = $_POST['localizacao'];
+    $nome        = $_POST['nome']; 
+    $obs         = $_POST['obs']; 
+    $raca        = $_POST['raca'];
+    $id_Animal   = $_POST['id_Animal'];
+    $idUsuario   = $_SESSION['id'];
+
+
+    if($_FILES['img']['name'] != NULL){ // COM Imagem
+      $imgAnt = $_POST['imgAnt'];
+      /* Config_upload */
+      //parâmetros de configuração para o upload
+      // limitar as extensões? (sim ou não)
+      $limitar_ext1="sim";
+
+      //extensões autorizadas
+      $extensoes_validas1=array(".gif",".jpg",".jpeg",".bmp",".GIF",".JPG",".JPEG",".BMP",".PNG",".png");
+
+      // limitar o tamanho do arquivo? (sim ou não)
+      $limitar_tamanho1="sim";
+
+      //tamanho limite do arquivo em bytes
+      $tamanho_bytes1="20000000";
+
+      // se já existir o arquivo indica se ele deve ser sobrescrito (sim ou não)
+      $sobrescrever1="não";
+      
+      // caminho absoluto onde os arquivos serão armazenados
+      $caminho1="../../imagens";
+
+      // /*executa_upload*/
+      $nome_arquivo1=$_FILES['img']['name']; 
+      $tamanho_arquivo1=$_FILES['img']['size']; 
+      $arquivo_temporario1=$_FILES['img']['tmp_name']; 
+
+      if (!empty($nome_arquivo1)){
+          if($sobrescrever1=="não" && file_exists("$caminho1/$nome_arquivo1")){
+              // die("Arquivo já existe");
+              $vet1['result']="Arquivo ja existe";
+              echo json_encode($vet1);
+              die();
+          }
+          if($limitar_tamanho1=="sim" && ($tamanho_arquivo1 > $tamanho_bytes1)){
+              // die("Arquivo deve ter o no máximo $tamanho_bytes bytes");
+              // $vet['result']="Arquivo deve ter o no máximo  bytes";
+              $vet1['result']="Arquivo deve ter o no maximo 20000000 bytes";
+              echo json_encode($vet1);
+              die();
+      
+          }
+          $ext1 = strrchr($nome_arquivo1,'.');
+          if (($limitar_ext1 == "sim") && !in_array($ext1,$extensoes_validas1)){
+              // die("Extensão de arquivo inválida para upload");
+              $vet1['result']="Extensao de arquivo invalida para upload";
+              echo json_encode($vet1);
+              die();
+
+          }
+          if (move_uploaded_file($arquivo_temporario1, "$caminho1/$nome_arquivo1")){
+              // $vet['result']="Imagem Movida";
+              // echo json_encode($vet);
+              // die();
+              $movida1 = 1;
+          }
+          else{
+              // echo "Arquivo não pode ser copiado para o servidor.";
+              $vet1['result']="Arquivo nao pode ser copiado para o servidor";
+              echo json_encode($vet1);
+              die();
+          }
+      }else{ 
+          // die("Selecione o arquivo a ser enviado");
+          $vet1['result']="Selecione o arquivo a ser enviado";
+          echo json_encode($vet1);
+          die();
+      }
+
+      if($movida1){
+        $img1 = $nome_arquivo1;
+        $array1 = array($tipo,$dt_nasc,$sexo,$localizacao,$nome,$obs,$raca,$img1,$id_Animal,$idUsuario);
+        $res1=alteraPetComImg($conexao,$array1);
+        if($res1){
+          $movida1=0;
+          $cam = "$caminho1/$imgAnt";
+          if( unlink($cam)){
+            echo json_encode($res1);
+          }
+           
+        }
+      }
+      
+      // $array = array($tipo,$dt_nasc,$sexo,$localizacao,$nome,$obs,$raca,$id_Animal,$idUsuario);
+      // $res=alteraPet($conexao, $array);
+      // echo json_encode($res);
+
+     
+    }else { // Sem  IMAGEM
+
+      $array2= array($tipo,$dt_nasc,$sexo,$localizacao,$nome,$obs,$raca,$id_Animal,$idUsuario);
+      $res2=alteraPet($conexao, $array2);
+      if($res2){
+        echo json_encode($res2); 
+        die();
+      }
+
+    }
   }
 
   # Apresenta animais para serem adotados

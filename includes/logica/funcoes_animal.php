@@ -139,7 +139,28 @@
     }catch(PDOException $e) {// Erro ao executar a query cai no catch
         echo 'Error: ' . $e->getMessage();
     }
-}
+  }
+
+
+  function alteraPetComImg($conexao, $array){ // OK
+    try {
+        $query = $conexao->prepare("update pet_tipo set tipo= ?, nascimento= ?, sexo = ?, localizacao= ?, nome = ?,  observacoes = ?, fk_raca_id = ?, imagem = ? where id_animal = ? and id_usuario = ?");
+        $pets = $query->execute($array);
+        $vet=array();
+        if($pets){
+          $vet['result']= "true";
+          return $vet;
+
+        }else{
+          $vet['result']= "Dados Pet Não Alterado";
+          return $vet;
+        } 
+        
+    }catch(PDOException $e) {// Erro ao executar a query cai no catch
+        echo 'Error: ' . $e->getMessage();
+    }
+  }
+
 
   function listarPetsAdota ($conexao){ // ,$idUsuario
     try {
