@@ -200,6 +200,7 @@ function editarAnimal(id){
         document.querySelector("#idpet").value = dados.id_animal;
         document.querySelector("#imgAnt").value = dados.imagem;
         document.querySelector("#editaPet").style.display = 'inline';
+        window.scrollTo( 0, 0 ); // Manda para o formulário
 
     });
   }  
@@ -264,6 +265,94 @@ function salvaEditaPet(event){
           console.log(dados)
           escondeForm()
           alert("Dados Atualizados Com Sucesso")
+          function gerarObjetoPetEdita(){ // OK
+            const nome = document.querySelector('#nome').value;
+            const dt_nasc = document.querySelector('#dt_nasc').value;
+            const tipo = document.querySelector('#SeletorTipo').value;
+            const sexo = document.querySelector('#SeletorSexo').value;
+            const raca = document.querySelector('#raca').value;
+            const localizacao = document.querySelector('#cep').value;
+            const obs = document.querySelector('#obs').value;
+            const id_Animal = document.querySelector("#idpet").value;
+            const imgAnt = document.querySelector("#imgAnt").value;
+            const img = document.querySelector('#imgPet').files[0];
+            const editaPet = true;
+            return { // Cria o objeto 
+              nome,dt_nasc,tipo,sexo,raca,localizacao,obs,id_Animal,img,imgAnt,editaPet
+            }
+          
+          }
+          
+          function formularioValidoEdita(dadosAnimal){ // OK 
+            let campoVazio = false; 
+            // const arrayDadosUser = Object.values(dadosAnimal);
+            const arrayDadosUser = Object.entries(dadosAnimal);
+            // console.log(Object.entries(dadosAnimal));
+          
+            arrayDadosUser.forEach(cont=>{
+              if(cont[0]!='img' && cont[1] === ''){ // ??
+                 campoVazio = true;
+              }
+            });
+          
+            return !campoVazio;  
+          }
+          
+          
+          function salvaEditaPet(event){
+            event.preventDefault()
+            let dadosAnimal = gerarObjetoPetEdita();
+            let formData = new FormData();
+            if(formularioValidoEdita(dadosAnimal)){
+                Object.entries(dadosAnimal).forEach(([key, value]) => {
+                  // console.log(key + " = " + value)
+                  formData.append(key, value)
+                });
+                console.log(dadosAnimal)
+                // console.log(`Dados Envia Alteração: ${dadosAnimal}`)
+                fetch('includes/logica/logica_animal.php',{
+                    method: 'POST',
+                    body: formData,
+                }).then ((response) => { return response.json() 
+                }).then( dados => {
+                  console.log(dados)
+                  if(dados.result == 'true'){
+                    console.log(dados)
+                    escondeForm()
+                    alert("Dados Atualizados Com Sucesso")
+                    showPets()
+                  // }else {
+                  //   alert("Dados Não Atualizados")
+                  // }
+                  } if(dados.result == 'Arquivo ja existe'){
+                    alert("Arquivo já existe !!");
+                    // console.log(`${dados}`)
+                  }else if(dados.result == 'Arquivo deve ter o no maximo 20000000 bytes'){
+                    alert("Arquivo deve ter o no máximo 20000000 bytes !!");
+                    // console.log(dados)
+                  }else if(dados.result == 'Extensao de arquivo invalida para upload'){
+                    alert("Extensão de arquivo invalida para upload");
+                    // console.log(dados)
+                  }else if(dados.result == 'Arquivo nao pode ser copiado para o servidor'){
+                      alert("Arquivo nao pode ser copiado para o servidor");
+                      // console.log(dados)
+                  }else if(dados.result == 'Selecione o arquivo a ser enviado'){
+                    alert("Selecione o arquivo a ser enviado");
+                    // console.log(dados)
+                  }
+          
+                    
+                });
+                
+            }else {
+                alert("Verifique os Campos, Existem Campos Não Preenchidos")
+            }
+          
+            // recuperarDadosEdita();
+          
+          
+          }
+          
           showPets()
         // }else {
         //   alert("Dados Não Atualizados")
@@ -331,11 +420,12 @@ function showPets(){
                 }else{
                   Sx = "Macho";
                 }  
-                
+                // https://media-manager.noticiasaominuto.com/1920/naom_5c43865b1e42c.jpg
+                let caminhoImg = `imagens/${item.imagem}`;
                 document.querySelector('#listarPets').innerHTML += `
-                <div class="col-md-4">
+                <div class="col-md-4 pt-2">
                  <div class="card mb-4 shadow-sm">
-                  <img class="card-img-top" src="https://media-manager.noticiasaominuto.com/1920/naom_5c43865b1e42c.jpg" alt="Card image cap">
+                  <img class="card-img-top imganimal" src="${caminhoImg}" alt="Card image cap">
                    <div class="card-body overflow-auto">
                      <p class="card-text"> Nome: ${item.nome} | Tipo: ${tipoA} | Raça: ${item.nomer} <br></p>
                      <p class="card-text"> Sexo: ${Sx} | Data Nasc: ${item.nascimento} | Localização: ${item.localizacao} <br></p>
@@ -526,10 +616,6 @@ function showSolicitacoes(){
   
     })    
 }
-
-
-
-
 
 
 

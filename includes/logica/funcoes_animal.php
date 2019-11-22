@@ -53,7 +53,7 @@
   function listarPetsUsuario($conexao,$idUsuario){
     try {
       
-        $query = $conexao->prepare("select pet_tipo.id_animal,pet_tipo.nome,pet_tipo.observacoes,pet_tipo.sexo,pet_tipo.tipo,pet_tipo.nascimento,pet_tipo.localizacao,pet_tipo.fk_raca_id,raca.id,raca.nomer from pet_tipo full join raca on(pet_tipo.fk_raca_id = raca.id)  where id_usuario='$idUsuario' and dataadoc IS NULL ");
+        $query = $conexao->prepare("select pet_tipo.id_animal,pet_tipo.imagem,pet_tipo.nome,pet_tipo.observacoes,pet_tipo.sexo,pet_tipo.tipo,pet_tipo.nascimento,pet_tipo.localizacao,pet_tipo.fk_raca_id,raca.id,raca.nomer from pet_tipo full join raca on(pet_tipo.fk_raca_id = raca.id)  where id_usuario='$idUsuario' and dataadoc IS NULL ");
         $query->execute();
         $pets = $query->fetchAll(PDO::FETCH_ASSOC); //coloca os dados num array $usuario
         $vetore=array();

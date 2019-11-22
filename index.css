@@ -19,3 +19,25 @@ footer{
   height: 8px;
   background-color: black; /* or add it to the track */
 }
+
+@media (max-width: 2000px) {
+  .imganimal {
+    height: 200px !important;
+  }
+}
+
+@media (max-width: 750px) {
+  .imganimal {
+    height: 400px !important;
+  }
+}
+
+@media (max-width: 450px) {
+  .imganimal {
+    height: 200px !important;
+  }
+}
+
+.quebraPalavra{
+  word-wrap: break-word;
+}

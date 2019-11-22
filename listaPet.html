@@ -21,120 +21,71 @@
         
         <h3 class="mf-2 pt-4">Pets Cadastrados</h3>
           
-          <!-- <main id="editaPet">
-              <h3>Edite Um Pet</h3>
-            <section>
-              <form name="cadastro" id="cadastro" >
-                <p><label for="nome">Nome: </label><input type="text" name="nome" id="nome"></p>
-                <p><label for="data">Data Nascimento: </label><input type="date" name="dt_nasc" id="dt_nasc" size="11"></p>
-              
-                <p> <label for="tipo">Tipo:</label>
-                  <select   name="SeletorTipo" id="SeletorTipo" >
+          <form class="col-10 container-fluid" id="editaPet"  onsubmit="salvaEditaPet(event)" enctype="multipart/form-data">
+            
+            <div class="form-row mf-2 mr-2">  
+              <div class="form-group col-md-6 col-12">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control"  name="nome" id="nome" placeholder="João Da Silva">
+              </div>
+      
+              <div class="form-group col-md-6 col-12">
+                <label for="nome">Data Nascimento</label>
+                <input type="date" class="form-control"  name="dt_nasc" id="dt_nasc" >
+              </div>
+            </div>  
+      
+            <div class="form-row mf-2 mr-2"> 
+              <div class="form-group col-md-6 col-12">
+                <label for="SeletorTipo">Pet Tipo</label>
+                <select class="form-control" name="SeletorTipo" id="SeletorTipo">
                     <option value="" >--Escolha--</option>
                     <option value="C" >Cão</option>
                     <option value="G">Gato</option>
-                  </select>
-                </p>
-    
-                <p> <label for="sexo">Sexo:</label>
-                  <select   name="SeletorSexo" id="SeletorSexo" >
-                    <option value="">--Escolha--</option>
-                    <option value="M">Macho</option>
-                    <option value="F">Femea</option>
-                  </select>
-                </p>
-               
-                <p> <label for="raca">Raça:</label> 
-                  <select  name="raca" id="raca" >
-                    <option value="">--Escolha--</option>
-                  
-                  </select>
-                </p >
-    
-                <input type="hidden" name="idpet" id="idpet">
-                <p><label for="localizacao">Localização CEP: </label><input type="text" name="cep" id="cep"  placeholder="ex:96040540" size="10" onblur="pesquisacep(this.value);" ></p>
-                <p><label for="Observacoes">Observações: </label> <br><textarea name="obs" id="obs"  placeholder="Descreve Informações relevantes, Se o animal é vacidando, Portedo animal, Comportamento"  rows="4" cols="50" ></textarea> </p>
-    
-    
-    
-                <p><button type="button" id='salvaEdita' name='salvaEdita' value="salvaEdita" onclick="salvaEditaPet()" >Salvar</button>  </p>     
-                <hr>
-          </main>
-          
-          
-           <form class="" id="editaPet"  onsubmit="cadastrarPet(event)" enctype="multipart/form-data">
-            <input type="file" name="imgPet" id="imgPet">
-            <p><button type="submit" id='cadastrar' name='cadastrar' value="Cadastrar"> Cadastrar </button>  </p>      
-            <button type="button"> <a href="home.html"> Voltar </a> </button>
+                </select>
+              </div>
+      
+              <div class="form-group col-md-6 col-12">
+                <label for="SeletorSexo">Pet Sexo</label>
+                <select class="form-control" name="SeletorSexo" id="SeletorSexo">
+                  <option value="">--Escolha--</option>
+                  <option value="M">Macho</option>
+                  <option value="F">Femea</option>
+                </select>
+              </div>
+            </div>
+      
+            <div class="form-row mf-2 mr-2"> 
+              <div class="form-group col-md-6 col-12">
+                <label for="raca">Raça</label>
+                <select class="form-control" name="raca" id="raca">
+                  <option value="">--Escolha--</option>
+                </select>
+              </div>
+              <input type="hidden" name="idpet" id="idpet">
+      
+              <div class="form-group col-md-6 col-12">
+                <label for="cep">Localização CEP</label>
+                <input type="text" class="form-control" name="cep" id="cep"  placeholder="ex:96040540" size="10" onblur="pesquisacep(this.value);">
+              </div>
+            </div>
+      
+            <div class="form-group mf-2 mr-2">
+              <label for="obs">Descrição Pet</label>
+              <textarea class="form-control" name="obs" id="obs"  placeholder="Descreve Informações relevantes, Se o animal é vacidando, Portedo animal, Comportamento" rows="3"></textarea>
+            </div>
+            <div class="form-row pb-2 mf-4 quebraPalavra">
+              <input type="file" name="imgPet" id="imgPet" >
+            </div>
+            <input type="hidden" name="imgAnt" id="imgAnt">
             
-          </form> -->
-    
-          <form class="col-10 container-fluid" id="editaPet"  onsubmit="salvaEditaPet(event)" enctype="multipart/form-data">
-            
-          <div class="form-row mf-2 mr-2">  
-            <div class="form-group col-md-6 col-12">
-              <label for="nome">Nome</label>
-              <input type="text" class="form-control"  name="nome" id="nome" placeholder="João Da Silva">
-            </div>
-    
-            <div class="form-group col-md-6 col-12">
-              <label for="nome">Data Nascimento</label>
-              <input type="date" class="form-control"  name="dt_nasc" id="dt_nasc" >
-            </div>
-          </div>  
-    
-          <div class="form-row mf-2 mr-2"> 
-            <div class="form-group col-md-6 col-12">
-              <label for="SeletorTipo">Pet Tipo</label>
-              <select class="form-control" name="SeletorTipo" id="SeletorTipo">
-                  <option value="" >--Escolha--</option>
-                  <option value="C" >Cão</option>
-                  <option value="G">Gato</option>
-              </select>
-            </div>
-    
-            <div class="form-group col-md-6 col-12">
-              <label for="SeletorSexo">Pet Sexo</label>
-              <select class="form-control" name="SeletorSexo" id="SeletorSexo">
-                <option value="">--Escolha--</option>
-                <option value="M">Macho</option>
-                <option value="F">Femea</option>
-              </select>
-            </div>
-          </div>
-    
-          <div class="form-row mf-2 mr-2"> 
-            <div class="form-group col-md-6 col-12">
-              <label for="raca">Raça</label>
-              <select class="form-control" name="raca" id="raca">
-                <option value="">--Escolha--</option>
-              </select>
-            </div>
-            <input type="hidden" name="idpet" id="idpet">
-    
-            <div class="form-group col-md-6 col-12">
-              <label for="cep">Localização CEP</label>
-              <input type="text" class="form-control" name="cep" id="cep"  placeholder="ex:96040540" size="10" onblur="pesquisacep(this.value);">
-            </div>
-          </div>
-    
-          <div class="form-group mf-2 mr-2">
-            <label for="obs">Descrição Pet</label>
-            <textarea class="form-control" name="obs" id="obs"  placeholder="Descreve Informações relevantes, Se o animal é vacidando, Portedo animal, Comportamento" rows="3"></textarea>
-          </div>
-          <div class="form-row pb-2 mf-4">
-            <input type="file" name="imgPet" id="imgPet">
-          </div>
-          <input type="hidden" name="imgAnt" id="imgAnt">
-          
-          <button type="submit" class="btn btn-primary mb-2 ">Salvar</button>
-    
+            <button type="submit" class="btn btn-primary mb-2 ">Salvar</button>
+      
             
           </form>
     
           <div class="album bg-light">
             <div class="container">
-    
               <div class="row" id="listarPets" style="min-height: 90vh;">
       
               </div>  

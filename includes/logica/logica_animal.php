@@ -153,8 +153,7 @@
     $id_Animal   = $_POST['id_Animal'];
     $idUsuario   = $_SESSION['id'];
 
-
-    if($_FILES['img']['name'] != NULL){ // COM Imagem
+    if($_FILES){ // COM Imagem
       $imgAnt = $_POST['imgAnt'];
       /* Config_upload */
       //parâmetros de configuração para o upload
