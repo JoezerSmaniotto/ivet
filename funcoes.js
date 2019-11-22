@@ -53,6 +53,32 @@ function valida_sessao(formulario) { // OK
 
 }
 
+function trocaMenu() { // OK
+
+    fetch('autentica.php', {
+        method: 'POST',
+        mode: 'no-cors'
+    })
+        .then(response => {
+            return response.json();
+        }).then(dados => {
+            console.log('Recebendo dados Menu!');
+            console.log(dados);
+            if (dados) {
+                if (dados.sucesso == false) {
+                    menuDeslogado();
+                } else {
+                    menuLogado()
+                    return dados.sucesso;
+                }
+            }
+        })
+        .catch(error => {
+            console.log(`Erro ao conectar:\n\n${error.message}`)
+        });
+
+
+}
 
 function listar(formulario) { // ??
 
@@ -119,36 +145,36 @@ function menuDeslogado() {
 }
 
 
-function boasvindas() { // OK
-    let apresentarUser = true
-    let obj = { apresentarUser }
-    fetch('includes/logica/logica_usuario.php', {
-        method: 'post',
-        mode: 'cors',
-        body: JSON.stringify(obj)
-    })
-        .then(response => response.json())
-        .then(function result(dados) {
-            // document.querySelector('#welcome').innerHTML = `Olá ${dados.nome} `;
-            let data = new Date();
-            let hora = data.getHours();
-            let saldacao = "Bom dia"
-            if (hora >= 6 && hora < 12) {
-                saldacao = "Bom dia"
-            } else if (hora >= 12 && hora < 19) {
-                saldacao = "Boa tarde"
-            } else {
-                saldacao = "Boa Noite"
-            }
-            console.log(`${saldacao} ${hora} `);
-            return `${saldacao} ${dados.nome} `;
+// function boasvindas() { // OK
+//     let apresentarUser = true
+//     let obj = { apresentarUser }
+//     fetch('includes/logica/logica_usuario.php', {
+//         method: 'post',
+//         mode: 'cors',
+//         body: JSON.stringify(obj)
+//     })
+//         .then(response => response.json())
+//         .then(function result(dados) {
+//             // document.querySelector('#welcome').innerHTML = `Olá ${dados.nome} `;
+//             let data = new Date();
+//             let hora = data.getHours();
+//             let saldacao = "Bom dia"
+//             if (hora >= 6 && hora < 12) {
+//                 saldacao = "Bom dia"
+//             } else if (hora >= 12 && hora < 19) {
+//                 saldacao = "Boa tarde"
+//             } else {
+//                 saldacao = "Boa Noite"
+//             }
+//             // console.log(`${saldacao} ${hora} `);
+//             return `${saldacao} ${dados.nome} `;
 
-        });
+//         });
 
-    // .catch(error => {
-    //     console.log(`Erro ao conectar:\n\n${error.message}`)
-    // });
-}
+//     // .catch(error => {
+//     //     console.log(`Erro ao conectar:\n\n${error.message}`)
+//     // });
+// }
 
 let saldacao2 = function () {
     return new Promise(function (resolve, reject) {
@@ -186,6 +212,9 @@ let saldacao2 = function () {
 
     })
 }
+
+
+
 
 function menuLogado() {
 
@@ -273,10 +302,6 @@ function menuLogado() {
 }
 
 
-
-
-
-
 function autentica() { // OK
 
     fetch('autentica.php', {
@@ -287,13 +312,13 @@ function autentica() { // OK
             return response.json();
         }).then(dados => {
             console.log('Recebendo dados!');
-            //console.log(dados);
+            console.log(dados);
             if (dados) {
                 if (dados.sucesso == false) {
-                    // window.location='home.html';
-                    menuDeslogado();
+                    window.location='home.html';
+                    // menuDeslogado();
                 } else {
-                    menuLogado()
+                    // menuLogado()
                     return dados.sucesso;
                 }
             }
@@ -319,7 +344,7 @@ function sair() { // OK
             console.log('Recebendo dados!');
             console.log(dados);
             if (dados.sair == true) {
-                window.location = 'login.html'
+                window.location = 'home.html'
             }
 
         })
@@ -466,7 +491,7 @@ function salvaEdicao() { // OK
             let result = JSON.parse(data)
             //console.log(result)
             alert("Dados Atualizados Com Sucesso")
-            boasvindas()
+            // boasvindas()
         });
 
     } else {

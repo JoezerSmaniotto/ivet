@@ -11,7 +11,7 @@
         }
 
     }
-
+    
 
     function alterarUsuario($conexao, $array){
         try {

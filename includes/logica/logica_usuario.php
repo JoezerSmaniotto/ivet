@@ -64,8 +64,6 @@ if(isset( $data->apresentarUser)){
 }  
 
 
-
-
 #SAIR 
 if(isset($_POST['sair'])){
         session_start();
@@ -120,10 +118,8 @@ if(isset($data->excluirConta)){
     if($result){
         echo json_encode($result);
         session_destroy();
-       
-        
+             
     }
-
     
 } 
 
@@ -138,10 +134,6 @@ if(isset( $data->validaEmail)){
     echo json_encode($result); 
     
 }
-
-
-
-
 
 
 #ALTERAR USUÁRIO_Logado
