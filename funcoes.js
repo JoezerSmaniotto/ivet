@@ -68,6 +68,7 @@ function trocaMenu() { // OK
                 if (dados.sucesso == false) {
                     menuDeslogado();
                 } else {
+                    // window.location="home.html"
                     menuLogado()
                     return dados.sucesso;
                 }
@@ -79,6 +80,38 @@ function trocaMenu() { // OK
 
 
 }
+
+function trocaMenu2() { // OK
+
+    fetch('autentica.php', {
+        method: 'POST',
+        mode: 'no-cors'
+    })
+        .then(response => {
+            return response.json();
+        }).then(dados => {
+            console.log('Recebendo dados Menu!');
+            console.log(dados);
+            if (dados) {
+                if (dados.sucesso == false) {
+                    // menuDeslogado();
+                } else {
+                    window.location="home.html"
+                    // menuLogado()
+                    // return dados.sucesso;
+                }
+            }
+        })
+        .catch(error => {
+            console.log(`Erro ao conectar:\n\n${error.message}`)
+        });
+
+
+}
+
+
+
+
 
 function listar(formulario) { // ??
 
@@ -165,10 +198,11 @@ function menuDeslogado() {
                                 <input type="submit" class="btn btn-primary" value="Logar"></input>
                                 
                                 <div class="form-group pt-3">
-                                     <a href="cadastroJoezer.html">Cadastre-se !!</a>
+                                     <a href="cadastroUsuario.html">Cadastre-se !!</a>
                                 </div>
                                 
                             </form>
+                            <div id='texto'></div>
                         </div>
                     
                     </div>

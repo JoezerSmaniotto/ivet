@@ -494,7 +494,7 @@ function showPetsTotal(){
           
           // `;
 
-
+          let caminhoImg ;
            data.forEach((item,index)=>{
               console.log(index);
                console.log(item);
@@ -508,15 +508,12 @@ function showPetsTotal(){
                }else{
                  Sx = "Macho";
                } 
-              //  document.querySelector('#listarPets').innerHTML += `Nome: ${item.nome} | Tipo: ${tipoA} | Raça: ${item.nomer} <br>`;
-              //  document.querySelector('#listarPets').innerHTML += `Sexo: ${Sx} | Data Nasc: ${item.nascimento} | Localização: ${item.localizacao} <br>`;
-              //  document.querySelector('#listarPets').innerHTML += `Observações: ${item.observacoes} <br>`;
-              //  document.querySelector('#listarPets').innerHTML += `<button onclick="solicitaAdota(${item.id_animal})">Adote !</button>`;
-              //  document.querySelector('#listarPets').innerHTML += `<br><hr>`;
+              
+              caminhoImg = `imagens/${item.imagem}`;
               document.querySelector('#listarPets').innerHTML += `
               <div class="col-md-4">
                <div class="card mb-4 shadow-sm">
-                <img class="card-img-top" src="https://media-manager.noticiasaominuto.com/1920/naom_5c43865b1e42c.jpg" alt="Card image cap">
+                <img class="card-img-top imganimal" src="${caminhoImg}" alt="Card image cap">
                  <div class="card-body overflow-auto">
                    <p class="card-text"> Nome: ${item.nome} | Tipo: ${tipoA} | Raça: ${item.nomer} <br></p>
                    <p class="card-text"> Sexo: ${Sx} | Data Nasc: ${item.nascimento} | Localização: ${item.localizacao} <br></p>
