@@ -204,7 +204,7 @@
 
   function apresentarSolicitacoesAdocao($conexao,$idUsuario){
     try {
-      $query = $conexao->prepare("select adota.id_usuario as id_usu,pet_tipo.nome as nomeAni,raca.nomer,pet_tipo.id_animal,usuario.nome,usuario.e_mail
+      $query = $conexao->prepare("select adota.id_usuario as id_usu,pet_tipo.nome as nomeAni,raca.nomer,pet_tipo.imagem,pet_tipo.id_animal,usuario.nome,usuario.e_mail
       from adota join pet_tipo on( adota.id_animal = pet_tipo.id_animal) join usuario 
       on (adota.id_usuario= usuario.id_usuario) join raca 
       on (pet_tipo.fk_raca_id = raca.id)

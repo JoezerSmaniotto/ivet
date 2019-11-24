@@ -594,20 +594,45 @@ function showSolicitacoes(){
       if(data.result =="Não Há Solicitações"){
           let reposta = document.querySelector("#listarPets")
           document.querySelector('#listarPets').innerText = "";
-          let p4 = document.createElement('p')
+          // let h2 = document.createElement('h2')
+          // h2.createElement("Não Há Solicitações !!")
+
           let conteudo = document.createTextNode(" Não Há Solicitações !!")
+          // conteudo.classList.add("text-center");
+          // reposta.appendChild(h2) 
           reposta.appendChild(conteudo)     
           alert("Não Há Solicitações");
       }else{
-          let tipoA,Sx;
+          let tipoA,Sx,caminhoImg;
           document.querySelector('#listarPets').innerText = "";
           data.forEach((item)=>{
-              document.querySelector('#listarPets').innerHTML += `O usuario: ${item.nome} com e-mail: ${item.e_mail} <br>`;
-              document.querySelector('#listarPets').innerHTML += `Deseja Adotar o Pet ${item.nomeani}  da raça ${item.nomer} <br>`;
-              document.querySelector('#listarPets').innerHTML += `<button onclick="aceitaAdocao(${item.id_animal},${item.id_usu})">Aceito !</button>`;
-              document.querySelector('#listarPets').innerHTML += `<button onclick="rejeitarAdocao(${item.id_animal},${item.id_usu})">Rejeitar !</button>`;
-              document.querySelector('#listarPets').innerHTML += `<br><hr>`;
-            })
+              caminhoImg = `imagens/${item.imagem}`;
+              // document.querySelector('#listarPets').innerHTML += `O usuario: ${item.nome} com e-mail: ${item.e_mail} <br>`;
+              // document.querySelector('#listarPets').innerHTML += `Deseja Adotar o Pet ${item.nomeani}  da raça ${item.nomer} <br>`;
+              // document.querySelector('#listarPets').innerHTML += `<button onclick="aceitaAdocao(${item.id_animal},${item.id_usu})">Aceito !</button>`;
+              // document.querySelector('#listarPets').innerHTML += `<button onclick="rejeitarAdocao(${item.id_animal},${item.id_usu})">Rejeitar !</button>`;
+              // document.querySelector('#listarPets').innerHTML += `<br><hr>`;
+              caminhoImg = `imagens/${item.imagem}`;
+              document.querySelector('#listarPets').innerHTML += `
+              <div class="col-md-4">
+               <div class="card mb-4 shadow-sm">
+                <img class="card-img-top imganimal" src="${caminhoImg}" alt="Card image cap">
+                 <div class="card-body overflow-auto">
+                   <p class="card-text"> O usuario: ${item.nome} com e-mail: ${item.e_mail}<br>
+                    Deseja Adotar o Pet ${item.nomeani}  da raça ${item.nomer}<br>
+                    Deseja Adotar o Pet ${item.nomeani}  da raça ${item.nomer}<br></p> 
+                   <div class="d-flex justify-content-between align-items-center">
+                     <div class="btn-group">
+                       <button type="button" class="btn btn-sm btn-outline-secondary"  onclick="aceitaAdocao(${item.id_animal},${item.id_usu})" >Aceito !</button>
+                       <button type="button" class="btn btn-sm btn-outline-secondary"  onclick="rejeitarAdocao(${item.id_animal},${item.id_usu})">Rejeitar!</button>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div> `;
+          
+          
+          })
 
       }
   
