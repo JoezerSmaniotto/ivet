@@ -123,10 +123,16 @@
   #Exclui Pet
   if(isset($data->excluirPet)){
     // $idUsuario = $_SESSION['id'];
-    $idAnimal = $data->idAnimal;    
-    $array = array($idAnimal);
-    $result=deletarPet($conexao, $array);
-    echo json_encode($result); 
+    $idAnimal = $data->idAnimal;
+    $imagemExclui = $data->imagem;
+    $caminho2="../../imagens";
+    $way = "$caminho2/$imagemExclui";
+    if( unlink($way)){
+      $array = array($idAnimal);
+      $result=deletarPet($conexao, $array);
+      echo json_encode($result);
+    }
+    
   }
 
   

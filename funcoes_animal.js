@@ -1,4 +1,5 @@
-   
+
+     
 function limpa_formulário_cep() {
     //Limpa valores do formulário de cep.
    
@@ -159,11 +160,11 @@ function formularioValido(dadosAnimal){ // OK
 }
 
 
-function excluirAnimal(idAnimal,nome){
+function excluirAnimal(idAnimal,nome,imagem){
   
   if(window.confirm(`Deseja Realmente Excluir o ${nome} Pet?`)){
     let excluirPet = true; 
-    let obj =  { excluirPet,idAnimal };
+    let obj =  { excluirPet,idAnimal,imagem };
     console.log(obj);
     fetch('includes/logica/logica_animal.php',{
         method:'delete',
@@ -204,8 +205,6 @@ function editarAnimal(id){
 
     });
   }  
- 
-
 }
 
 // Começo Edita
@@ -432,7 +431,7 @@ function showPets(){
                      <p class="card-text"> Observações: ${item.observacoes} <br></p> 
                      <div class="d-flex justify-content-between align-items-center">
                        <div class="btn-group">
-                         <button type="button" class="btn btn-sm btn-outline-secondary" onclick="excluirAnimal(${item.id_animal},'${item.nome}')" >Exclui</button>
+                         <button type="button" class="btn btn-sm btn-outline-secondary" onclick="excluirAnimal(${item.id_animal},'${item.nome}','${item.imagem}')" >Exclui</button>
                          <button type="button" class="btn btn-sm btn-outline-secondary" onclick="editarAnimal(${item.id_animal})">Edita</button>
                        </div>
                      
@@ -444,7 +443,7 @@ function showPets(){
                 // document.querySelector('#listarPets').innerHTML += `Nome: ${item.nome} | Tipo: ${tipoA} | Raça: ${item.nomer} <br>`;
                 // document.querySelector('#listarPets').innerHTML += `Sexo: ${Sx} | Data Nasc: ${item.nascimento} | Localização: ${item.localizacao} <br>`;
                 // document.querySelector('#listarPets').innerHTML += `Observações: ${item.observacoes} <br>`;
-                // document.querySelector('#listarPets').innerHTML += `<button onclick="excluirAnimal(${item.id_animal},'${item.nome}')">Exclui</button>`;
+                // document.querySelector('#listarPets').innerHTML += `<button onclick="excluirAnimal(${item.id_animal},'${item.nome}','${item.nome}')">Exclui</button>`;
                 // document.querySelector('#listarPets').innerHTML += `<button onclick="editarAnimal(${item.id_animal})">Edita</button>`;
                 // document.querySelector('#listarPets').innerHTML += `<br><hr>`;
 
@@ -459,14 +458,46 @@ function showPets(){
 function solicitaAdota(id_animal){
   let solicitaAdocao = true;
   let obj =  { solicitaAdocao,id_animal};
-  fetch('includes/logica/logica_animal.php',{
-      method:'post',
-      body: JSON.stringify(obj) // Converte para JSON
-  }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
-  }).then( data => {
-     console.log(data)
-     
+  fetch('autentica.php', {
+    method: 'POST',
+    mode: 'no-cors'
+  })
+  .then(response => {
+      return response.json();
+  }).then(dados => {
+      console.log('Recebendo dados Menu!');
+      console.log(dados);
+      if (dados) {
+          if (!dados.sucesso) {
+            $('#exampleModal').modal(
+             
+            )
+          } else {
+              fetch('includes/logica/logica_animal.php',{
+                method:'post',
+                body: JSON.stringify(obj) // Converte para JSON
+              }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+              }).then( data => {
+                console.log(data)
+                alert("Solitação Enviada !!")
+                
+              });
+          }
+      }
+  })
+  .catch(error => {
+      console.log(`Erro ao conectar:\n\n${error.message}`)
   });
+
+
+  // fetch('includes/logica/logica_animal.php',{
+  //     method:'post',
+  //     body: JSON.stringify(obj) // Converte para JSON
+  // }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+  // }).then( data => {
+  //    console.log(data)
+     
+  // });
 
 }
 
@@ -620,7 +651,6 @@ function showSolicitacoes(){
                  <div class="card-body overflow-auto">
                    <p class="card-text"> O usuario: ${item.nome} com e-mail: ${item.e_mail}<br>
                     Deseja Adotar o Pet ${item.nomeani}  da raça ${item.nomer}<br>
-                    Deseja Adotar o Pet ${item.nomeani}  da raça ${item.nomer}<br></p> 
                    <div class="d-flex justify-content-between align-items-center">
                      <div class="btn-group">
                        <button type="button" class="btn btn-sm btn-outline-secondary"  onclick="aceitaAdocao(${item.id_animal},${item.id_usu})" >Aceito !</button>

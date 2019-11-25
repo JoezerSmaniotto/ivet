@@ -164,7 +164,7 @@ function menuDeslogado() {
                         <a class="nav-link" href="home.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contato</a>
+                        <a class="nav-link" href="contato.html">Contato</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="cadastroUsuario.html">Cadastra-se<span class="sr-only">(current)</span></a>
