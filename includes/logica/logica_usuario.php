@@ -1,10 +1,12 @@
 <?php
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
     session_start();
     require_once('conecta.php');
     require_once('funcoes_usuario.php');
     $json = file_get_contents('php://input');
     $data = json_decode($json);
-
+    
     
     
 #CADASTRO USUÁRIO // OK    
@@ -152,6 +154,66 @@ if(isset($_POST['alterar'])){
 
     header('location:../../index.php');
 }
+
+
+# Contato
+if(isset($data->contato)){ 
+    $nome        = $data->nome;    
+    $EmailRes    = $data->EmailRes;     
+    $assunto     = $data->assunto;
+    $conteudo    = $data->conteudo;
+
+
+    // var_dump( $nome );
+    // var_dump($EmailRes );
+    // var_dump($assunto );
+    // var_dump( $conteudo );
+
+
+
+    require_once('PHPMailer/src/PHPMailer.php');
+    require_once('PHPMailer/src/Exception.php');
+    require_once('PHPMailer/src/SMTP.php');    
+
+    $mail = new PHPMailer();
+    $mail->SetLanguage("br");
+    $mail->IsSMTP();
+    $mail->isHTML(true);
+    $mail->SMTPDebug = 0; //exibe erros e mensagens, 0 não exibe nada
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = "tls";
+
+    $mail->Host = "smtp.gmail.com";
+    $mail->Port = 587;
+    $mail->Username = "animalsivet@gmail.com";
+    $mail->Password = "@1234567j";
+    $mail->CharSet = "utf-8";
+
+    $mail->From = "animalsivet@gmail.com"; //remetente
+    $mail->FromName = "Ivet";
+    $mail->AddAddress($EmailRes);
+
+    $mail->Subject = "Contato - Ivet";
+    $mail->Body = "Olá ".$nome.",<br><br>Obrigado por entrar em contato conosco, retornaremos assim que possível!";
+
+    // var_dump($mail);
+
+    $vetore = array();
+    if(!$mail->Send()){
+        // $message = $mail->ErrorInfo;
+        // echo(json_encode(['success' => false, 'message' => $message]));
+        $vetore['success']=false;
+        echo json_encode($vetore); 
+    } else {
+        // echo(json_encode(['success' => true, 'message' => 'Seu contato foi enviado com sucesso!']));
+        $vetore['success']=true;
+        echo json_encode($vetore); 
+    }
+
+    // else echo(json_encode(['success' => false, 'message' => 'Erro ao enviar sua mensagem, tente novamente!']));
+
+
+}    
 
 
 

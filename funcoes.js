@@ -150,8 +150,8 @@ function menuDeslogado() {
     
 
     document.querySelector('#colocamenu').innerHTML = `
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Ivet</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary text-light">
+            <a class="navbar-brand" href="home.html">Ivet</a>
             
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -215,37 +215,6 @@ function menuDeslogado() {
 }
 
 
-// function boasvindas() { // OK
-//     let apresentarUser = true
-//     let obj = { apresentarUser }
-//     fetch('includes/logica/logica_usuario.php', {
-//         method: 'post',
-//         mode: 'cors',
-//         body: JSON.stringify(obj)
-//     })
-//         .then(response => response.json())
-//         .then(function result(dados) {
-//             // document.querySelector('#welcome').innerHTML = `Olá ${dados.nome} `;
-//             let data = new Date();
-//             let hora = data.getHours();
-//             let saldacao = "Bom dia"
-//             if (hora >= 6 && hora < 12) {
-//                 saldacao = "Bom dia"
-//             } else if (hora >= 12 && hora < 19) {
-//                 saldacao = "Boa tarde"
-//             } else {
-//                 saldacao = "Boa Noite"
-//             }
-//             // console.log(`${saldacao} ${hora} `);
-//             return `${saldacao} ${dados.nome} `;
-
-//         });
-
-//     // .catch(error => {
-//     //     console.log(`Erro ao conectar:\n\n${error.message}`)
-//     // });
-// }
-
 let saldacao2 = function () {
     return new Promise(function (resolve, reject) {
         let saldacao = "Bom dia"
@@ -292,8 +261,8 @@ function menuLogado() {
     .then(function (response) {
         let boasvi = response;
         document.querySelector('#colocamenu').innerHTML = `
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Ivet</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary text-light">
+            <a class="navbar-brand" href="home.html">Ivet</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -330,45 +299,7 @@ function menuLogado() {
         
     })
 
-    // document.querySelector('#colocamenu').innerHTML = `
-    //     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    //         <a class="navbar-brand" href="#">Ivet</a>
-    //         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    //         <span class="navbar-toggler-icon"></span>
-    //         </button>
-    //         <div class="collapse navbar-collapse" id="navbarNav">
-    //         <ul class="navbar-nav ml-auto">
-                
-    //             <li class="nav-item  active">
-    //                 <a class="nav-link" href="home.html">Home</a>
-    //             </li>
-    //             <li class="nav-item">
-    //                 <a class="nav-link" href="solicitacoesAdot.html">SolicitaçõesAdo</a>
-    //             </li>
-    //             <li class="nav-item">
-    //                 <a class="nav-link" href="adicionaPet.html">AdiconaPet</a>
-    //             </li>
-    //             <li class="nav-item">
-    //                 <a class="nav-link" href="listaPet.html">ListaPets</a>
-    //             </li>
-    //             <li class="nav-item">
-    //                 <a class="nav-link" href="editarPerfil.html">Edita Perfil</a>
-    //             </li>
-                
-    //             <li class="nav-item">
-    //                 <a class="nav-link" href="#" onclick="sair()">Sair</a>
-    //             </li>
-    //             <li class="nav-item">
-    //                 boasvi
-    //             </li>
-              
-    //         </ul>
-    //         </div>
-    //     </nav> `;
-
-    // <li class="nav-item">
-    //  <p>${boasvi}</p>
-    // </li>
+ 
 }
 
 
@@ -684,7 +615,7 @@ function cadastrarUsuario() {
                 alert("Usuario Cadastrado !!");
                 // formulario.reset(); 
                 // Aqui redireciona o window
-                window.location = 'login.html'
+                window.location = 'home.html'
             }
         });
     } else {
@@ -696,7 +627,7 @@ function cadastrarUsuario() {
 function gerarObjetoUsuarioCadastro() {
     const nome = document.querySelector('#nome').value;
     const cpf = document.querySelector('#cpf').value;
-    const email = document.querySelector('#email').value;
+    const email = document.querySelector('#emails').value;
     const cep = document.querySelector('#cep').value;
     const rua = document.querySelector('#rua').value;
     const numero = document.querySelector('#numero').value;
@@ -726,11 +657,14 @@ function pesquisaemail(email) {
     }).then((response) => {
         return response.json()
     }).then(data => {
-        //console.log('Recebendo dados!')
+        console.log('Recebendo dados!')
         console.log(data);
-        if (data.result == 'true') {
+        if (data.result == "true") {
             alert(`Email: ${email} já cadastrado`)
-            document.querySelector("#email").value = ' '
+            document.querySelector("#emails").value = ' ';
+            // document.querySelector("#email").reset();
+           
+            
         }
 
     }).catch(error => {
@@ -740,3 +674,44 @@ function pesquisaemail(email) {
 }
 
 
+function contatoForm(event){
+    event.preventDefault()
+    const nome = document.querySelector("#nome").value;
+    const EmailRes = document.querySelector("#emailcont").value;
+    const assunto = document.querySelector("#assunto").value;
+    const conteudo = document.querySelector("#conteudo").value;
+    console.log(EmailRes)
+    console.log(nome)
+    console.log(assunto)
+    console.log(conteudo)
+    let contato = true
+    let obj = { nome , EmailRes, assunto, conteudo ,contato }
+    fetch('includes/logica/logica_usuario.php', {
+        method: 'POST',
+        body: JSON.stringify(obj)
+    }).then((response) => {
+        return response.json()
+    }).then(data => {
+        console.log('Recebendo dados!')
+        console.log(data);
+        if (data.success == true) {
+            // document.querySelector("#email").value = ' ';
+            // document.querySelector("#email").reset();
+            alert("Contato Enviado Com Sucesso")
+            
+        }else{
+            alert("Falha No Envio! Tente Novamente!! ")
+        }
+
+    }).catch(error => {
+        console.log(`Erro ao conectar:\n\n${error.message}`)
+    });
+
+    
+
+}
+
+
+function email(el){
+    console.log(el.value)
+}

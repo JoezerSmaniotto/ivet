@@ -78,8 +78,8 @@ function cadastrarPet(event){
   event.preventDefault()
   const formulario = document.querySelector("#cadastro")
   const dadosAnimal = gerarObjetoAnimalCadastro()
-  
   console.log(dadosAnimal);
+
   let formData = new FormData();
   if( formularioValido(dadosAnimal)){
     
@@ -87,7 +87,7 @@ function cadastrarPet(event){
       // console.log(key + " = " + value)
       formData.append(key, value)
     });
-    // console.log(formData)
+    console.log(formData)
     fetch('includes/logica/logica_animal.php',{ // 
       method: 'POST',
       body: formData,

@@ -4,133 +4,79 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width,initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <!--<link rel="stylesheet" href="assets/css/index.css">-->
-      <title>Cadastrar Usuário</title>
+      <title>Contato</title>
       <script src="funcoes.js"></script>
-      <script src="funcoes_animal.js"></script>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
       <link rel="stylesheet" href="index.css">
-
   </head>
-  <body >
-    
-    <main>
+  <body  onload="menuDeslogado(),trocaMenu2()">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="min-height: 9vh">
-            <a class="navbar-brand" href="#">Ivet</a>
-            
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="home.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contato.html">Contato</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="cadastroUsuario.html">Cadastra-se<span class="sr-only">(current)</span></a>
-                    </li>
-    
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Login</button></a>
-                    </li>
-    
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form name="acesso" id="formulario" method="post" onsubmit="valida_sessao(this)"> 
-                                <div class="form-group">
-                                    <label for="email" class="col-form-label">E-mail:</label>
-                                    <input type="text" class="form-control" id="email" name="email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="senha" class="col-form-label">Senha:</label>
-                                    <input type="password" class="form-control" id="senha" name="senha">
-                                </div>
-    
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <input type="submit" class="btn btn-primary" value="Logar"></input>
-                                
-                                <div class="form-group pt-3">
-                                     <a href="cadastroUsuario.html">Cadastre-se !!</a>
-                                </div>
-                            </form>
-                            <div id='texto'></div>
-                        </div>
-                    
-                    </div>
+    <!-- <main> -->
+      <div id="colocamenu" style="min-height: 9vh" >   </div>  
+
+      <div class="container-fluid bg-transparent" style="min-height: 82vh">
+          <!-- <div class="col-md-8 mr-auto ml-auto" style="min-height: 82vh">  -->
+
+            <div class="row">
+              <div class="col-md-12 text-center p-4">
+                  <h1>Contato</h1>
+              </div>
+            </div>
+              
+            <form class="col-12 container-fluid p-3" id="contato" name="contato" onsubmit="contatoForm(event)">
+                        
+              <div class="row">  
+                <div class="col-md-6 col-12">
+                    <div class="form-group"> 
+                      <label for="nome">Nome</label>
+                      <input type="text" class="form-control"  name="nome" id="nome" placeholder="Ex: João Da Silva">
+                   </div>
+                </div>
+        
+              <div class="col-md-6 col-12">
+                  <div class="form-group"> 
+                    <label for="nome">Email</label>
+                    <input type="email" class="form-control"  name="emailcont" id="emailcont" placeholder="Ex: joãosilva@gmail.com">
+                </div>
+              </div>
+                
+              </div>  
+        
+              <div class="row"> 
+                <div class="col-md-6 col-12">
+                    <div class="form-group"> 
+                      <label for="SeletorTipo">Assunto</label>
+                      <select class="form-control" name="assunto" id="assunto">
+                          <option value="" >--Escolha--</option>
+                          <option value="FaleConosco">FaleConosco</option>
+                          <option value="Pets">Pets</option>
+                          <option value="Dogs">Dogs</option>
+                      </select>
                     </div>
                 </div>
-                    
-                </ul>
-            </div>
-        </nav> 
-        <!-- fim menu -->
-
-        <!-- </div> -->
-        <!-- <section> -->
-  
-    <div class="container-fluid bg-transparent">
-        <div class="col-md-8 mr-auto ml-auto" style="min-height: 82vh">
-          <div class="row">
-            <div class="col-md-12 text-center">
-                <h1>Contato</h1>
-            </div>
-          </div>
-
-          <form class="col-12 container-fluid" id="editaPet" name="cadastro" onsubmit="contatoForm(event)" enctype="multipart/form-data">
-                      
-            <div class="form-row mf-2 mr-2">  
-              <div class="form-group col-md-6 col-12">
-                <label for="nome">Nome</label>
-                <input type="text" class="form-control"  name="nome" id="nome" placeholder="Ex: João Da Silva">
               </div>
-      
-              <div class="form-group col-md-6 col-12">
-                <label for="nome">Email</label>
-                <input type="email" class="form-control"  name="email" id="email" placeholder="Ex: joãosilva@gmail.com">
+        
+              <div class="row"> 
+                <div class=" col-12">
+                  <div class="form-group"> 
+                    <label for="obs">Conteúdo</label>
+                    <textarea class="form-control" name="conteudo" id="conteudo"  placeholder="Descreve " rows="3"></textarea>
+                  </div>
+                </div>
               </div>
-            </div>  
-      
-            <div class="form-row mf-2 mr-2"> 
-              <div class="form-group col-md-6 col-12">
-                <label for="SeletorTipo">Assunto</label>
-                <select class="form-control" name="assunto" id="assunto">
-                    <option value="" >--Escolha--</option>
-                    <option value="FaleConosco">FaleConosco</option>
-                    <option value="Pets">Pets</option>
-                    <option value="Dogs">Dogs</option>
-                </select>
-              </div>
-            </div>
-      
-            <div class="form-group mf-2 mr-2">
-              <label for="obs">Conteúdo</label>
-              <textarea class="form-control" name="conteudo" id="conteudo"  placeholder="Descreve " rows="3"></textarea>
-            </div>
+        
 
-            <button type="button" class="btn btn-primary mb-2 ">Enviar</button>
-            
-                 
-          </form>
-      
-    </div>
-  </div>
-    <!-- </section> -->
-    </main>
-    <footer class="footer mt-auto py-3 bg-primary align-items-stretch" style="margin-top: auto !important; width: 100% !important;">
+              <button type="submit" class="btn btn-primary mb-2 ">Enviar</button>
+              
+                  
+            </form>
+        
+          <!-- </div> -->
+      </div>
+    
+    <!-- </main> -->
+
+    <footer class="footer mt-auto py-3 bg-primary align-items-stretch" style="margin-top: auto !important; width: 100% !important; min-height:9vh">
       <div class="container-fluid  text-center mt-2">
           <span class="text-muted" style="color: white !important">Copyright 2001-2019 ivet.com.br</span>
       </div>
