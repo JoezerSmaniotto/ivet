@@ -163,14 +163,6 @@ if(isset($data->contato)){
     $assunto     = $data->assunto;
     $conteudo    = $data->conteudo;
 
-
-    // var_dump( $nome );
-    // var_dump($EmailRes );
-    // var_dump($assunto );
-    // var_dump( $conteudo );
-
-
-
     require_once('PHPMailer/src/PHPMailer.php');
     require_once('PHPMailer/src/Exception.php');
     require_once('PHPMailer/src/SMTP.php');    
@@ -195,8 +187,6 @@ if(isset($data->contato)){
 
     $mail->Subject = "Contato - Ivet";
     $mail->Body = "Olá ".$nome.",<br><br>Obrigado por entrar em contato conosco, retornaremos assim que possível!";
-
-    // var_dump($mail);
 
     $vetore = array();
     if(!$mail->Send()){

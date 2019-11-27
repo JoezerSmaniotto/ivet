@@ -1,5 +1,6 @@
 <?php
-
+   use PHPMailer\PHPMailer\PHPMailer;
+   use PHPMailer\PHPMailer\Exception;
 
   function buscarRaca($conexao){
     try {
@@ -266,6 +267,7 @@
 
   function rejeitaAdocao($conexao,$array){
     try {
+      
       //  $array = array($data_adocao,$status_Solicita,$idUsuario,$id_Animal);
       $query = $conexao->prepare("update adota set status_adocao= ? where id_usuario = ? and id_animal = ? ");
       $resultado = $query->execute($array);
@@ -282,6 +284,93 @@
     }catch(PDOException $e) {// Erro ao executar a query cai no catch
         echo 'Error: ' . $e->getMessage();
     }
+  }
+
+
+  function emailSolicitacao($conexao,$idAnimal,$idUsuario){
+    try {
+      $solitacoes=array();
+      unset($solitacoes);
+      $query = $conexao->prepare("select usuario.nome as nomedono,usuario.e_mail as emaildono,pet_tipo.nome as nomeAnimal
+      from adota left join pet_tipo on(adota.id_animal = pet_tipo.id_animal) 
+      left join usuario on (pet_tipo.id_usuario = usuario.id_usuario) 
+      where adota.id_animal = '$idAnimal' and adota.id_usuario = '$idUsuario' ");
+      $query->execute();
+      $solitacoes = $query->fetchAll(PDO::FETCH_ASSOC); //coloca os dados num array 
+      if($solitacoes){
+            return $solitacoes;
+      }       
+    }
+   
+    catch(PDOException $e) {
+          echo 'Error: ' . $e->getMessage();
+    }
+  }
+
+  function solicitaDadosRejeitado($conexao,$id_Animal,$idUsuario){
+    try {
+      $solitacoe=array();
+      unset($solitacoe);
+      $query = $conexao->prepare("select usuario.nome as nomeSolict,usuario.e_mail as emailSolict,pet_tipo.nome as nomeAnimal
+      from adota left join pet_tipo on(adota.id_animal = pet_tipo.id_animal) 
+      left join usuario on (adota.id_usuario = usuario.id_usuario) 
+      where adota.id_animal = '$id_Animal' and adota.id_usuario = '$idUsuario' ");
+      $query->execute();
+      $solitacoe = $query->fetchAll(PDO::FETCH_ASSOC); //coloca os dados num array 
+      if($solitacoe){
+        return $solitacoe;
+      }       
+    }
+
+    catch(PDOException $e) {
+          echo 'Error: ' . $e->getMessage();
+    }   
+
+  }
+
+  function enviaEmail($emailResp,$mensag){
+
+    require_once('PHPMailer/src/PHPMailer.php');
+    require_once('PHPMailer/src/Exception.php');
+    require_once('PHPMailer/src/SMTP.php');    
+
+    $mail = new PHPMailer();
+    $mail->SetLanguage("br");
+    $mail->IsSMTP();
+    $mail->isHTML(true);
+    $mail->SMTPDebug = 0; //exibe erros e mensagens, 0 não exibe nada
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = "tls";
+
+    $mail->Host = "smtp.gmail.com";
+    $mail->Port = 587;
+    $mail->Username = "animalsivet@gmail.com";
+    $mail->Password = "@1234567j";
+    $mail->CharSet = "utf-8";
+
+    $mail->From = "animalsivet@gmail.com"; //remetente
+    $mail->FromName = "Ivet";
+    $mail->AddAddress($emailResp);
+
+    $mail->Subject = "Contato - Ivet";
+    $mail->Body = $mensag;
+    
+    $vetore = array();
+    if(!$mail->Send()){
+        // $message = $mail->ErrorInfo;
+        // echo(json_encode(['success' => false, 'message' => $message]));
+        // $vetore['success']=false;
+        // echo json_encode($vetore); 
+    } else {
+        // echo(json_encode(['success' => true, 'message' => 'Seu contato foi enviado com sucesso!']));
+        // $vetore['success']=true;
+        // echo json_encode($vetore); 
+    }
+  
+
+
+
+  
   }
 
 

@@ -637,12 +637,8 @@ function showSolicitacoes(){
           let tipoA,Sx,caminhoImg;
           document.querySelector('#listarPets').innerText = "";
           data.forEach((item)=>{
-              caminhoImg = `imagens/${item.imagem}`;
-              // document.querySelector('#listarPets').innerHTML += `O usuario: ${item.nome} com e-mail: ${item.e_mail} <br>`;
-              // document.querySelector('#listarPets').innerHTML += `Deseja Adotar o Pet ${item.nomeani}  da raça ${item.nomer} <br>`;
-              // document.querySelector('#listarPets').innerHTML += `<button onclick="aceitaAdocao(${item.id_animal},${item.id_usu})">Aceito !</button>`;
-              // document.querySelector('#listarPets').innerHTML += `<button onclick="rejeitarAdocao(${item.id_animal},${item.id_usu})">Rejeitar !</button>`;
-              // document.querySelector('#listarPets').innerHTML += `<br><hr>`;
+              // caminhoImg = `imagens/${item.imagem}`;
+              
               caminhoImg = `imagens/${item.imagem}`;
               document.querySelector('#listarPets').innerHTML += `
               <div class="col-md-4">

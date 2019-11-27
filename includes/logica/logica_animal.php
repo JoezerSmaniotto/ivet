@@ -1,4 +1,5 @@
 <?php
+   
     session_start();
     require_once('conecta.php');
     require_once('funcoes_animal.php');
@@ -270,15 +271,35 @@
 
    # Faz as notificações nas para os animais a serem adotados.
    if(isset($data->solicitaAdocao)){
-    $idUsuario = $_SESSION['id'];
-    $id_Animal = $data->id_animal; 
-    $data_Solicita = date('d/m/y'); 
-    $status_Solicita = 0;
-    $array = array($data_Solicita,$status_Solicita,$idUsuario,$id_Animal);
-    $resulta=solicitaAdocao($conexao,$array);
-    echo json_encode($resulta); 
+      $idUsuario = $_SESSION['id'];
+      $id_Animal = $data->id_animal; 
+      $data_Solicita = date('d/m/y'); 
+      $status_Solicita = 0;
+      $retorSolict = array();
+      unset($retorSolict);
+      $array = array($data_Solicita,$status_Solicita,$idUsuario,$id_Animal);
+      $resulta=solicitaAdocao($conexao,$array);
+      echo json_encode($resulta); 
 
-  }
+      // Manda Email
+      $retorSolict = emailSolicitacao($conexao,$id_Animal,$idUsuario);
+      // var_dump($retorSolict);
+      $nomeDono=$retorSolict[0]["nomedono"];
+      // var_dump($nomeDono);
+      // die();
+      $emailDono=$retorSolict[0]["emaildono"];
+      $nomeanimal=$retorSolict[0]["nomeanimal"];
+      $nomeSolicitante=$_SESSION['nome'];
+      $retorSolict = array();
+      unset($retorSolict);
+          
+      $mensagem1= "Olá {$nomeDono} ,<br><br> {$nomeSolicitante} Deseja Adotar seu Pet: {$nomeanimal}, respota esta solicitação !!! <br><br><br><br> Atenciosamente <br> Equipe  Ivet" ;
+      $solAd=enviaEmail($emailDono,$mensagem1);
+      if($solAd){
+        
+      }
+      
+    }
 
    # Lista as Solictaçoes De Adoção Para o Dono do Pet
   if(isset($data->apresentarSolicitacoesAdocao)){
@@ -318,6 +339,19 @@
     $array = array($status_Solicita,$idUsuario,$id_Animal);
     $resul=rejeitaAdocao($conexao,$array);
     echo json_encode($resul); 
+    $resultRej=solicitaDadosRejeitado($conexao,$id_Animal,$idUsuario);
+    // var_dump($resultRej);
+    $nomeSolitc=$resultRej[0]["nomesolict"];
+    $emailSolict=$resultRej[0]["emailsolict"];
+    $nomeanimal=$resultRej[0]["nomeanimal"];
+    $nomeDono=$_SESSION['nome'];
+    $link = "www.ivet.com.br";
+    $mensagem = "Olá {$nomeSolitc} ,<br><br>{$nomeDono} rejeitou sua  solicitação de adoção do  Pet: {$nomeanimal}, acesse nosso site e encontre outros pets !!! <br> {$link}<br><br><br> Atenciosamente <br> Equipe  Ivet" ;
+    $retornoEmail=enviaEmail($emailSolict,$mensagem);
+    if($retornoEmail){
+
+    }
+
     
   }
 
