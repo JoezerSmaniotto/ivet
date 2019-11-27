@@ -325,7 +325,20 @@
       $array = array($data_adocao,$id_Animal);
       $resul = atualizaDataAdocao($conexao,$array);
       if($resul){
-        echo json_encode($resul); 
+        echo json_encode($resul);
+        $resultRej=solicitaDados($conexao,$id_Animal,$idUsuario);
+        // var_dump($resultRej);
+        $nomeSolitc=$resultRej[0]["nomesolict"];
+        $emailSolict=$resultRej[0]["emailsolict"];
+        $nomeanimal=$resultRej[0]["nomeanimal"];
+        $nomeDono=$_SESSION['nome'];
+        $emailDono=$_SESSION['email'];
+        $link = "www.ivet.com.br";
+        $mensagem = "Olá {$nomeSolitc} ,<br><br>{$nomeDono} aceitou sua solicitação de adoção do  Pet: {$nomeanimal}, enctre em contato com ele pelo e-mail {$emailDono}!!! <br><br><br> Atenciosamente <br> Equipe  Ivet <br>{$link}" ;
+        $retornoEmail=enviaEmail($emailSolict,$mensagem);
+        if($retornoEmail){
+
+        }
       }
     }
   }
@@ -339,14 +352,14 @@
     $array = array($status_Solicita,$idUsuario,$id_Animal);
     $resul=rejeitaAdocao($conexao,$array);
     echo json_encode($resul); 
-    $resultRej=solicitaDadosRejeitado($conexao,$id_Animal,$idUsuario);
+    $resultRej=solicitaDados($conexao,$id_Animal,$idUsuario);
     // var_dump($resultRej);
     $nomeSolitc=$resultRej[0]["nomesolict"];
     $emailSolict=$resultRej[0]["emailsolict"];
     $nomeanimal=$resultRej[0]["nomeanimal"];
     $nomeDono=$_SESSION['nome'];
     $link = "www.ivet.com.br";
-    $mensagem = "Olá {$nomeSolitc} ,<br><br>{$nomeDono} rejeitou sua  solicitação de adoção do  Pet: {$nomeanimal}, acesse nosso site e encontre outros pets !!! <br> {$link}<br><br><br> Atenciosamente <br> Equipe  Ivet" ;
+    $mensagem = "Olá {$nomeSolitc} ,<br><br>{$nomeDono} rejeitou sua  solicitação de adoção do  Pet: {$nomeanimal}, acesse nosso site e encontre outros pets  acesse o link !!! {$link}<br><br><br> Atenciosamente <br> Equipe  Ivet" ;
     $retornoEmail=enviaEmail($emailSolict,$mensagem);
     if($retornoEmail){
 
@@ -354,6 +367,8 @@
 
     
   }
+
+  
 
 
 

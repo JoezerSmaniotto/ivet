@@ -307,7 +307,7 @@
     }
   }
 
-  function solicitaDadosRejeitado($conexao,$id_Animal,$idUsuario){
+  function solicitaDados($conexao,$id_Animal,$idUsuario){
     try {
       $solitacoe=array();
       unset($solitacoe);
