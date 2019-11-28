@@ -55,3 +55,25 @@ main{
   flex-direction: column;
   height: 100vh;
 }
+
+.navbar-light .navbar-nav .nav-link  {
+  color:white;
+
+}
+
+.navbar-light .navbar-nav .active>.nav-link{
+  color:white;
+}
+
+.btn-outline-secondary{
+  color:black;
+}
+
+.navbar-light .navbar-brand{
+  color:white;
+}
+
+.fontLogo{
+  font-family: 'Indie Flower', cursive;
+}
+

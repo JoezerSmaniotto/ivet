@@ -334,7 +334,7 @@
         $nomeDono=$_SESSION['nome'];
         $emailDono=$_SESSION['email'];
         $link = "www.ivet.com.br";
-        $mensagem = "Olá {$nomeSolitc} ,<br><br>{$nomeDono} aceitou sua solicitação de adoção do  Pet: {$nomeanimal}, enctre em contato com ele pelo e-mail {$emailDono}!!! <br><br><br> Atenciosamente <br> Equipe  Ivet <br>{$link}" ;
+        $mensagem = "Olá {$nomeSolitc} ,<br><br>{$nomeDono} aceitou sua solicitação de adoção do  Pet: {$nomeanimal}, entre em contato pelo e-mail {$emailDono}!!! <br><br><br> Atenciosamente <br> Equipe  Ivet <br>{$link}" ;
         $retornoEmail=enviaEmail($emailSolict,$mensagem);
         if($retornoEmail){
 

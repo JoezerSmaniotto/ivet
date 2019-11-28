@@ -184,9 +184,9 @@ if(isset($data->contato)){
     $mail->From = "animalsivet@gmail.com"; //remetente
     $mail->FromName = "Ivet";
     $mail->AddAddress($EmailRes);
-
+    $link = "www.ivet.com.br";
     $mail->Subject = "Contato - Ivet";
-    $mail->Body = "Olá ".$nome.",<br><br>Obrigado por entrar em contato conosco, retornaremos assim que possível!";
+    $mail->Body = "Olá {$nome},<br><br>Obrigado por entrar em contato conosco, retornaremos assim que possível!<br><br><br> Atenciosamente <br> Equipe  Ivet <br>{$link}";
 
     $vetore = array();
     if(!$mail->Send()){

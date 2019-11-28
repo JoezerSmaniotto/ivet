@@ -93,12 +93,10 @@ function trocaMenu2() { // OK
             console.log('Recebendo dados Menu!');
             console.log(dados);
             if (dados) {
-                if (dados.sucesso == false) {
-                    // menuDeslogado();
-                } else {
+                if ((dados.sucesso != false)) {
                     window.location="home.html"
-                    // menuLogado()
-                    // return dados.sucesso;
+                } else {
+                    // window.location="home.html"
                 }
             }
         })
@@ -151,14 +149,14 @@ function menuDeslogado() {
 
     document.querySelector('#colocamenu').innerHTML = `
         <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-            <a class="navbar-brand" href="home.html">Ivet</a>
+            <a class="navbar-brand fontLogo" href="home.html">Ivet</a>
             
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto d-flex align-items-center">
                     
                     <li class="nav-item">
                         <a class="nav-link" href="home.html">Home</a>
@@ -262,12 +260,12 @@ function menuLogado() {
         let boasvi = response;
         document.querySelector('#colocamenu').innerHTML = `
         <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-            <a class="navbar-brand" href="home.html">Ivet</a>
+            <a class="navbar-brand fontLogo" href="home.html">Ivet</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto d-flex">
                 
                 <li class="nav-item  active">
                     <a class="nav-link" href="home.html">Home</a>
@@ -289,7 +287,7 @@ function menuLogado() {
                     <a class="nav-link" href="#" onclick="sair()">Sair</a>
                 </li>
                 <li class="nav-item">
-                   <p class="nav-link text-danger"> ${boasvi}</p>
+                  <a class="nav-link text-danger" href="#">${boasvi}</a> 
                 </li>
               
             </ul>
@@ -713,4 +711,8 @@ function contatoForm(event){
 
 function email(el){
     console.log(el.value)
+}
+
+function paginaAtualMenu (){
+    
 }
