@@ -29,7 +29,7 @@
               </div>
           </div>
           
-          <form class="" id="cadastro" name="cadastro" onsubmit="cadastrarPet(event)" enctype="multipart/form-data">
+          <form class="" id="cadastroPet" name="cadastroPet" onsubmit="cadastrarPet(event)" enctype="multipart/form-data">
                       
             <div class="form-row mf-2 mr-2">  
               <div class="form-group col-md-6 col-12">
@@ -119,7 +119,7 @@
 
   <script>
     // Carrega a foto Que acabou de selecionar com files
-    document.cadastro.imgPet.onchange = function(e){
+    document.cadastroPet.imgPet.onchange = function(e){
       const div = document.getElementById('fotoselec');
       div.innerHTML='';
       const img = document.createElement('img');

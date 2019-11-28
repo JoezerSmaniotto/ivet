@@ -613,7 +613,7 @@ function cadastrarUsuario() {
             if (data.result == "true") {
                 const resetar = document.querySelector("#cadastro");
                 alert("Usuario Cadastrado !!");
-                // formulario.reset(); 
+                document.querySelector("#cadastrarUsuario").reset()
                 // Aqui redireciona o window
                 window.location = 'home.html'
             }
@@ -695,10 +695,9 @@ function contatoForm(event){
         console.log('Recebendo dados!')
         console.log(data);
         if (data.success == true) {
-            // document.querySelector("#email").value = ' ';
-            // document.querySelector("#email").reset();
+            document.querySelector("#contato").reset()
             alert("Contato Enviado Com Sucesso")
-            
+                        
         }else{
             alert("Falha No Envio! Tente Novamente!! ")
         }

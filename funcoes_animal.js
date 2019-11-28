@@ -97,7 +97,8 @@ function cadastrarPet(event){
           if(data == 'true'){
               console.log(data)
               alert("Animal Cadastrado Com Sucesso");
-              formulario.reset()
+              document.querySelector("#cadastroPet").reset()
+
           }else if(data.result == 'Arquivo ja existe'){
             alert("Arquivo já existe !!");
             console.log(`${data}`)
@@ -223,6 +224,7 @@ function gerarObjetoPetEdita(){ // OK
   const editaPet = true;
   return { // Cria o objeto 
     nome,dt_nasc,tipo,sexo,raca,localizacao,obs,id_Animal,img,imgAnt,editaPet
+    
   }
 
 }
@@ -234,7 +236,7 @@ function formularioValidoEdita(dadosAnimal){ // OK
   // console.log(Object.entries(dadosAnimal));
 
   arrayDadosUser.forEach(cont=>{
-    if(cont[0]!='img' && cont[1] === ''){ // ??
+    if(cont[0]!='img' && cont[1] === ''){ 
        campoVazio = true;
     }
   });
@@ -243,6 +245,8 @@ function formularioValidoEdita(dadosAnimal){ // OK
 }
 
 
+
+        
 function salvaEditaPet(event){
   event.preventDefault()
   let dadosAnimal = gerarObjetoPetEdita();
@@ -264,94 +268,7 @@ function salvaEditaPet(event){
           console.log(dados)
           escondeForm()
           alert("Dados Atualizados Com Sucesso")
-          function gerarObjetoPetEdita(){ // OK
-            const nome = document.querySelector('#nome').value;
-            const dt_nasc = document.querySelector('#dt_nasc').value;
-            const tipo = document.querySelector('#SeletorTipo').value;
-            const sexo = document.querySelector('#SeletorSexo').value;
-            const raca = document.querySelector('#raca').value;
-            const localizacao = document.querySelector('#cep').value;
-            const obs = document.querySelector('#obs').value;
-            const id_Animal = document.querySelector("#idpet").value;
-            const imgAnt = document.querySelector("#imgAnt").value;
-            const img = document.querySelector('#imgPet').files[0];
-            const editaPet = true;
-            return { // Cria o objeto 
-              nome,dt_nasc,tipo,sexo,raca,localizacao,obs,id_Animal,img,imgAnt,editaPet
-            }
-          
-          }
-          
-          function formularioValidoEdita(dadosAnimal){ // OK 
-            let campoVazio = false; 
-            // const arrayDadosUser = Object.values(dadosAnimal);
-            const arrayDadosUser = Object.entries(dadosAnimal);
-            // console.log(Object.entries(dadosAnimal));
-          
-            arrayDadosUser.forEach(cont=>{
-              if(cont[0]!='img' && cont[1] === ''){ // ??
-                 campoVazio = true;
-              }
-            });
-          
-            return !campoVazio;  
-          }
-          
-          
-          function salvaEditaPet(event){
-            event.preventDefault()
-            let dadosAnimal = gerarObjetoPetEdita();
-            let formData = new FormData();
-            if(formularioValidoEdita(dadosAnimal)){
-                Object.entries(dadosAnimal).forEach(([key, value]) => {
-                  // console.log(key + " = " + value)
-                  formData.append(key, value)
-                });
-                console.log(dadosAnimal)
-                // console.log(`Dados Envia Alteração: ${dadosAnimal}`)
-                fetch('includes/logica/logica_animal.php',{
-                    method: 'POST',
-                    body: formData,
-                }).then ((response) => { return response.json() 
-                }).then( dados => {
-                  console.log(dados)
-                  if(dados.result == 'true'){
-                    console.log(dados)
-                    escondeForm()
-                    alert("Dados Atualizados Com Sucesso")
-                    showPets()
-                  // }else {
-                  //   alert("Dados Não Atualizados")
-                  // }
-                  } if(dados.result == 'Arquivo ja existe'){
-                    alert("Arquivo já existe !!");
-                    // console.log(`${dados}`)
-                  }else if(dados.result == 'Arquivo deve ter o no maximo 20000000 bytes'){
-                    alert("Arquivo deve ter o no máximo 20000000 bytes !!");
-                    // console.log(dados)
-                  }else if(dados.result == 'Extensao de arquivo invalida para upload'){
-                    alert("Extensão de arquivo invalida para upload");
-                    // console.log(dados)
-                  }else if(dados.result == 'Arquivo nao pode ser copiado para o servidor'){
-                      alert("Arquivo nao pode ser copiado para o servidor");
-                      // console.log(dados)
-                  }else if(dados.result == 'Selecione o arquivo a ser enviado'){
-                    alert("Selecione o arquivo a ser enviado");
-                    // console.log(dados)
-                  }
-          
-                    
-                });
-                
-            }else {
-                alert("Verifique os Campos, Existem Campos Não Preenchidos")
-            }
-          
-            // recuperarDadosEdita();
-          
-          
-          }
-          
+          document.querySelector("#editaPet").reset()
           showPets()
         // }else {
         //   alert("Dados Não Atualizados")
@@ -384,6 +301,7 @@ function salvaEditaPet(event){
 
 
 }
+          
 
 
 function showPets(){
@@ -440,13 +358,6 @@ function showPets(){
                  </div>
                </div> `;
 
-                // document.querySelector('#listarPets').innerHTML += `Nome: ${item.nome} | Tipo: ${tipoA} | Raça: ${item.nomer} <br>`;
-                // document.querySelector('#listarPets').innerHTML += `Sexo: ${Sx} | Data Nasc: ${item.nascimento} | Localização: ${item.localizacao} <br>`;
-                // document.querySelector('#listarPets').innerHTML += `Observações: ${item.observacoes} <br>`;
-                // document.querySelector('#listarPets').innerHTML += `<button onclick="excluirAnimal(${item.id_animal},'${item.nome}','${item.nome}')">Exclui</button>`;
-                // document.querySelector('#listarPets').innerHTML += `<button onclick="editarAnimal(${item.id_animal})">Edita</button>`;
-                // document.querySelector('#listarPets').innerHTML += `<br><hr>`;
-
               })
 
         }
@@ -489,16 +400,6 @@ function solicitaAdota(id_animal){
       console.log(`Erro ao conectar:\n\n${error.message}`)
   });
 
-
-  // fetch('includes/logica/logica_animal.php',{
-  //     method:'post',
-  //     body: JSON.stringify(obj) // Converte para JSON
-  // }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
-  // }).then( data => {
-  //    console.log(data)
-     
-  // });
-
 }
 
 
@@ -510,20 +411,18 @@ function showPetsTotal(){
       body: JSON.stringify(obj) // Converte para JSON
   }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
   }).then( data => {
-     console.log(data)
-      // if(data.result =="Não Há Animais Cadastrados"){
-      //     let reposta = document.querySelector("#listarPets")
-      //     document.querySelector('#listarPets').innerText = "";
-      //     let p4 = document.createElement('p')
-      //     let conteudo = document.createTextNode(" Não Há Animais Cadastrados ")
-      //     reposta.appendChild(conteudo)     
-      //     alert("Não Há Animais Cadastrados");
-      // }else{
+      console.log(data)
+      if(data.result =="result"){
+          let reposta = document.querySelector("#listarPets")
+          document.querySelector('#listarPets').innerText = "";
+          let p4 = document.createElement('p')
+          let conteudo = document.createTextNode(" Não Há Animais Cadastrados ")
+          reposta.appendChild(conteudo)     
+          alert("Não Há Animais Cadastrados");
+      }else{
           let tipoA,Sx;
-          // document.querySelector('#listarPets').innerHTML = "";
-          // document.querySelector('#listarPets').innerHTML = `
-          
-          // `;
+          document.querySelector('#listarPets').innerHTML = "";
+         
 
           let caminhoImg ;
            data.forEach((item,index)=>{
@@ -543,27 +442,26 @@ function showPetsTotal(){
               caminhoImg = `imagens/${item.imagem}`;
               document.querySelector('#listarPets').innerHTML += `
               <div class="col-md-4">
-               <div class="card mb-4 shadow-sm">
-                <img class="card-img-top imganimal" src="${caminhoImg}" alt="Card image cap">
-                 <div class="card-body overflow-auto">
-                   <p class="card-text"> Nome: ${item.nome} | Tipo: ${tipoA} | Raça: ${item.nomer} <br></p>
-                   <p class="card-text"> Sexo: ${Sx} | Data Nasc: ${item.nascimento} | Localização: ${item.localizacao} <br></p>
-                   <p class="card-text"> Observações: ${item.observacoes} <br></p> 
-                   <div class="d-flex justify-content-between align-items-center">
-                     <div class="btn-group">
-                       <button type="button" class="btn btn-sm btn-outline-secondary" onclick="solicitaAdota(${item.id_animal})" >Adote</button>
-                       <button type="button" class="btn btn-sm btn-outline-secondary">Maiss</button>
-                     </div>
+                <div class="card mb-4 shadow-sm">
+                  <img class="card-img-top imganimal" src="${caminhoImg}" alt="Card image cap">
+                  <div class="card-body overflow-auto">
+                    <p class="card-text"> Nome: ${item.nome} | Tipo: ${tipoA} | Raça: ${item.nomer} <br></p>
+                    <p class="card-text"> Sexo: ${Sx} | Data Nasc: ${item.nascimento} | Localização: ${item.localizacao} <br></p>
+                    <p class="card-text"> Observações: ${item.observacoes} <br></p> 
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="solicitaAdota(${item.id_animal})" >Adote</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Maiss</button>
+                      </div>
                    </div>
                  </div>
                </div>
-             </div> `;
-
-
-            
+             </div> `;            
             })
-  
-    })    
+   
+        }
+
+      })
 }
 
 function aceitaAdocao(id_animal,id_usu){
