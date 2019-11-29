@@ -15,7 +15,7 @@
     <!-- <main> -->
       <div id="colocamenu" style="min-height: 9vh" >   </div>  
 
-      <div class="container-fluid bg-transparent" style="min-height: 82vh">
+      <div class="container-fluid bg-transparent flex-column align-items-center flex-column " style="min-height: 82vh">
           <!-- <div class="col-md-8 mr-auto ml-auto" style="min-height: 82vh">  -->
 
             <div class="row">
@@ -23,66 +23,64 @@
                   <h1>Contato</h1>
               </div>
             </div>
-              
-            <form class="col-12 container-fluid p-3" id="contato" name="contato" onsubmit="contatoForm(event)">
-                        
-              <div class="row">  
-                <div class="col-md-6 col-12">
-                    <div class="form-group"> 
-                      <label for="nome">Nome</label>
-                      <input type="text" class="form-control"  name="nome" id="nome" placeholder="Ex: João Da Silva">
-                   </div>
-                </div>
-        
-              <div class="col-md-6 col-12">
-                  <div class="form-group"> 
-                    <label for="nome">Email</label>
-                    <input type="email" class="form-control"  name="emailcont" id="emailcont" placeholder="Ex: joãosilva@gmail.com">
-                </div>
-              </div>
-                
-              </div>  
-        
-              <div class="row"> 
-                <div class="col-md-6 col-12">
-                    <div class="form-group"> 
-                      <label for="SeletorTipo">Assunto</label>
-                      <select class="form-control" name="assunto" id="assunto">
-                          <option value="" >--Escolha--</option>
-                          <option value="FaleConosco">FaleConosco</option>
-                          <option value="Pets">Pets</option>
-                          <option value="Dogs">Dogs</option>
-                      </select>
+            
+            <div class="row">
+              <form class="col-12 container-fluid p-3" id="contato" name="contato" onsubmit="contatoForm(event)">
+                          
+                <div class="row">  
+                  <div class="col-md-6 col-12">
+                      <div class="form-group"> 
+                        <label for="nome">Nome</label>
+                        <input type="text" class="form-control"  name="nome" id="nome" placeholder="Ex: João Da Silva">
                     </div>
-                </div>
-              </div>
-        
-              <div class="row"> 
-                <div class=" col-12">
-                  <div class="form-group"> 
-                    <label for="obs">Conteúdo</label>
-                    <textarea class="form-control" name="conteudo" id="conteudo"  placeholder="Descreve " rows="3"></textarea>
+                  </div>
+          
+                <div class="col-md-6 col-12">
+                    <div class="form-group"> 
+                      <label for="nome">Email</label>
+                      <input type="email" class="form-control"  name="emailcont" id="emailcont" placeholder="Ex: joãosilva@gmail.com">
                   </div>
                 </div>
-              </div>
-        
-
-              <button type="submit" class="btn btn-primary mb-2 ">Enviar</button>
-              
                   
-            </form>
-        
-          <!-- </div> -->
+                </div>  
+          
+                <div class="row"> 
+                  <div class="col-md-6 col-12">
+                      <div class="form-group"> 
+                        <label for="SeletorTipo">Assunto</label>
+                        <select class="form-control" name="assunto" id="assunto">
+                            <option value="" >--Escolha--</option>
+                            <option value="FaleConosco">FaleConosco</option>
+                            <option value="Pets">Pets</option>
+                            <option value="Dogs">Dogs</option>
+                        </select>
+                      </div>
+                  </div>
+                </div>
+          
+                <div class="row"> 
+                  <div class=" col-12">
+                    <div class="form-group"> 
+                      <label for="obs">Conteúdo</label>
+                      <textarea class="form-control" name="conteudo" id="conteudo"  placeholder="Descreve " rows="3"></textarea>
+                    </div>
+                  </div>
+                </div>
+          
+
+                <button type="submit" class="btn btn-primary mb-2 ">Enviar</button>
+                
+                    
+              </form>
+            </div>
       </div>
     
     <!-- </main> -->
-
-    <footer class="footer mt-auto py-3 bg-primary align-items-stretch" style="margin-top: auto !important; width: 100% !important; min-height:9vh">
-      <div class="container-fluid  text-center mt-2">
-          <span class="text-muted" style="color: white !important">Copyright 2001-2019 ivet.com.br</span>
-      </div>
-    </footer>
- 
+        <footer class="footer mt-auto py-3 bg-primary align-items-stretch" style="margin-top: auto !important; width: 100% !important; min-height:9vh">
+          <div class="container-fluid  text-center mt-2">
+              <span class="text-muted" style="color: white !important">Copyright 2001-2019 ivet.com.br</span>
+          </div>
+        </footer>
 
   </body>
 

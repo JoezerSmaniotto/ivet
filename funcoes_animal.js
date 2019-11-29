@@ -441,7 +441,7 @@ function showPetsTotal(){
               
               caminhoImg = `imagens/${item.imagem}`;
               document.querySelector('#listarPets').innerHTML += `
-              <div class="col-md-4">
+              <div class="col-md-4 transforme">
                 <div class="card mb-4 shadow-sm">
                   <img class="card-img-top imganimal" src="${caminhoImg}" alt="Card image cap">
                   <div class="card-body overflow-auto">
@@ -539,7 +539,7 @@ function showSolicitacoes(){
               
               caminhoImg = `imagens/${item.imagem}`;
               document.querySelector('#listarPets').innerHTML += `
-              <div class="col-md-4">
+              <div class="col-md-4 ">
                <div class="card mb-4 shadow-sm">
                 <img class="card-img-top imganimal" src="${caminhoImg}" alt="Card image cap">
                  <div class="card-body overflow-auto">

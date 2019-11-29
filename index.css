@@ -9,14 +9,26 @@ footer{
 
 } */
 
+
+.transforme:hover {
+  transform: scale(1.1,1.1);
+  transition: 0.5s linear all;
+  /* box-shadow: 1px 1px 1px blue; */
+}
+
+.no-padding {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+
 .card-body {
   height: 200px;
 }
 
-
 .card-body::-webkit-scrollbar {
   width: 5px;
-  height: 8px;
+  /* height: 8px; */
   background-color: black; /* or add it to the track */
 }
 
@@ -77,3 +89,28 @@ main{
   font-family: 'Indie Flower', cursive;
 }
 
+
+element.style {
+  min-height: 9vh;
+}
+_reboot.scss:22
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+user agent stylesheet
+div {
+  display: block;
+}
+Inherited from body
+_reboot.scss:47
+body {
+  margin: 0;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.navbar{
+  min-height: 9vh;
+
+}

@@ -148,7 +148,7 @@ function menuDeslogado() {
     
 
     document.querySelector('#colocamenu').innerHTML = `
-        <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary" >
             <a class="navbar-brand fontLogo" href="home.html">Ivet</a>
             
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -259,7 +259,7 @@ function menuLogado() {
     .then(function (response) {
         let boasvi = response;
         document.querySelector('#colocamenu').innerHTML = `
-        <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary" >
             <a class="navbar-brand fontLogo" href="home.html">Ivet</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
