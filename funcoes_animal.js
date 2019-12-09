@@ -170,7 +170,7 @@ function excluirAnimal(idAnimal,nome,imagem){
     fetch('includes/logica/logica_animal.php',{
         method:'delete',
         body: JSON.stringify(obj) // Converte para JSON
-    }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+    }).then ((response) => { return response.json() 
     }).then( data => {
         // console.log(data)
         if(data.result == 'Animal Exluído'){
@@ -310,7 +310,7 @@ function showPets(){
     fetch('includes/logica/logica_animal.php',{
         method:'post',
         body: JSON.stringify(obj) // Converte para JSON
-    }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+    }).then ((response) => { return response.json() 
     }).then( data => {
        console.log(data)
         if(data.result =="Não Há Animais Cadastrados"){
@@ -387,7 +387,7 @@ function solicitaAdota(id_animal){
               fetch('includes/logica/logica_animal.php',{
                 method:'post',
                 body: JSON.stringify(obj) // Converte para JSON
-              }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+              }).then ((response) => { return response.json() 
               }).then( data => {
                 console.log(data)
                 alert("Solitação Enviada !!")
@@ -409,7 +409,7 @@ function showPetsTotal(){
   fetch('includes/logica/logica_animal.php',{
       method:'post',
       body: JSON.stringify(obj) // Converte para JSON
-  }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+  }).then ((response) => { return response.json() 
   }).then( data => {
       console.log(data)
       if(data.result =="result"){
@@ -471,7 +471,7 @@ function aceitaAdocao(id_animal,id_usu){
     fetch('includes/logica/logica_animal.php',{
         method:'post',
         body: JSON.stringify(obj) // Converte para JSON
-    }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+    }).then ((response) => { return response.json() 
     }).then( data => {
       console.log(data)
         if(data.result =="Adoção Efetivada"){
@@ -495,7 +495,7 @@ function rejeitarAdocao(id_animal,id_usu){
     fetch('includes/logica/logica_animal.php',{
         method:'post',
         body: JSON.stringify(obj) // Converte para JSON
-    }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+    }).then ((response) => { return response.json() 
     }).then( data => {
       console.log(data)
         if(data.result =="Rejeição Efetivada"){
@@ -517,18 +517,18 @@ function showSolicitacoes(){
   fetch('includes/logica/logica_animal.php',{
       method:'post',
       body: JSON.stringify(obj) // Converte para JSON
-  }).then ((response) => { return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+  }).then ((response) => { return response.json() 
   }).then( data => {
      console.log(data)
       if(data.result =="Não Há Solicitações"){
           let reposta = document.querySelector("#listarPets")
           document.querySelector('#listarPets').innerText = "";
-          // let h2 = document.createElement('h2')
-          // h2.createElement("Não Há Solicitações !!")
+          let h2 = document.createElement('h2')
+          h2.innerHTML="Não Há Solicitações !!";
 
-          let conteudo = document.createTextNode(" Não Há Solicitações !!")
-          // conteudo.classList.add("text-center");
-          // reposta.appendChild(h2) 
+          // let conteudo = document.createTextNode(" Não Há Solicitações !!")
+          conteudo.classList.add("text-center");
+          reposta.appendChild(h2) 
           reposta.appendChild(conteudo)     
           alert("Não Há Solicitações");
       }else{
@@ -564,6 +564,60 @@ function showSolicitacoes(){
 }
 
 
+
+// ALTERADO
+
+// function showSolicitacoes(){
+//   let apresentarSolicitacoesAdocao = true;
+//   let obj =  { apresentarSolicitacoesAdocao };
+//   fetch('includes/logica/logica_animal.php',{
+//       method:'post',
+//       body: JSON.stringify(obj) // Converte para JSON
+//   }).then ((response) => { return response.json() //
+//   }).then( data => {
+//      console.log(data)
+//       if(data.result =="Não Há Solicitações"){
+//           let reposta = document.querySelector("#listarPets")
+//           document.querySelector('#listarPets').innerText = "";
+//           // let h2 = document.createElement('h2')
+//           // h2.createElement("Não Há Solicitações !!")
+
+//           let conteudo = document.createTextNode(" Não Há Solicitações !!")
+//           // conteudo.classList.add("text-center");
+//           // reposta.appendChild(h2) 
+//           reposta.appendChild(conteudo)     
+//           alert("Não Há Solicitações");
+//       }else{
+//           let tipoA,Sx,caminhoImg;
+//           document.querySelector('#listarPets').innerText = "";
+//           data.forEach((item)=>{
+//               // caminhoImg = `imagens/${item.imagem}`;
+              
+//               caminhoImg = `imagens/${item.imagem}`;
+//               document.querySelector('#listarPets').innerHTML += `
+//               <div class="col-md-4 ">
+//                <div class="card mb-4 shadow-sm">
+//                 <img class="card-img-top imganimal" src="${caminhoImg}" alt="Card image cap">
+//                  <div class="card-body overflow-auto">
+//                    <p class="card-text"> O usuario: ${item.nome} com e-mail: ${item.e_mail}<br>
+//                     Deseja Adotar o Pet ${item.nomeani}  da raça ${item.nomer}<br>
+//                    <div class="d-flex justify-content-between align-items-center">
+//                      <div class="btn-group">
+//                        <button type="button" class="btn btn-sm btn-outline-secondary"  onclick="aceitaAdocao(${item.id_animal},${item.id_usu})" >Aceito !</button>
+//                        <button type="button" class="btn btn-sm btn-outline-secondary"  onclick="rejeitarAdocao(${item.id_animal},${item.id_usu})">Rejeitar!</button>
+//                      </div>
+//                    </div>
+//                  </div>
+//                </div>
+//              </div> `;
+          
+          
+//           })
+
+//       }
+  
+//     })    
+// }
 
 
 

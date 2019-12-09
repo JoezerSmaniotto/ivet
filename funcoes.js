@@ -111,7 +111,7 @@ function trocaMenu2() { // OK
 
 
 
-function listar(formulario) { // ??
+function listar(formulario) { //
 
     event.preventDefault();
     fetch('listagem.php', {
@@ -512,7 +512,7 @@ function excluirConta() {
             method: 'delete',
             body: JSON.stringify(obj) // Converte para JSON
         }).then((response) => {
-            return response.text() // esse .text poderia ser json() se sim o que mudaria ??  ???
+            return response.text() 
         }).then(data => {
             //let result = JSON.parse(data)
             //console.log(result)
@@ -605,7 +605,7 @@ function cadastrarUsuario() {
             method: 'post',
             body: JSON.stringify(dadosUsuario)// converte para JSON o JSON.stringify // body apenas quando quero fazer um post
         }).then((response) => {
-            return response.json() // esse .text poderia ser json() se sim o que mudaria ??  ???
+            return response.json() 
         }).then(data => {
             console.log(data);
             if (data.result == "true") {
@@ -661,8 +661,7 @@ function pesquisaemail(email) {
             alert(`Email: ${email} já cadastrado`)
             document.querySelector("#emails").value = ' ';
             // document.querySelector("#email").reset();
-           
-            
+                 
         }
 
     }).catch(error => {
@@ -678,10 +677,10 @@ function contatoForm(event){
     const EmailRes = document.querySelector("#emailcont").value;
     const assunto = document.querySelector("#assunto").value;
     const conteudo = document.querySelector("#conteudo").value;
-    console.log(EmailRes)
-    console.log(nome)
-    console.log(assunto)
-    console.log(conteudo)
+    // console.log(EmailRes)
+    // console.log(nome)
+    // console.log(assunto)
+    // console.log(conteudo)
     let contato = true
     let obj = { nome , EmailRes, assunto, conteudo ,contato }
     fetch('includes/logica/logica_usuario.php', {
